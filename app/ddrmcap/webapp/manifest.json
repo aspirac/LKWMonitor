@@ -1,0 +1,226 @@
+{
+  "_version": "1.76.0",
+  "sap.app": {
+    "id": "ns.ddrmcap",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "1.0.0"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:lrop",
+      "version": "1.19.3",
+      "toolsId": "6414d465-d763-4375-98a3-7db1ed93b100"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/odata/v4/service/ddrm/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.0"
+        }
+      }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "ddrmcap-display": {
+          "semanticObject": "ddrmcap",
+          "action": "display",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.141.3",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.fe.templates": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "ns.ddrmcap.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "@i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "uri": "i18n/i18n.properties"
+      }
+    },
+    "resources": {
+      "css": []
+    },
+    "routing": {
+      "config": {},
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "ProcessList",
+          "target": "ProcessList"
+        },
+        {
+          "pattern": "Process({key}):?query:",
+          "name": "ProcessObjectPage",
+          "target": "ProcessObjectPage"
+        },
+        {
+          "pattern": "Process({key})/to_InsolvencyMeasures({key2}):?query:",
+          "name": "InsolvencyMeasuresObjectPage",
+          "target": "InsolvencyMeasuresObjectPage"
+        }
+      ],
+      "targets": {
+        "ProcessList": {
+          "type": "Component",
+          "id": "ProcessList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/Process",
+              "variantManagement": "Page",
+              "navigation": {
+                "Process": {
+                  "detail": {
+                    "route": "ProcessObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable"
+                  },
+                  "actions": {
+                    "setStatus20": {
+                      "press": "ns.ddrmcap.ext.controller.ActionsHeader.onSetStatus20",
+                      "visible": true,
+                      "enabled": true,
+                      "requiresSelection": true,
+                      "text": "{i18n>setStatus20}"
+                    }
+                  }
+                }
+              },
+              "initialLoad": "Enabled"
+            }
+          }
+        },
+        "ProcessObjectPage": {
+          "type": "Component",
+          "id": "ProcessObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/Process",
+              "content": {
+                "header": {
+                  "actions": {
+                    "callInterface": {
+                      "press": "ns.ddrmcap.ext.controller.ActionsObject.oncallInterface",
+                      "visible": true,
+                      "enabled": true,
+                      "text": "{i18n>callinterface}"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "InsolvencyMeasuresObjectPage": {
+          "type": "Component",
+          "id": "InsolvencyMeasuresObjectObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": true,
+              "entitySet": "InsolvencyMeasures",
+              "sectionLayout": "Tabs"
+            }
+          }
+        },
+        "CrisisMeasuresObjectPage": {
+          "type": "Component",
+          "id": "CrisisMeasuresObjectObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": true,
+              "entitySet": "CrisisMeasures",
+              "createWithParameterDialog": {
+                "fields": {
+                  " measuresTypeId": {
+                    "path": " measuresTypeId"
+                  },
+                  "commentMeasures": {
+                    "path": "commentMeasures"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "extends": {
+      "extensions": {
+        "sap.ui.controllerExtensions": {
+          "sap.fe.templates.ObjectPage.ObjectPageController": {
+            "controllerName": "ns.ddrmcap.ext.controller.InputValidationController"
+          }
+        }
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "ddrm.service"
+  }
+}

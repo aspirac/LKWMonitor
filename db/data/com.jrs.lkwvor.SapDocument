@@ -1,0 +1,12 @@
+DocNumber;DocType;description;CustomerNumber;CustomerName
+340885352;ZC01;Nemac Freight Order; 330885352;Nemak Wernigerode GmbH
+343681679;ZC01;BBS automotive GmbH Freight Order;333681679;BBS automotive GmbH
+322514621;ZC01;Felss Group GmbH Freight Order;332514621;Felss Group GmbH
+332431225;ZC02;Felss Group GmbH Sales Order;332514621;Felss Group GmbH
+342950911;ZC01;Felss Group GmbH Freight Order;332514621;Felss Group GmbH
+481737914;ZC01;Felss Group GmbH Freight Order;332514621;Felss Group GmbH
+507571136;ZC01;HEG Heckert Engineering GmbH Freight Order;407571136;HEG Heckert Engineering GmbH
+341315538;ZC01;Capricorn Composite GmbH Freight Order;331315538;Capricorn Composite GmbH
+315438598;ZC01;IDEAL Group Deutschland Freight Order;335438598;IDEAL Group Deutschland
+330954814;ZC01;IDEAL Automotive Ingolstadt Freight Order;340954814;IDEAL Automotive Ingolstadt
+

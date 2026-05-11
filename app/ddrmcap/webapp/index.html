@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>DDRM Cap</title>
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            /* IMPORTANT: do NOT set overflow:hidden here, otherwise #sap-ui-static gets clipped */
+        }
+
+        body>div,
+        #container,
+        #container-uiarea {
+            height: 100%;
+        }
+
+        /* Remove the outer (browser) scroll by preventing the UI area from overflowing */
+        #container-uiarea {
+            overflow: hidden;
+        }
+    </style>
+    <script id="sap-ui-bootstrap" src="https://sapui5.hana.ondemand.com/1.141.3/resources/sap-ui-core.js"
+        data-sap-ui-theme="sap_horizon" data-sap-ui-resource-roots='{
+            "ns.ddrmcap": "./"
+        }' data-sap-ui-on-init="module:sap/ui/core/ComponentSupport" data-sap-ui-compat-version="edge"
+        data-sap-ui-async="true" data-sap-ui-frame-options="trusted"></script>
+</head>
+
+<body class="sapUiBody sapUiSizeCompact" id="content">
+    <div data-sap-ui-component data-name="ns.ddrmcap" data-id="container" data-settings='{"id" : "ns.ddrmcap"}'
+        data-handle-validation="true"></div>
+</body>
+
+</html>

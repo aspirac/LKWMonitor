@@ -1,0 +1,10 @@
+ID;description
+10;Auslieferung palettierte Ware
+11;Auslieferung Siloware
+12;Auslieferung Sonstiges (ohne Belegbezug)
+20;Anlieferung LVS-gefährtes Material
+21;Anlieferung nicht LVS-gefährtes Material
+22;Anlieferung Leerpaletten
+23;Anlieferung Holzeinkauf  Rundholz
+24;Anlieferung Holzeinkauf  Schättgäter
+25;Anlieferung Sonstiges (ohne Belegbezug)

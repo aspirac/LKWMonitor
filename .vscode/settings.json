@@ -1,0 +1,23 @@
+{
+  "workbench.editorAssociations": {
+    "*.app": "default",
+    "*.global": "default",
+    "*.action": "default",
+    "*.extension": "default",
+    "*.page": "default",
+    "*.service": "default",
+    "*.cim": "default",
+    "*.rule": "default",
+    "*.properties": "default",
+    "*.fragment": "default"
+  },
+  "workbench.editor.enablePreview": false,
+  "workbench.editor.enablePreviewFromQuickOpen": false,
+  "workbench.editor.showTabs": "multiple",
+  "[cds]": {
+    "editor.defaultFormatter": "SAPSE.vscode-cds"
+  },
+  "SAP HANA Database Artifacts.lastSelectedTargetPath": "/home/user/projects/ddrmdsp/db/src",
+  "SAP HANA SQLScript LSP.URL": "https://cf-eu10-004.cf.hana-tooling.ingress.orchestration.prod-eu10.hanacloud.ondemand.com/hrtt-service",
+  "SAP HANA SQLScript LSP.XsAdvancedHrttServiceUrl": ""
+}
