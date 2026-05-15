@@ -109,7 +109,7 @@ In order to push the developments to Gitlab do:
 **-	git init
 -	git add .
 -	git commit -m "Push existing project to GitLab" 
--	git remote add origin https://cicd.skyway.porsche.com/DDRM/ddrm_cap/ddrmdsp.git
+-	git remote add origin https://github.com/aspirac/LKWMonitor.git
 -	git push -u origin master**
 
 
