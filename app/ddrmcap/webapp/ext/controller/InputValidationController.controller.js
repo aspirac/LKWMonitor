@@ -18,7 +18,17 @@ sap.ui.define(['sap/ui/core/mvc/ControllerExtension',
 
 		return ControllerExtension.extend('ddrm.ext.controller.InputValidation', {
 			// this section allows to extend lifecycle hooks or hooks provided by Fiori elements
-
+            onCallInterfaceII: function (oEvent) {
+				debugger;
+            const oModel = this.base.getView().getModel();
+            // Call an unbound action
+            oModel.invokeAction("MyService.myAction", {
+                context: undefined,
+                skipParameterDialog: true
+            }).then(function () {
+                MessageToast.show("Action Called");
+            });
+        },
 			override: {
 				/**
 				 * Called when a controller is instantiated and its View controls (if available) are already created.

@@ -163,6 +163,12 @@
                       "visible": true,
                       "enabled": true,
                       "text": "{i18n>callinterface}"
+                    },
+                    "callInterfaceII": {
+                      "press": "ns.ddrmcap.ext.controller.InputValidationController.controller.oncallInterface",
+                      "visible": false,
+                      "enabled": true,
+                      "text": "{i18n>callinterface}"
                     }
                   }
                 }

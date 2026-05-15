@@ -16,7 +16,7 @@ sap.ui.define([
      * @param oContext the context of the page on which the event was fired. `undefined` for list report page.
      * @param aSelectedContexts the selected contexts of the table rows.
      */
-    callInterfaceScale: function (oLicencePlate) {
+    callInterfaceScale: function (oLicencePlate,  oObject) {
       try {
         var date = new Date("04/20/2026 00:00:00");
         var milliseconds = date.getTime();
@@ -62,7 +62,7 @@ sap.ui.define([
       //  oBindList.refresh();
     },
 
-    callInterfaceFSE: function (oLicencePlate) {
+    callInterfaceFSE: function (oLicencePlate, oObject) {
 
       let result = [
 

@@ -1,3 +1,6 @@
+
+
+
 sap.ui.define([
     "sap/m/MessageToast",
     "./Helpers/ActionUtils",
@@ -19,11 +22,14 @@ sap.ui.define([
             var sMsg;
             aSelectedContexts.forEach((oObject, index) => {
                 const obj = oObject.getObject();
+                debugger;
+              
                 if (obj.processStatusID_ID == '20') {
-                    let result = Xface.callInterfaceScale(obj.LKW_Kennzeichen);
+                    let result = Xface.callInterfaceScale(obj.LKW_Kennzeichen, oObject);
+                    debugger;
                     let s = aUtils.getLabel("ProcessStatusDescription");
                     aUtils.formatXface(oObject, obj, result);
-                    result = Xface.callInterfaceFSE(obj.LKW_Kennzeichen);
+                    result = Xface.callInterfaceFSE(obj.LKW_Kennzeichen, oObject);
                     aUtils.formatXface(oObject, obj, result);
                 
               
@@ -36,8 +42,6 @@ sap.ui.define([
                   
                 }
                 MessageToast.show(sMsg);
-                location.reload(); 
-
             });
         }
     };

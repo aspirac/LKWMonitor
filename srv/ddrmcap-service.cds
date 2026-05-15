@@ -18,3 +18,4 @@ service DDRMService @(requires: 'authenticated-user') {
   entity ProcessSAPDocumentIn              as projection on db.ProcessSAPDocumentIn;
   entity ProcessSAPDocumentOut              as projection on db.ProcessSAPDocumentOut;
 }
+
