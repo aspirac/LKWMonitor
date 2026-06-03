@@ -41,7 +41,7 @@ entity Process : managed {
 entity ProcessStatus : managed {
     key ID          :  String(100);                 
      description : String(100);
-             description_ID : String(2);
+     description_ID : String(2);
      Process  : Association to many Process
                           on Process.processStatusID = $self;
 

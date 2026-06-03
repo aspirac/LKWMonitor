@@ -18,7 +18,7 @@ annotate service.Process with @(
 
         {
             $Type: 'UI.DataField',
-            Value: processTypeID_description_ID,
+            Value: processTypeID.description_ID,
             Label: '{@i18n>processType}',
         },
 
@@ -30,7 +30,7 @@ annotate service.Process with @(
  
         {
             $Type: 'UI.DataField',
-            Value: processStatusID_description_ID,
+            Value: processStatusID.description_ID,
             Label: '{@i18n>processStatus}',
         },
  
