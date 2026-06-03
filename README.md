@@ -110,6 +110,6 @@ In order to push the developments to Gitlab do:
 -	git add .
 -	git commit -m "Push existing project to GitLab" 
 -	git remote add origin https://github.com/aspirac/LKWMonitor.git
--	git push -u origin master**
+-	git push 
 
 
