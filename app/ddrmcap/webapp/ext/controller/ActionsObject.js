@@ -18,6 +18,13 @@ sap.ui.define([
          * @param oContext the context of the page on which the event was fired. `undefined` for list report page.
          * @param aSelectedContexts the selected contexts of the table rows.
          */
+         oncallInterfaceII: function (oContext, aSelectedContexts) {
+            var sMsg;
+            debugger;
+            sMsg = 'TEST';
+            var model = this.ediFlow.getView();
+         },
+
         oncallInterface: function (oContext, aSelectedContexts) {
             var sMsg;
             aSelectedContexts.forEach((oObject, index) => {

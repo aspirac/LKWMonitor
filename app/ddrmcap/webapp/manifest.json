@@ -137,7 +137,7 @@
                       "press": "ns.ddrmcap.ext.controller.ActionsHeader.onSetStatus20",
                       "visible": true,
                       "enabled": true,
-                      "requiresSelection": true,
+                      "requiresSelectio n": true,
                       "text": "{i18n>setStatus20}"
                     }
                   }
@@ -162,13 +162,13 @@
                       "press": "ns.ddrmcap.ext.controller.ActionsObject.oncallInterface",
                       "visible": true,
                       "enabled": true,
-                      "text": "{i18n>callinterface}"
+                      "text": "{i18n>callinterfaceLVS}"
                     },
                     "callInterfaceII": {
-                      "press": "ns.ddrmcap.ext.controller.InputValidationController.controller.oncallInterface",
-                      "visible": false,
+                      "press": "ns.ddrmcap.ext.controller.ActionsObject.onCustomActionPress",
+                      "visible": true,
                       "enabled": true,
-                      "text": "{i18n>callinterface}"
+                      "text": "{i18n>callinterfaceWAAGE}"
                     }
                   }
                 }

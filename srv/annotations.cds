@@ -11,19 +11,34 @@ annotate DDRMService.ProcessSAPDocumentOut with @title: 'Zugeordnete Belege - Au
 
 
 annotate DDRMService.ProcessType with {
-    ID          @title                 : '{@i18n>processTypeId}';
-    //            @Common.Text           : description
-    //            @Common.TextArrangement: #TextOnly;
-    description @title: '{@i18n>ProcessTypeDescription}';
-
+    ID          @title                 : '{@i18n>processTypeId}';              
+    description @title: '{@i18n>ProcessTypeDescription}'
+     @Core.Immutable;
+  
+  
 }
 
+
+annotate DDRMService.ProcessType  with @(
+    Common.Text: {
+        $value: 'description',
+        ![@UI.TextArrangement]: #TextLast
+    }
+);
+
+annotate DDRMService.ProcessType with {
+    description
+    @readonly;
+}
 
 annotate DDRMService.ProcessStatus with {
+   
     ID          @title: '{@i18n>id}';
-    description @title: '{@i18n>description}';
+    description @title: '{@i18n>ProcessStatusDescription}'
+    @Core.Immutable;
 
 }
+
 annotate DDRMService.SAPDocument with {
     DocNumber         @title: '{@i18n>docNumber}';
     DocType @title: '{@i18n>docType}';
@@ -43,7 +58,7 @@ annotate DDRMService.Process with {
     Fahrername @title: '{@i18n>Fahrername}';
     Frachtfuehrername  @title:'{@i18n>Frachtfuehrername}';
     Containernummer_1 @title: '{@i18n>Containernummer_1}';
-    Containernummer_2 @title: '{@i18n>Containernummer_2}';
+    Siegelnummer @title: '{@i18n>Siegelnummer}';
     Bemerkung_1  @title: '{@i18n>Bemerkung_1}'  @UI.multiLineText: true;
     Bemerkung_2  @title: '{@i18n>Bemerkung_2}'  @UI.multiLineText: true;
     WaageScheinNr @title: '{@i18n>WaageScheinNr}';
@@ -58,6 +73,7 @@ annotate DDRMService.Process with {
   
 
 }
+
 
 annotate DDRMService.Process with {
     @UI.MultiLineText

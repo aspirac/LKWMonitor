@@ -18,7 +18,7 @@ annotate service.Process with @(
 
         {
             $Type: 'UI.DataField',
-            Value: processTypeID_ID,
+            Value: processTypeID_description_ID,
             Label: '{@i18n>processType}',
         },
 
@@ -30,7 +30,7 @@ annotate service.Process with @(
  
         {
             $Type: 'UI.DataField',
-            Value: processStatusID_ID,
+            Value: processStatusID_description_ID,
             Label: '{@i18n>processStatus}',
         },
  
@@ -39,7 +39,13 @@ annotate service.Process with @(
             Value: processStatusID.description,
             Label: '{@i18n>ProcessStatusDescription}',
         },
-
+     {
+            $Type: 'UI.DataField',
+            Value: processID,
+          
+            Updatable: false,
+            Label: '{@i18n>processID}',
+        },
       {
             $Type: 'UI.DataField',
             Value: LKW_Kennzeichen,
@@ -71,8 +77,8 @@ annotate service.Process with @(
         },
    {
             $Type: 'UI.DataField',
-            Value: Containernummer_2,
-            Label: '{@i18n>Containernummer_2}',
+            Value: Siegelnummer,
+            Label: '{@i18n>Siegelnummer}',
         },
  
      {
@@ -128,9 +134,21 @@ annotate service.Process with @(
       
             {
                 $Type: 'UI.DataField',
-                Value: processTypeID_ID,
-            }
+                Value: processTypeID_ID
+                  },
 
+           {
+                $Type: 'UI.DataField',
+                Value: processTypeID.description,
+                
+            }, 
+          {
+                $Type: 'UI.DataField',
+                Value: processID,
+                     Updatable: false,
+                Label: '{@i18n>processID}',
+                
+            }, 
 
         ],
     },
@@ -142,7 +160,11 @@ annotate service.Process with @(
                 $Type: 'UI.DataField',
                 Value: processStatusID_ID
             },
- 
+          {
+                $Type: 'UI.DataField',
+                Value: processStatusID.description,
+                
+            }, 
 
         ],
     },
@@ -173,7 +195,7 @@ annotate service.Process with @(
           
          {
                 $Type: 'UI.DataField',
-                Value: Containernummer_2 ,
+                Value: Siegelnummer ,
             },
                  {
                 $Type: 'UI.DataField',
@@ -297,30 +319,7 @@ annotate service.Process with @(
             ID           : 'Common',
             Label        : '{@i18n>commonFacet}',
             Target       : '@UI.FieldGroup#CommonGroup',
- //           ![@UI.Hidden]: {$edmJson: {$If: [
- //               {$And: [
- //                   {$Ne: [
- //                       {$Path: 'caseTypeID_ID'},
- //                       'Ausnahme'
- //                   ]},
- //                   {$Ne: [
- //                       {$Path: 'caseTypeID_ID'},
- //                       'Insolvenz'
- //                 ]},
-//                    {$Ne: [
-//                        {$Path: 'caseTypeID_ID'},
-//                        'Krise'
-//                    ]},
-//                    {$Ne: [
-//                        {$Path: 'caseTypeID_ID'},
-//                        'VS-Reporting Relevant'
-//                    ]}
 
-
-   //             ]},
-   //             true,
-   //            false
-  //          ]}}
         },
 
       {
@@ -329,7 +328,14 @@ annotate service.Process with @(
             Label : '{@i18n>LKWFacet}',
             Target: '@UI.FieldGroup#LKWGroup',
         },
-  
+          {
+            $Type : 'UI.ReferenceFacet',
+            ID    : 'SAPInfo',
+            Label : '{@i18n>sapFacet}',
+//            Target: '@UI.FieldGroup#SAPGroup',
+
+          Target: 'to_ProcessSAPDocumentIn/@UI.PresentationVariant',        
+        },
        {
             $Type : 'UI.ReferenceFacet',
             ID    : 'WaageInfo',
@@ -357,14 +363,6 @@ annotate service.Process with @(
             ]}}
         },
 
-         {
-            $Type : 'UI.ReferenceFacet',
-            ID    : 'SAPInfo',
-            Label : '{@i18n>sapFacet}',
-            Target: '@UI.FieldGroup#SAPGroup',
-          
-        },
-
    
         {
             $Type : 'UI.ReferenceFacet',
@@ -388,6 +386,8 @@ annotate service.Process with @(
     },
 
 );
+
+
 /*
 //Insolvenz List Report in Object page
 annotate service.InsolvencyMeasures with @(
@@ -704,6 +704,7 @@ annotate service.Process with {
     processTypeID @Common.ValueList: {
         $Type         : 'Common.ValueListType',
         CollectionPath: 'ProcessType',
+     
         Parameters    : [
             {
                 $Type            : 'Common.ValueListParameterInOut',
@@ -717,6 +718,8 @@ annotate service.Process with {
         ],
     }
 };
+
+
 
 annotate service.Process with {
     processStatusID @Common.ValueList: {
@@ -735,6 +738,7 @@ annotate service.Process with {
         ],
     }
 };
+
 
 /*
 annotate service.Process with {

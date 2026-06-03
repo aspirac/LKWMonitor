@@ -1,7 +1,8 @@
-ID;description
-10;Angelegt 
-20;Frei zur Einfahrt
-30;Erstverwogen
-40;Zweitverwogen
-50;Wartet auf Trockengehalt 
+ID;description;description_ID
+10 - Angelegt;Angelegt;10
+20 - Frei zur Einfahrt;Frei zur Einfahrt;20
+30 - Erstverwogen;Erstverwogen;30
+40 - Zweitverwogen;Zweitverwogen;40
+50 - Wartet auf Trockengehalt;Wartet auf Trockengehalt;50
+99 - Abgebrochen;Abgebrochen;99
 
