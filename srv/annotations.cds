@@ -1,8 +1,8 @@
 using DDRMService from './ddrmcap-service';
 
 annotate DDRMService.Process with @title: 'LKW Vorgang';
-annotate DDRMService.ProcessSAPDocumentIn with @title: 'Zugeordnete Belege - Ingang';
 annotate DDRMService.ProcessSAPDocumentOut with @title: 'Zugeordnete Belege - Ausgang';
+annotate DDRMService.ProcessSAPDocumentIn with @title: 'Zugeordnete Belege - Eingang';
 
 
 
@@ -40,17 +40,18 @@ annotate DDRMService.ProcessStatus with {
 }
 
 annotate DDRMService.SAPDocument with {
-    DocNumber         @title: '{@i18n>docNumber}';
-    DocType @title: '{@i18n>docType}';
-    description @title: '{@i18n>description}';
-    CustomerNumber @title: '{@i18n>customerNumber}';
-    CustomerName   @title: '{@i18n>customeName}';
+    DocNumber         @title: '{@i18n>docNumber}' ;
+    DocType @title: '{@i18n>sapDocumentType}' @readonly;
+    DocTypeDesc @title: '{@i18n>sapDocumentTypeDescription}' @readonly;
+    description @title: '{@i18n>description}' @readonly;
+    CustomerNumber @title: '{@i18n>sapDocumentClientNumber}'@readonly;
+    CustomerName   @title: '{@i18n>sapDocumentClientName}' @readonly;
 }
+
+
+
 annotate DDRMService.Process with {
  
-   
- 
-
     processTypeID @title: '{@i18n>processTypeId}';
     processStatusID @title: '{@i18n>processStatusId}';
     LKW_Kennzeichen @title: '{@i18n>LKWKennzeichen}';

@@ -28,6 +28,7 @@ modules:
       - name: ddrm-auth
       - name: ddrm-db
       - name: ddrm-destination
+#      - name: ddrm-attachments
 
   - name: ddrm-db-deployer
     type: hdb
@@ -173,3 +174,9 @@ resources:
     parameters:
       service: html5-apps-repo
       service-plan: app-runtime
+#
+#  - name: ddrm-attachments
+#    type: org.cloudfoundry.managed-service
+#    parameters:
+#      service: objectstore
+#      service-plan: standard

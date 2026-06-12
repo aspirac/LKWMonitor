@@ -31,7 +31,7 @@ sap.ui.define([
                 const obj = oObject.getObject();
                 debugger;
               
-                if (obj.processStatusID_ID == '20') {
+                if (obj.processStatusID_ID == '20 - Frei zur Einfahrt') {
                     let result = Xface.callInterfaceScale(obj.LKW_Kennzeichen, oObject);
                     debugger;
                     let s = aUtils.getLabel("ProcessStatusDescription");

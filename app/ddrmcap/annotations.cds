@@ -126,6 +126,22 @@ annotate service.Process with @(
 
     //To allow updatable on child "InsolvencyMeasures" entity
 
+    //To allow updatable on child "SapDocumentIn" entity
+ //   Capabilities                          : {NavigationRestrictions: {RestrictedProperties: [
+ //       {
+ //           NavigationProperty: to_ProcessSAPDocumentIn,
+ //           UpdateRestrictions: {Updatable: true}
+//        },
+//      {
+//            NavigationProperty: to_ProcessSAPDocumentOut,
+//            UpdateRestrictions: {Updatable: true}
+//        },
+
+//        {
+//            NavigationProperty: to_CrisisMeasures,
+//            UpdateRestrictions: {Updatable: true}
+//        },
+ //   ]}, },
 
 
     UI.FieldGroup #CreateGroup            : {
@@ -265,11 +281,12 @@ annotate service.Process with @(
         $Type: 'UI.FieldGroupType',
         Data : [
             
-              {
+          
+                {
                 $Type: 'UI.DataField',
-                Value:  to_ProcessSAPDocumentIn,
+                Value:  to_ProcessSAPDocumentOut
             },
-      
+   
                  
         ],
     },
@@ -296,6 +313,8 @@ annotate service.Process with @(
             },
         ],
     },
+
+    
     UI.Collection                         : [{
         ID   : 'MeasuresInfoCollection',
         // ID for the collection
@@ -328,14 +347,23 @@ annotate service.Process with @(
             Label : '{@i18n>LKWFacet}',
             Target: '@UI.FieldGroup#LKWGroup',
         },
-          {
-            $Type : 'UI.ReferenceFacet',
-            ID    : 'SAPInfo',
-            Label : '{@i18n>sapFacet}',
+ 
+      {
+         $Type : 'UI.ReferenceFacet',
+            ID    : 'SAPInfoOut',
+            Label : '{@i18n>sapFacetOut}',
 //            Target: '@UI.FieldGroup#SAPGroup',
-
-          Target: 'to_ProcessSAPDocumentIn/@UI.PresentationVariant',        
+              Target: 'to_ProcessSAPDocumentOut/@UI.PresentationVariant',        
         },
+     {
+         $Type : 'UI.ReferenceFacet',
+            ID    : 'SAPInfoIn',
+            Label : '{@i18n>sapFacetIn}',
+//            Target: '@UI.FieldGroup#SAPGroup',
+              Target: 'to_ProcessSAPDocumentIn/@UI.PresentationVariant',        
+        },
+ 
+
        {
             $Type : 'UI.ReferenceFacet',
             ID    : 'WaageInfo',
@@ -355,7 +383,7 @@ annotate service.Process with @(
                     ]},
                     {$Eq: [
                         {$Path: 'processTypeID_ID'},
-                        '20'
+                        
                     ]}
                 ]},
                 false,
@@ -370,7 +398,7 @@ annotate service.Process with @(
             Label : '{@i18n>datesFacet}',
             Target: '@UI.FieldGroup#DateGroup',
         },
-
+      
     ],
     UI.HeaderInfo                         : {
         TypeName      : '{@i18n>RootEntities}',
@@ -387,7 +415,133 @@ annotate service.Process with @(
 
 );
 
+ annotate service.ProcessSAPDocumentIn with @(
+    Capabilities.UpdateRestrictions: {Updatable: true},
+    UI                             : {
+        HeaderInfo: {
+            $Type         : 'UI.HeaderInfoType',
+            TypeName      : '{i18n>SapDocumentIn}',
+            TypeNamePlural: '{i18n>SapDocumentIn}'
+        },
 
+        PresentationVariant           : {
+        Visualizations: ['@UI.LineItem'],
+  //      SortOrder     : [{
+  //          $Type     : 'Common.SortOrderType',
+   //         Property  : sapDocumentInID,
+  //          Descending: false
+  //      }]
+      },
+        
+       SelectionFields               : [],
+        LineItem  : [
+
+            {
+                $Type: 'UI.DataField',
+                Value: sapDocumentInID,
+                Label: '{@i18n>sapDocumentInID}',
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: to_SapDocument_DocNumber,
+                Label: '{@i18n>sapDocumentInNumber}',
+            },
+           
+          
+             {
+                $Type: 'UI.DataField',
+                Value: to_SapDocument.DocType,
+   
+            },
+              {
+                $Type: 'UI.DataField',
+                Value: to_SapDocument.DocTypeDesc,
+       
+            },
+           {
+                $Type: 'UI.DataField',
+                Value: to_SapDocument.description,
+          
+            },
+           {
+                $Type: 'UI.DataField',
+                Value: to_SapDocument.CustomerNumber,
+          
+            },
+     
+          {
+                $Type: 'UI.DataField',
+                Value: to_SapDocument.CustomerName,
+          
+            },         
+           
+        ]
+    }
+);
+ annotate service.ProcessSAPDocumentOut with @(
+    Capabilities.UpdateRestrictions: {Updatable: true},
+    UI                             : {
+        HeaderInfo: {
+            $Type         : 'UI.HeaderInfoType',
+            TypeName      : '{i18n>SapDocumentOut}',
+            TypeNamePlural: '{i18n>SapDocumentOut}'
+        },
+
+        PresentationVariant           : {
+        Visualizations: ['@UI.LineItem'],
+  //      SortOrder     : [{
+  //          $Type     : 'Common.SortOrderType',
+   //         Property  : sapDocumentInID,
+  //          Descending: false
+  //      }]
+      },
+        
+       SelectionFields               : [],
+        LineItem  : [
+
+            {
+                $Type: 'UI.DataField',
+                Value: sapDocumentOutID,
+                Label: '{@i18n>sapDocumentOutID}',
+            },
+      
+            {
+                $Type: 'UI.DataField',
+                Value: to_SapDocument_DocNumber,
+                Label: '{@i18n>sapDocumentOutNumber}',
+            },
+             {
+                $Type: 'UI.DataField',
+                Value: to_SapDocument.DocType,
+   
+            },
+              {
+                $Type: 'UI.DataField',
+                Value: to_SapDocument.DocTypeDesc,
+       
+            },
+           {
+                $Type: 'UI.DataField',
+                Value: to_SapDocument.description,
+          
+            },
+           {
+                $Type: 'UI.DataField',
+                Value: to_SapDocument.CustomerNumber,
+          
+            },
+     
+          {
+                $Type: 'UI.DataField',
+                Value: to_SapDocument.CustomerName,
+          
+            },
+     
+          
+           
+        ]
+    }
+);   
 /*
 //Insolvenz List Report in Object page
 annotate service.InsolvencyMeasures with @(
@@ -735,6 +889,75 @@ annotate service.Process with {
                 $Type            : 'Common.ValueListParameterDisplayOnly',
                 ValueListProperty: 'description',
             },
+        ],
+    }
+};
+
+annotate service.ProcessSAPDocumentIn with {
+    to_SapDocument @Common.ValueList: {
+        $Type         : 'Common.ValueListType',
+        CollectionPath: 'SAPDocument',
+        Parameters    : [
+            {
+                $Type            : 'Common.ValueListParameterInOut',
+                LocalDataProperty: to_SapDocument_DocNumber,
+                ValueListProperty: 'DocNumber',
+            },
+                      {
+                $Type            : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty: 'DocType',
+            },
+            {
+                $Type            : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty: 'DocTypeDesc',
+                 },
+            {
+                $Type            : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty: 'description',
+                 },
+            {
+                $Type            : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty: 'CustomerNumber',
+            },
+            {
+                $Type            : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty: 'CustomerName',
+            },
+            
+        ],
+    }
+};
+annotate service.ProcessSAPDocumentOut with {
+    to_SapDocument @Common.ValueList: {
+        $Type         : 'Common.ValueListType',
+        CollectionPath: 'SAPDocument',
+        Parameters    : [
+            {
+                $Type            : 'Common.ValueListParameterInOut',
+                LocalDataProperty: to_SapDocument_DocNumber,
+                ValueListProperty: 'DocNumber',
+            },
+            {
+                $Type            : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty: 'DocType',
+            },
+            {
+                $Type            : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty: 'DocTypeDesc',
+                 },
+            {
+                $Type            : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty: 'description',
+                 },
+            {
+                $Type            : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty: 'CustomerNumber',
+            },
+            {
+                $Type            : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty: 'CustomerName',
+            },
+    
         ],
     }
 };

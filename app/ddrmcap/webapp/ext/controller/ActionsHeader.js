@@ -23,7 +23,7 @@ sap.ui.define([
             
             aSelectedContexts.forEach((oObject, index) => {
                 const obj = oObject.getObject();
-                ActionUtils.setStatus(oObject, obj, '20');
+                ActionUtils.setStatus(oObject, obj, '20 - Frei zur Einfahrt');
 
 
             });

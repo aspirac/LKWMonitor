@@ -6,7 +6,7 @@ using {com.jrs.lkwvor as db} from '../db/schema';
 service DDRMService @(requires: 'authenticated-user') {
 
   @odata.draft.enabled
-  @odata.draft.bypass
+  //@odata.draft.bypass
  
   entity Process as projection on db.Process actions{
     action setStatus20();
@@ -34,10 +34,18 @@ service DDRMService @(requires: 'authenticated-user') {
   entity ProcessStatus             as projection on db.ProcessStatus;
   entity ProcessType               as projection on db.ProcessType;
   entity SAPDocument               as projection on db.SAPDocument;
-  entity ProcessSAPDocumentIn              as projection on db.ProcessSAPDocumentIn;
+ 
   entity ProcessSAPDocumentOut              as projection on db.ProcessSAPDocumentOut;
+  entity ProcessSAPDocumentIn              as projection on db.ProcessSAPDocumentIn;
+  //entity MediaFile                 as projection on db.MediaFile;
 }
-
+  entity LKWMonitorInfo{
+        key id                                : String;
+            name                              : String;
+            is_potentially_hazardous_asteroid : Boolean;
+            nasa_jpl_url                      : String;
+            kilometers_per_hour               : String;
+    };
 Annotate db.Process with {
     processTypeID @Common.ValueList: {
         $Type         : 'Common.ValueListType',
@@ -55,4 +63,5 @@ Annotate db.Process with {
  //           },
         ],
     }
+      
 };

@@ -1,6 +1,7 @@
 namespace com.jrs.lkwvor;
 
 using {managed} from '@sap/cds/common';
+using {Attachments} from '@cap-js/attachments';
 
 entity Process : managed {
 
@@ -25,17 +26,23 @@ entity Process : managed {
         FSEAlternativeMenge:Decimal;
         FSETrockenGehalt:Decimal;
         FSEAGewicht:Decimal;
-        to_ProcessSAPDocumentIn : Composition of ProcessSAPDocumentIn
-                                  on to_ProcessSAPDocumentIn.Process = $self;
+ 
         to_ProcessSAPDocumentOut  : Composition of many ProcessSAPDocumentOut
                                   on to_ProcessSAPDocumentOut.Process = $self;
-    
+        to_ProcessSAPDocumentIn  : Composition of many ProcessSAPDocumentIn
+                                  on to_ProcessSAPDocumentIn.Process = $self;
+ 
+
+        attachment      : Composition of many Attachments
+  
+
  
 }
 
 
 
 
+ 
 
 
 entity ProcessStatus : managed {
@@ -56,40 +63,43 @@ entity ProcessType : managed {
                           on Process.processTypeID = $self;
 }
 
-entity ProcessSAPDocumentIn : managed {
-   
-    key ID : UUID @(Core.Computed: true);
-    sapDocumentInID : Integer  @Core.Computed;
-    DocNumber          : Association to SAPDocument;
-    Process             : Association to Process
-}
+
 
 entity ProcessSAPDocumentOut : managed { 
     key ID : UUID @(Core.Computed: true);
-    DocNumber          : Association to SAPDocument;
-    Process             : Association to Process
+    sapDocumentOutID : Integer  @Core.Computed;
+    to_SapDocument:     Association to SAPDocument;
+ //   DocNumber          : String(20);
+    Process             : Association to  Process
+}
+
+entity ProcessSAPDocumentIn : managed { 
+    key ID : UUID @(Core.Computed: true);
+    sapDocumentInID : Integer  @Core.Computed;
+    to_SapDocument:     Association to SAPDocument;
+ //   DocNumber          : String(30);
+    Process             : Association to  Process
 }
 entity SAPDocument : managed {
-   
-    key DocNumber          : String(30);
+//    key MANDT: String(5);
+    key DocNumber      : String(30);
+    DocType            : String(5);
+    DocTypeDesc        : String(50);
     description: String(60);
-    CustomerNumber: String(10);    
+    CustomerNumber: String(20);    
     CustomerName: String(100);    
-    DocType            : Association to SAPDocumentType
+    ProcessSapDocumentIn :Association to many ProcessSAPDocumentIn
+                            on ProcessSapDocumentIn.to_SapDocument = $self;
+
+ 
 
 }
+
 entity SAPDocumentType : managed {
    
-    key DocType         : String(4);
+    key DocType         : String(10);
     description: String(60);
-    to_SAPDocument : Association to many SAPDocument on
-                     to_SAPDocument.DocType = $self;
+ //   to_SAPDocument : Association to many SAPDocument on
+ //                    to_SAPDocument.DocType = $self;
 
 }
-
-entity SAPClient: managed {
-key  MANDT: String(3);
-     BUKRS: String(3)
-}
-
-

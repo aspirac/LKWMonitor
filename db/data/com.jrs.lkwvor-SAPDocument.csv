@@ -1,0 +1,4 @@
+DocNumber;DocType;DocTypeDesc;description;CustomerNumber;CustomerName
+TM00001;ZT001;Frachtauftrag;Frachtauftrag XC345455;30000001;RS Gmbh
+TM00002;ZT002;Frachteinheit;Frachtauftrag XZ345678;30000002;Knoll Machine Bau
+TM00003;ZT002;Frachteinheit;Frachtauftrag XZ345679;40000001;SAP AG
