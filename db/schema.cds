@@ -18,8 +18,8 @@ entity Process : managed {
         Bemerkung_1 : LargeString;
         Bemerkung_2 : LargeString;
         WaageScheinNr: Decimal;
-        WaageScheinDate: Date;
-        WaageScheinTime:Time;
+        WaageScheinDate: DateTime;
+   //     WaageScheinTime:Time;
         WaageScheinBruto:Decimal;
         WaageScheinNetto:Decimal;
         WaageScheinTara:Decimal;

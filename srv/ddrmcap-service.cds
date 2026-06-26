@@ -58,7 +58,7 @@ type APIInfo  {
     
         WaageScheinNr: Decimal;
         WaageScheinDate: Date;
-        WaageScheinTime:Time;
+  //      WaageScheinTime:Time;
         WaageScheinBruto:Decimal;
         WaageScheinNetto:Decimal;
         WaageScheinTara:Decimal;

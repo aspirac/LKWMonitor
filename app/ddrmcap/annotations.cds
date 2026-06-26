@@ -286,10 +286,11 @@ annotate service.Process with @(
                 $Type: 'UI.DataField',
                 Value: WaageScheinDate,
             },
-          {
-                $Type: 'UI.DataField',
-                Value: WaageScheinTime ,
-            },
+ //         {
+ //               $Type: 'UI.DataField',
+ //              Value: WaageScheinTime ,
+ //               visible: false,
+ //           },
            {
                 $Type: 'UI.DataField',
                 Value: WaageScheinBruto ,

@@ -64,7 +64,7 @@ annotate DDRMService.Process with {
     Bemerkung_2  @title: '{@i18n>Bemerkung_2}'  @UI.multiLineText: true;
     WaageScheinNr @title: '{@i18n>WaageScheinNr}';
     WaageScheinDate @title: '{@i18n>WaageScheinDate}';
-    WaageScheinTime @title: '{@i18n>WaageScheinTime}';
+  //  WaageScheinTime @title: '{@i18n>WaageScheinTime}';
     WaageScheinBruto  @title: '{@i18n>WaageScheinBruto}';
     WaageScheinNetto  @title: '{@i18n>WaageScheinNetto}';
     WaageScheinTara  @title: '{@i18n>WaageScheinTara}';

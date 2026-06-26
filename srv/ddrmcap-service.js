@@ -242,13 +242,15 @@ class DDRMService extends cds.ApplicationService {
         //  console.log("=====>>>>UPDATE SCALE SCHEINNR: >>>" + oData.WaageScheinNr+ " " + ProcessId);
 
         let dateString = this._getDate();
+        let date = new Date();
         let timeString = this._getTime();
-        console.log("=====>>>>UPDATE SCALE Date: >>>" + dateString + " " + timeString);
+        console.log("=====>>>>UPDATE SCALE Date: >>>" + date);
+        this._warningMessage("=====>>>>UPDATE SCALE Date: >>>" + date.toString() + " " + timeString, req, "performUpdateScale");
         await UPDATE.entity(Process, ProcessId)
           .set({
             WaageScheinNr: oData.WaageScheinNr,
-    //        WaageScheinDate: dateString,
-    //        WaageScheinTime: timeString,
+            WaageScheinDate: date,
+         //   WaageScheinTime: timeString,
             WaageScheinBruto: oData.WaageScheinBruto,
             WaageScheinNetto: oData.WaageScheinNetto,
             WaageScheinTara: oData.WaageScheinTara
@@ -352,6 +354,14 @@ class DDRMService extends cds.ApplicationService {
  
     }
 
+    this._warningMessage = function (eMessage, req, loc) {
+    var messageString;
+     console.error(eMessage);
+     messageString = this._getMessage(req, 'BTP_WARNING') + " " + eMessage + "(" + loc + ")";
+     req.notify(400, messageString);
+ 
+    }
+
     this._callAPI = async function (oURL, oLicencePlate, oDriverName) {
       try {
         const apiURL = oURL + '(LKW_Kennzeichen = \'' + oLicencePlate + '\', Fahrername = \'' + oDriverName + '\' )';
@@ -359,19 +369,19 @@ class DDRMService extends cds.ApplicationService {
 
         // temp
         const jsonReturn = {
-          "WaageScheinNr": "1234567",
+          "WaageScheinNr": Math.floor(Math.random() * 1000000),
 
-          //      "WaageScheinDate": new Date(),
+          "WaageScheinDate": new Date(),
           //      "WaageScheinTime": new Date().toLocaleTimeString(),
-          "WaageScheinBruto": 10000,
-          "WaageScheinNetto": 8000,
-          "WaageScheinTara": 2000,
-          "FSEAlternativeMenge": 500,
-          "FSETrockenGehalt": 10,
-          "FSEAGewicht": 400
+          "WaageScheinBruto":  Math.floor(Math.random() * 10000),
+          "WaageScheinNetto":  Math.floor(Math.random() * 8000),
+          "WaageScheinTara":  Math.floor(Math.random() * 2000),
+          "FSEAlternativeMenge":  Math.floor(Math.random() * 500),
+          "FSETrockenGehalt":  Math.floor(Math.random() * 10),
+          "FSEAGewicht":  Math.floor(Math.random() * 400)
         };
         console.log("=====>>>>Date Call API >>>" + jsonReturn.WaageScheinDate);
-        console.log("=====>>>>Time CALL API >>>" + jsonReturn.WaageScheinTime);
+      //  console.log("=====>>>>Time CALL API >>>" + jsonReturn.WaageScheinTime);
 
 
         //    console.log("=====>>>>FSA Menge >>>" + jsonReturn.FSEAlternativeMenge);
@@ -381,7 +391,7 @@ class DDRMService extends cds.ApplicationService {
 
         WaageScheinNr: Decimal;
         WaageScheinDate: DateTime;
-        WaageScheinTime: Time;
+   //     WaageScheinTime: Time;
         WaageScheinBruto: Decimal;
         WaageScheinNetto: Decimal;
         WaageScheinTara: Decimal;

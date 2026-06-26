@@ -6,7 +6,7 @@ service WaageDataService {
         Fahrername          : String(20);
         WaageScheinNr       : Decimal;
         WaageScheinDate     : Date;
-        WaageScheinTime     : Time;
+ //       WaageScheinTime     : Time;
         WaageScheinBruto    : Decimal;
         WaageScheinNetto    : Decimal;
         WaageScheinTara     : Decimal;

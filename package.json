@@ -36,12 +36,10 @@
     "build:ui:ddrm": "cd app/ddrmcap && npm install && npm run build",
     "deploy:btp:dev": "mbt build && cf deploy mta_archives/ddrm_1.0.0.mtar"
   },
-    "engines": {
+  "engines": {
     "node": "24.15.0",
     "npm": "11.17.0"
   },
-
-  
   "cds": {
     "requires": {
       "change-tracking": {

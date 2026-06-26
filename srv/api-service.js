@@ -87,7 +87,7 @@ module.exports = cds.service.impl(async function () {
                 LKW_Kennzeichen : lv_LKWKennzeichen,
                 Fahrername          : lv_Fahrername,
                  WaageScheinDate: '15-06-2025',
-                WaageScheinTime     : '14:30:00',
+         //       WaageScheinTime     : '14:30:00',
                 WaageScheinBruto    :1001.01,
                 WaageScheinNetto : 1002.02,
                 WaageScheinTara : 1003.03
