@@ -1,4 +1,5 @@
 
+//const axios = require('axios');
 
 sap.ui.define(['sap/ui/core/mvc/ControllerExtension',
 	'sap/m/MessageToast',
@@ -48,6 +49,8 @@ sap.ui.define(['sap/ui/core/mvc/ControllerExtension',
 
 				 onInit: function () {
 				
+					debugger;
+					let lv_url = window.location.href
 					// you can access the Fiori elements extensionAPI via this.base.getExtensionAPI
 					var oModel = this.base.getExtensionAPI().getModel();
 					
@@ -67,6 +70,7 @@ sap.ui.define(['sap/ui/core/mvc/ControllerExtension',
 				},
 
 				onBeforeRendering: function () {
+					debugger;
 					// you can access the Fiori elements extensionAPI via this.base.getExtensionAPI
 					var oModel = this.base.getExtensionAPI().getModel();
 					var message = "This is a success message!";

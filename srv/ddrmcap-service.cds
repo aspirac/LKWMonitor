@@ -4,13 +4,20 @@ using {com.jrs.lkwvor as db} from '../db/schema';
 @path: 'service/ddrm'
 
 service DDRMService @(requires: 'authenticated-user') {
-
+    type Result: {
+        message: String;
+        id: Integer;
+        param1: String;
+        param2: String;
+    };
   @odata.draft.enabled
   //@odata.draft.bypass
  
   entity Process as projection on db.Process actions{
-    action setStatus20();
-  };
+    action setSStatus20();
+    action callInterfaceScale() returns Result;
+    action callSetStatus20() returns Result;
+     };
 
  // entity Process as projection on db.Process {
  //   *,
@@ -46,6 +53,21 @@ service DDRMService @(requires: 'authenticated-user') {
             nasa_jpl_url                      : String;
             kilometers_per_hour               : String;
     };
+
+type APIInfo  {
+    
+        WaageScheinNr: Decimal;
+        WaageScheinDate: Date;
+        WaageScheinTime:Time;
+        WaageScheinBruto:Decimal;
+        WaageScheinNetto:Decimal;
+        WaageScheinTara:Decimal;
+        FSEAlternativeMenge:Decimal;
+        FSETrockenGehalt:Decimal;
+        FSEAGewicht:Decimal;
+ 
+}
+
 Annotate db.Process with {
     processTypeID @Common.ValueList: {
         $Type         : 'Common.ValueListType',

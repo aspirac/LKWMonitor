@@ -1,7 +1,32 @@
 
 using DDRMService as service from '../../srv/ddrmcap-service';
 
+
 annotate service.Process with @(
+
+    
+
+   
+    Analytics.AggregatedProperty #ProcessID_countdistinct : {
+        $Type : 'Analytics.AggregatedPropertyType',
+        Name : 'ProcessID_countdistinct',
+        AggregatableProperty : ProcessID,
+        AggregationMethod : 'countdistinct',
+        ![@Common.Label] : '{i18n>Processes}',
+    },
+    
+    UI.Chart #alpChart : {
+        $Type : 'UI.ChartDefinitionType',
+        ChartType : #Column,
+        Dimensions : [
+            processStatusID,
+        ],
+        DynamicMeasures : [
+            '@Analytics.AggregatedProperty#ProcessID_countdistinct',
+        ],
+        Title : '{i18n>TravelsByCustomerCountry}',
+    },
+
     UI.SelectionFields                    : [
         processTypeID_ID,
         processStatusID_ID,
@@ -12,10 +37,33 @@ annotate service.Process with @(
       //  Containernummer_2,
     ],
 
+    UI.Identification        : [
+        // Object Page
+                  {
+            $Type : 'UI.DataFieldForAction',
+            Action: 'DDRMService.callSetStatus20',  
+            Label :  '{@i18n>setStatus20}',
+        },
+        {
+            $Type : 'UI.DataFieldForAction',
+            Action: 'DDRMService.callInterfaceScale',  
+            Label :  '{@i18n>callinterface}',
+        },
+ 
+    ],
 
     UI.LineItem                           : [
 
-
+      {
+            $Type : 'UI.DataFieldForAction',
+            Action: 'DDRMService.callInterfaceScale',  
+            Label :  '{@i18n>callinterface}',
+        },
+        {
+            $Type : 'UI.DataFieldForAction',
+            Action: 'DDRMService.callSetStatus20',  
+            Label :  '{@i18n>setStatus20}',
+        },
         {
             $Type: 'UI.DataField',
             Value: processTypeID.description_ID,
@@ -379,11 +427,11 @@ annotate service.Process with @(
                 {$Or: [
                     {$Eq: [
                         {$Path: 'processTypeID_ID'},
-                        '10'
+                        '10 - Auslieferung palettierte Ware'
                     ]},
                     {$Eq: [
                         {$Path: 'processTypeID_ID'},
-                        
+                        '20 - Anlieferung LVS-gefährtes'
                     ]}
                 ]},
                 false,

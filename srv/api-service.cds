@@ -1,13 +1,25 @@
 service WaageDataService {
     
     entity WaageInfo {
-        key id                                : String;
-            name                              : String;
-            is_potentially_hazardous_asteroid : Boolean;
-            nasa_jpl_url                      : String;
-            kilometers_per_hour               : String;
+        key LKW_Kennzeichen : String(20);
+        Trailer_Kennzeichen : String(20);
+        Fahrername          : String(20);
+        WaageScheinNr       : Decimal;
+        WaageScheinDate     : Date;
+        WaageScheinTime     : Time;
+        WaageScheinBruto    : Decimal;
+        WaageScheinNetto    : Decimal;
+        WaageScheinTara     : Decimal;
+      
     }
 
+ entity FSAInfo {
+        key Trailer_Kennzeichen : String(20);
+        Fahrername          : String(20);
+        FSEAlternativeMenge : Decimal;
+        FSETrockenGehalt    : Decimal;
+        FSEAGewicht         : Decimal;
+    }
     entity WaageIn {
     key    LKW_Kennzeichen     : String(20);
   //      Trailer_Kennzeichen : String(20);

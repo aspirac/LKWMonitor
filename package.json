@@ -12,10 +12,12 @@
     "@sap/approuter": "^22.0.1",
     "@sap/cds": "^9.4.4",
     "@sap/html5-repo-mock": "^2.2.1",
-    "@sap/textbundle": "^6.0.0",
+    "@sap/textbundle": "^6.2.0",
     "@sap/xssec": "^4",
-    "axios": "^1.16.0",
-    "express": "^4"
+    "axion": "^0.1.0",
+    "axios": "^1.18.0",
+    "cfenv": "^1.2.6",
+    "express": "^4.22.2"
   },
   "devDependencies": {
     "@cap-js/sqlite": "^2.4.0",
@@ -34,10 +36,12 @@
     "build:ui:ddrm": "cd app/ddrmcap && npm install && npm run build",
     "deploy:btp:dev": "mbt build && cf deploy mta_archives/ddrm_1.0.0.mtar"
   },
-  "engines": {
-    "node": "20.19.5",
-    "npm": "10.5.0"
+    "engines": {
+    "node": "24.15.0",
+    "npm": "11.17.0"
   },
+
+  
   "cds": {
     "requires": {
       "change-tracking": {

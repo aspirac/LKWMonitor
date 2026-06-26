@@ -25,7 +25,7 @@ sap.ui.define([
 
         setValue: async function (oObject, obj, properties) {
             const oModel = oObject.oModel;
-  
+            debugger;
 
  // var oContext = oModel.getBindingContext();
   // let process = await SELECT `ID` .from `Process`

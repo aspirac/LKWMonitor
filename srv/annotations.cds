@@ -98,12 +98,12 @@ annotate DDRMService.Process with {
 
 };
 
-annotate DDRMService.Process @(Common : {
-    SideEffects #StatusChanged : {
-        SourceProperties : ['processStatusID_ID'],
-        TargetProperties : ['processStatusID_ID']
+annotate DDRMService.Process with @(
+    Common.SideEffects : {
+        SourceProperties : [ 'processStatusID' ],
+        TargetEntities   : [ 'Process' ]
     }
-});
+);
 
 
 

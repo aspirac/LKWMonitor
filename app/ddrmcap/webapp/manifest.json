@@ -135,8 +135,8 @@
                   "actions": {
                     "setStatus20": {
                       "press": "ns.ddrmcap.ext.controller.ActionsHeader.onSetStatus20",
-                      "visible": true,
-                      "enabled": true,
+                      "visible": false,
+                      "enabled": false,
                       "requiresSelectio n": true,
                       "text": "{i18n>setStatus20}"
                     }
@@ -160,13 +160,13 @@
                   "actions": {
                     "callInterface": {
                       "press": "ns.ddrmcap.ext.controller.ActionsObject.oncallInterface",
-                      "visible": true,
+                      "visible": false,
                       "enabled": true,
-                      "text": "{i18n>callinterfaceLVS}"
+                      "text": "{i18n>callinterface}"
                     },
                     "callInterfaceII": {
                       "press": "ns.ddrmcap.ext.controller.ActionsObject.onCustomActionPress",
-                      "visible": true,
+                      "visible": false,
                       "enabled": true,
                       "text": "{i18n>callinterfaceWAAGE}"
                     }

@@ -21,7 +21,7 @@ sap.ui.define([
 
             var sMsg;
             
-            aSelectedContexts.forEach((oObject, index) => {
+                aSelectedContexts.forEach((oObject, index) => {
                 const obj = oObject.getObject();
                 ActionUtils.setStatus(oObject, obj, '20 - Frei zur Einfahrt');
 

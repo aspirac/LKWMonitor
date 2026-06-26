@@ -1,8 +1,14 @@
 sap.ui.define([
-  "sap/m/MessageToast"
+  "sap/m/MessageToast",
+  "./ActionUtils",
+    "./axios",
 
 
-], function (MessageToast
+
+], function (MessageToast,
+
+  aUtils,
+  axios
 
 
 
@@ -16,11 +22,16 @@ sap.ui.define([
      * @param oContext the context of the page on which the event was fired. `undefined` for list report page.
      * @param aSelectedContexts the selected contexts of the table rows.
      */
-    callInterfaceScale: function (oLicencePlate,  oObject) {
+    callInterfaceScale: function (oLicencePlate,  oDriverName) {
       try {
+     
+        let scaleUrlWaage = aUtils.getOdataUrl("WaageInfo");
+        let scaleUrlFSE = aUtils.getOdataUrl("FSEInfo");
+        let resultsWaage = aUtils.callAPI(scaleUrlWaage, oLicencePlate, oDriverName);
         var date = new Date("04/20/2026 00:00:00");
         var milliseconds = date.getTime();
         var wdate = '/Date(' + milliseconds + ')/';
+
         let result = [
 
           {

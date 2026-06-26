@@ -1,14 +1,14 @@
 
-
+//const axios = require('axios');
 sap.ui.define([
     "sap/m/MessageToast",
     "./DbaseTransactions",
-    "sap/base/i18n/ResourceBundle"
+      "./axios"
 
 ], function (MessageToast,
     db,
-    resourceBundle,
-    syncWait
+
+    axios
 
 
 
@@ -17,6 +17,7 @@ sap.ui.define([
     'use strict';
 
     return {
+       
         /**
          * Generated event handler.
          *
@@ -42,6 +43,8 @@ sap.ui.define([
                 }
             ];
             this.displayMsg("Status wird geändert in Frei zur Einfahrt");
+            let lv_url = this.getOdataUrl("FSAInfo");
+        //    console.log("=====>>>>URL>>>" + lv_url);
             db.setValue(oObject, obj, properties);
 
 
@@ -52,8 +55,17 @@ sap.ui.define([
             MessageToast.show(msg);
 
         },
+        getOdataUrl: function(oOdata) {
+            debugger;
+            let lv_url = window.location.href;
+            var partsArray = lv_url.split('ns.ddrmcap');
+            return partsArray[0] + 'odata/v4/waage-data/' + oOdata;
+    
+          
+             },
+
         getLabel(s) {
-            var oResourceBundle = resourceBundle.create({ url: "/app/ddrmcap/webapp/i18n/i18n_de.properties" });
+           // var oResourceBundle = resourceBundle.create({ url: "/app/ddrmcap/webapp/i18n/i18n_de.properties" });
             //  return oResourceBundle.getText(s);
             return "123";
         }
@@ -63,38 +75,21 @@ sap.ui.define([
 
 
         },
-                callLSEAPI: async function () {
+        callAPI: async function (oURL, oLicencePlate, oDriverName) {
                     try {
                     const apiKey = 'DEMO_KEY'; 
                     const startDate = '2025-06-01';
                     const endDate = '2025-06-08';
-        
-                    // Build NASA API URL
-                    const nasaURL = `https://api.nasa.gov/neo/rest/v1/feed?start_date=${startDate}&end_date=${endDate}&api_key=${apiKey}`;
-                    const response = await axios.get(nasaURL);
-        
-                    const nearEarthObjects = response.data.near_earth_objects;
-                    const results = [];
-        
-                    // Extract and format NEO data from response
-                    for (const date in nearEarthObjects) {
-                        for (const neo of nearEarthObjects[date]) {
-                            results.push({
-                                id: neo.id,
-                                name: neo.name,
-                                is_potentially_hazardous_asteroid: neo.is_potentially_hazardous_asteroid,
-                                nasa_jpl_url: neo.nasa_jpl_url,
-                                kilometers_per_hour: neo.close_approach_data[0]?.relative_velocity?.kilometers_per_hour || 'N/A'
-                            });
-                        }
-                    }
-        
-                    return results;
+           debugger;
+                    const apiURL = oURL + '(LKWKennzeichen = \'' + oLicencePlate + '\', Fahrername = \'' + oDriverName + '\' )';
+                    const apiResponse = await axios.get(apiURL);
+                    return;
+                  
         
                 } catch (error) {
                     // Handle errors during API call
                     console.error(error.message);
-                    req.error(500, 'An error occurred while fetching data from the NASA API.');
+                    req.error(500, 'An error occurred while fetching data from the ODATA API.');
                 }
                 }
     };

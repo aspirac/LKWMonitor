@@ -1,13 +1,12 @@
-
-
-
 sap.ui.define([
     "sap/m/MessageToast",
     "./Helpers/ActionUtils",
-    "./Helpers/Interface",
+    "./Helpers/Interface"
+   
 ], function (MessageToast,
              aUtils,
-             Xface
+             Xface,
+            
 ) {
     'use strict';
 
