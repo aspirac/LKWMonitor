@@ -32,6 +32,14 @@ entity Process : managed {
         to_ProcessSAPDocumentIn  : Composition of many ProcessSAPDocumentIn
                                   on to_ProcessSAPDocumentIn.Process = $self;
  
+        to_ProcessWeighDocument  : Composition of many ProcessWeighDocument
+                                  on to_ProcessWeighDocument.Process = $self;
+ 
+
+        to_ProcessFSADocument  : Composition of many ProcessFSADocument
+                                  on to_ProcessFSADocument.Process = $self;
+ 
+
 
         attachment      : Composition of many Attachments
   
@@ -103,3 +111,22 @@ entity SAPDocumentType : managed {
  //                    to_SAPDocument.DocType = $self;
 
 }
+
+entity ProcessWeighDocument : managed { 
+    key ID : UUID @(Core.Computed: true);
+          WaageScheinNr: Decimal;
+        WaageScheinDate: DateTime;
+   //     WaageScheinTime:Time;
+        WaageScheinBruto:Decimal;
+        WaageScheinNetto:Decimal;
+        WaageScheinTara:Decimal;
+    Process             : Association to  Process
+    }
+
+    entity ProcessFSADocument : managed { 
+    key ID : UUID @(Core.Computed: true);
+           FSEAlternativeMenge:Decimal;
+        FSETrockenGehalt:Decimal;
+        FSEAGewicht:Decimal;
+    Process             : Association to  Process
+    }

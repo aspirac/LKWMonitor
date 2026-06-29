@@ -44,6 +44,10 @@ service DDRMService @(requires: 'authenticated-user') {
  
   entity ProcessSAPDocumentOut              as projection on db.ProcessSAPDocumentOut;
   entity ProcessSAPDocumentIn              as projection on db.ProcessSAPDocumentIn;
+  entity  ProcessWeighDocument              as projection on db.ProcessWeighDocument;
+  entity  ProcessFSADocument              as projection on db.ProcessFSADocument;
+    
+  
   //entity MediaFile                 as projection on db.MediaFile;
 }
   entity LKWMonitorInfo{
@@ -87,3 +91,18 @@ Annotate db.Process with {
     }
       
 };
+
+
+annotate db.Process @(Common : {
+    SideEffects #WaageChanged  : {
+        SourceProperties : ['WaageScheinDate'],
+        TargetProperties : ['WaageScheinDate', 'WaageScheinBruto', 'WaageScheinNetto', 'WaageScheinTara'],
+    }
+});
+
+annotate db.Process @(Common : {
+    SideEffects #FSEChanged  : {
+        SourceProperties : ['FSEAlternativeMenge'],
+        TargetProperties : ['FSEAlternativeMenge', 'FSETrockenGehalt', 'FSEAGewicht'],
+    }
+});
