@@ -280,6 +280,10 @@ annotate service.Process with @(
         Data : [
             {
                 $Type: 'UI.DataField',
+                Value: WaageNummer,
+            },
+          {
+                $Type: 'UI.DataField',
                 Value: WaageScheinNr,
             },
             {
@@ -308,10 +312,51 @@ annotate service.Process with @(
         ],
     },
 
+   UI.FieldGroup #WaageGroup2           : {
+        $Type: 'UI.FieldGroupType',
+        Data : [
+            {
+                $Type: 'UI.DataField',
+                Value: WaageNummer2,
+            },
+          {
+                $Type: 'UI.DataField',
+                Value: WaageScheinNr2,
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: WaageScheinDate2,
+            },
+ //         {
+ //               $Type: 'UI.DataField',
+ //              Value: WaageScheinTime ,
+ //               visible: false,
+ //           },
+           {
+                $Type: 'UI.DataField',
+                Value: WaageScheinBruto2 ,
+            },
+         {
+                $Type: 'UI.DataField',
+                Value: WaageScheinNetto2 ,
+            },
+          
+         {
+                $Type: 'UI.DataField',
+                Value: WaageScheinTara2,
+            },
+           
+        ],
+    },
+
      UI.FieldGroup #FSEGroup           : {
         $Type: 'UI.FieldGroupType',
         Data : [
             {
+                $Type: 'UI.DataField',
+                Value: FSEDate,
+            },
+         {
                 $Type: 'UI.DataField',
                 Value: FSEAlternativeMenge,
             },
@@ -418,6 +463,12 @@ annotate service.Process with @(
             ID    : 'WaageInfo',
             Label : '{@i18n>waageFacet}',
             Target: '@UI.FieldGroup#WaageGroup',
+        },
+          {
+            $Type : 'UI.ReferenceFacet',
+            ID    : 'WaageInfo2',
+            Label : '{@i18n>waageFacet2}',
+            Target: '@UI.FieldGroup#WaageGroup2',
         },
      {
             $Type : 'UI.ReferenceFacet',

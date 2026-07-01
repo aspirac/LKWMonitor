@@ -62,12 +62,22 @@ annotate DDRMService.Process with {
     Siegelnummer @title: '{@i18n>Siegelnummer}';
     Bemerkung_1  @title: '{@i18n>Bemerkung_1}'  @UI.multiLineText: true;
     Bemerkung_2  @title: '{@i18n>Bemerkung_2}'  @UI.multiLineText: true;
+    WaageNummer @title: '{@i18n>WaageNummer}';
     WaageScheinNr @title: '{@i18n>WaageScheinNr}';
     WaageScheinDate @title: '{@i18n>WaageScheinDate}';
   //  WaageScheinTime @title: '{@i18n>WaageScheinTime}';
     WaageScheinBruto  @title: '{@i18n>WaageScheinBruto}';
     WaageScheinNetto  @title: '{@i18n>WaageScheinNetto}';
     WaageScheinTara  @title: '{@i18n>WaageScheinTara}';
+    
+       WaageNummer2 @title: '{@i18n>WaageNummer}';
+    WaageScheinNr2 @title: '{@i18n>WaageScheinNr}';
+    WaageScheinDate2 @title: '{@i18n>WaageScheinDate}';
+  //  WaageScheinTime @title: '{@i18n>WaageScheinTime}';
+    WaageScheinBruto2  @title: '{@i18n>WaageScheinBruto}';
+    WaageScheinNetto2  @title: '{@i18n>WaageScheinNetto}';
+    WaageScheinTara2  @title: '{@i18n>WaageScheinTara}';
+    FSEDate          @title: '{@i18n>FSEDate}';
     FSEAlternativeMenge  @title: '{@i18n>FSEAlternativeMenge}';
     FSETrockenGehalt  @title: '{@i18n>FSETrockenGehalt}';
     FSEAGewicht  @title: '{@i18n>FSEAGewicht}';

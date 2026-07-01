@@ -34,17 +34,18 @@ class DDRMService extends cds.ApplicationService {
     this.on('callInterfaceScale', 'Process', async req => {
 
       let result = await this._updateProcessData(req, false);
-  
+
+      //      let result =  this._performInsertScale(req, false);
     })
 
-    this.on('callSetStatus20', 'Process.drafts',  req => {
+    this.on('callSetStatus20', 'Process.drafts', req => {
 
       const messageString = this._getMessage(req, 'MUST_NOT_BE_DRAFT');
       req.error(400, messageString);
     })
 
-    this.on('callSetStatus20', 'Process',   async req => {
-      let result =  await this._updateProcessStatus(req, false);
+    this.on('callSetStatus20', 'Process', async req => {
+      let result = await this._updateProcessStatus(req, false);
 
     })
 
@@ -91,7 +92,7 @@ class DDRMService extends cds.ApplicationService {
     })
 
     this._getOdataUrl = function (oData) {
-      console.log("=====>>>>BEFORE get URL: ");
+      //   console.log("=====>>>>BEFORE get URL: ");
       //     let lv_url1 = window.location.href;
       let lv_url = 'https://port4004-workspaces-ws-o8m4j.eu10.applicationstudio.cloud.sap/';
       // var partsArray = lv_url.split('ns.ddrmcap');
@@ -117,6 +118,9 @@ class DDRMService extends cds.ApplicationService {
 
 
         q1 = await SELECT.from(Process).where`ID=${ProcessId}`
+        let lv_weigh1 = q1[0].WaageNummer;
+        let lv_weigh2 = q1[0].WaageNummer2;
+
         const lv_status = await this._getProcessStatus(q1, req);
         const lv_type = await this._getProcessType(q1, req);
 
@@ -131,16 +135,36 @@ class DDRMService extends cds.ApplicationService {
 
 
         if (!lv_LicencePlate || !lv_DriverName) {
-          messageString = this._getMessage(req, 'INTERFACE_NO_PARAMETERS');
-          req.error(400, messageString);
-          return null;
+          //   messageString = this._getMessage(req, 'INTERFACE_NO_PARAMETERS');
+          //   req.error(400, messageString);
+          //   return null;
         }
 
         lv_url_scale = this._getOdataUrl("WaageInfo");
         let result_scale = await this._callAPI(lv_url_scale, lv_LicencePlate, lv_DriverName);
-        this._performUpdateScale(req, result_scale);
-        messageString = this._getMessage(req, 'INTERFACE_CALLED_SCALE');
-        req.notify(messageString);
+        console.log("=====>>>>WEIGH1 : >>> " + lv_weigh1 + " WEIGH2 : >>> " + lv_weigh2);
+        if (lv_weigh1 && lv_weigh2) {
+          messageString = this._getMessage(req, 'WEIGHING_IS_COMPLETED');
+          req.error(400, messageString);
+          return null;
+
+        }
+        if (!lv_weigh1 && !lv_weigh2) {
+          lv_weigh1 = 1;
+          this._performUpdateScale(req, result_scale, lv_weigh1);
+          messageString = this._getMessage(req, 'INTERFACE_CALLED_SCALE_I');
+          req.notify(messageString);
+        } else {
+          if (!lv_weigh2 && lv_weigh1) {
+            lv_weigh2 = 2;
+            this._performUpdateScale(req, result_scale, lv_weigh2);
+            messageString = this._getMessage(req, 'INTERFACE_CALLED_SCALE_II');
+            req.notify(messageString);
+          }
+        }
+        this._performInsertScale(req, result_scale);
+        //     console.log("=====>>>>CALLED INSERT SCALE: >>>");
+
 
 
         if (lv_type.startsWith("10") || lv_type.startsWith("20")) {
@@ -162,59 +186,59 @@ class DDRMService extends cds.ApplicationService {
         console.error(error.message);
         this._errorMessage(error.message, req, "updateProcessData");
         return (error.message);
-      
-      }
- }
 
-
- 
- 
-    this._updateProcessStatus =    async function (req) {
-        var ProcessId = req.params[0].ID;
-        var messageString;
-        var q1;
-      try { 
-          
-          q1 = await SELECT.from(Process).where`ID=${ProcessId}`;
-          let lv_status = this._getProcessStatus(q1, req);
-          if (lv_status.startsWith("20")) {
-            messageString = this._getMessage(req, 'STATUS_IS_ALREADY_20');
-            req.error(400, messageString);
-          
-          }else {
-          await this._performUpdateStatus(req, '20 - Frei zur Einfahrt');
-          messageString = this._getMessage(req, 'STATUS_SET_TO_20');
-          req.notify(messageString);
-      
-        }
-          
-
-      } catch (error) {
-        // Handle errors during API call<
-        console.error(error.message);
-        this._errorMessage(error.message , req, "updateProcessStatus");
-        return (error.message);
-      
       }
     }
 
 
-    this._performUpdateStatus =  async function (req, oStatus) {
+
+
+    this._updateProcessStatus = async function (req) {
+      var ProcessId = req.params[0].ID;
+      var messageString;
+      var q1;
       try {
-         console.log("=====>>>>performUpdateStatus: To status " + oStatus);
+
+        q1 = await SELECT.from(Process).where`ID=${ProcessId}`;
+        let lv_status = this._getProcessStatus(q1, req);
+        if (lv_status.startsWith("20")) {
+          messageString = this._getMessage(req, 'STATUS_IS_ALREADY_20');
+          req.error(400, messageString);
+
+        } else {
+          await this._performUpdateStatus(req, '20 - Frei zur Einfahrt');
+          messageString = this._getMessage(req, 'STATUS_SET_TO_20');
+          req.notify(messageString);
+
+        }
+
+
+      } catch (error) {
+        // Handle errors during API call<
+        console.error(error.message);
+        this._errorMessage(error.message, req, "updateProcessStatus");
+        return (error.message);
+
+      }
+    }
+
+
+    this._performUpdateStatus = async function (req, oStatus) {
+      try {
+        console.log("=====>>>>performUpdateStatus: To status " + oStatus);
         var ProcessId = req.params[0].ID;
-         console.log("=====>>>>performUpdateStatus Process ID: " + ProcessId);
-         await UPDATE.entity(Process, ProcessId)
-          .set( {processStatusID_ID: oStatus });
+        console.log("=====>>>>performUpdateStatus Process ID: " + ProcessId);
+        await UPDATE.entity(Process, ProcessId)
+          .set({ processStatusID_ID: oStatus });
         return;
 
       } catch (error) {
         // Handle errors during API call<
-        console.log("=====>>>>performUpdateStatus ERROR " + ProcessId+ " " + oStatus + " " + error.message);
-   //     console.error(error.message);
+        console.log("=====>>>>performUpdateStatus ERROR " + ProcessId + " " + oStatus + " " + error.message);
+        //     console.error(error.message);
         this._errorMessage(error.message, req, "performUpdateStatus");
         return (error.message);
-        
+
       }
     }
 
@@ -223,7 +247,7 @@ class DDRMService extends cds.ApplicationService {
         var ProcessId = req.params[0].ID;
 
         await UPDATE.entity(Process, ProcessId)
-          .set({ FSEAlternativeMenge: oData.FSEAlternativeMenge, FSETrockenGehalt: oData.FSETrockenGehalt, FSEAGewicht: oData.FSEAGewicht });
+          .set({ FSEDate: oData.FSEDate, FSEAlternativeMenge: oData.FSEAlternativeMenge, FSETrockenGehalt: oData.FSETrockenGehalt, FSEAGewicht: oData.FSEAGewicht });
         return;
 
       } catch (error) {
@@ -231,41 +255,117 @@ class DDRMService extends cds.ApplicationService {
         console.error(error.message);
         this._errorMessage(error.message, req, "performUpdateFSE");
         return (error.message);
-      
+
       }
     }
 
 
-    this._performUpdateScale = async function (req, oData) {
+    this._performUpdateScale = async function (req, oData, o_weigh) {
       try {
         let ProcessId = req.params[0].ID;
-        //  console.log("=====>>>>UPDATE SCALE SCHEINNR: >>>" + oData.WaageScheinNr+ " " + ProcessId);
+        // 
 
         let dateString = this._getDate();
         let date = new Date();
         let timeString = this._getTime();
         console.log("=====>>>>UPDATE SCALE Date: >>>" + date);
-        this._warningMessage("=====>>>>UPDATE SCALE Date: >>>" + date.toString() + " " + timeString, req, "performUpdateScale");
-        await UPDATE.entity(Process, ProcessId)
-          .set({
-            WaageScheinNr: oData.WaageScheinNr,
-            WaageScheinDate: date,
-         //   WaageScheinTime: timeString,
-            WaageScheinBruto: oData.WaageScheinBruto,
-            WaageScheinNetto: oData.WaageScheinNetto,
-            WaageScheinTara: oData.WaageScheinTara
-          });
-        req.data.WaageScheinNr = oData.WaageScheinNr;
-        req.data.WaageScheinBruto = oData.WaageScheinBruto;
-        req.data.WaageScheinNetto = oData.WaageScheinNetto;
-        req.data.WaageScheinTara = oData.WaageScheinTara;
+        let messageString = this._getMessage(req, 'BTP_UPDATE_SCALE') + date.toString() + " " + timeString;
+        this._infoMessage(messageString, req, "performUpdateScale");
+        if (o_weigh == 1) {
+          await UPDATE.entity(Process, ProcessId)
+            .set({
+              WaageNummer: o_weigh,
+              WaageScheinNr: oData.WaageScheinNr,
+              WaageScheinDate: date,
+              //   WaageScheinTime: timeString,
+              WaageScheinBruto: oData.WaageScheinBruto,
+              WaageScheinNetto: oData.WaageScheinNetto,
+              WaageScheinTara: oData.WaageScheinTara
+            });
+          req.data.WaageScheinNr = oData.WaageScheinNr;
+
+          req.data.WaageScheinBruto = oData.WaageScheinBruto;
+          req.data.WaageScheinNetto = oData.WaageScheinNetto;
+          req.data.WaageScheinTara = oData.WaageScheinTara;
+        }
+        if (o_weigh == 2) {
+          await UPDATE.entity(Process, ProcessId)
+            .set({
+              WaageNummer2: o_weigh,
+              WaageScheinNr2: oData.WaageScheinNr,
+              WaageScheinDate2: date,
+              //   WaageScheinTime: timeString,
+              WaageScheinBruto2: oData.WaageScheinBruto,
+              WaageScheinNetto2: oData.WaageScheinNetto,
+              WaageScheinTara2: oData.WaageScheinTara
+            });
+          req.data.WaageScheinNr2 = oData.WaageScheinNr;
+          req.data.WaageScheinBruto2 = oData.WaageScheinBruto;
+          req.data.WaageScheinNetto = oData.WaageScheinNetto;
+          req.data.WaageScheinTara2 = oData.WaageScheinTara;
+        }
+
         return;
       } catch (error) {
         // Handle errors during API call<
         console.error(error.message);
         this._errorMessage(error.message, req, "performUpdateScale");
         return (error.message);
-        
+
+      }
+    }
+
+    this._performInsertScale = function (req, oData) {
+      try {
+        const { ProcessWeighDocument } = cds.entities;
+        let ProcessId = req.params[0].ID;
+        console.log("=====>>>>INSERT SCALE SCHEINNR: >>>" + oData.WaageScheinNr + " " + ProcessId);
+        // max ID
+
+        var { maxID } = SELECT.one`max(WeighDocumentID) as maxID`.from(ProcessWeighDocument);
+        if (!maxID) {
+          maxID = 0;
+        }
+        const newWeighDocumentID = maxID + 1;
+        console.log("=====>>>>INSERT SCALE SCHEINNR: MAX ID >>>" + newWeighDocumentID);
+        let date = new Date();
+        const { uuid } = cds.utils;
+        let lv_id = uuid(); // generates a new UUID
+        const { INSERT } = cds.ql;
+        const NewWeighDocument = [
+          {
+            ID: lv_id,
+            WeighDocumentID: newWeighDocumentID,
+            WaageScheinNr: oData.WaageScheinNr,
+            WaageScheinDate: date,
+            WaageScheinBruto: oData.WaageScheinBruto,
+            WaageScheinNetto: oData.WaageScheinNetto,
+            WaageScheinTara: oData.WaageScheinTara,
+            Process: ProcessId
+
+
+          }
+        ];
+
+        console.log("=====>>>>BEFORE  INSERT SCALE SCHEINNR: ID >>>" + NewWeighDocument[0].ID);
+        console.log("=====>>>>BEFORE  INSERT SCALE SCHEINNR: WeighDocumentID >>>" + NewWeighDocument[0].WeighDocumentID);
+        console.log("=====>>>>BEFORE  INSERT SCALE SCHEINNR:  WaageScheinNr >>>" + NewWeighDocument[0].WaageScheinNr);
+        console.log("=====>>>>BEFORE  INSERT SCALE SCHEINNR:  WaageScheinDate >>>" + NewWeighDocument[0].WaageScheinDate);
+        console.log("=====>>>>BEFORE  INSERT SCALE SCHEINNR:  WaageScheinBruto >>>" + NewWeighDocument[0].WaageScheinBruto);
+        console.log("=====>>>>BEFORE  INSERT SCALE SCHEINNR:  WaageScheinNetto >>>" + NewWeighDocument[0].WaageScheinNetto);
+        console.log("=====>>>>BEFORE  INSERT SCALE SCHEINNR:  WaageScheinTara >>>" + NewWeighDocument[0].WaageScheinTara);
+
+        console.log("=====>>>>BEFORE  INSERT SCALE SCHEINNR:  Process >>>" + NewWeighDocument[0].Process);
+
+        const { result } = INSERT.into(ProcessWeighDocument).entries(NewWeighDocument);
+        console.log("=====>>>>AFTER INSERT SCALE SCHEINNR: MAX ID >>>" + newWeighDocumentID);
+        return;
+      } catch (error) {
+        // Handle errors during API call<
+        console.error(error.message);
+        this._errorMessage(error.message, req, "performInsertScale");
+        return (error.message);
+
       }
     }
 
@@ -280,7 +380,7 @@ class DDRMService extends cds.ApplicationService {
     this._getTime = function () {
       const d = new Date();
       const diff = d.getTimezoneOffset();
-      console.log("=====>>>>diff >>>" + diff);
+      //   console.log("=====>>>>diff >>>" + diff);
       const hours = d.getHours() + diff / 60; // Adjust for timezone offset
       const minutes = d.getMinutes();
       const seconds = d.getSeconds();
@@ -308,32 +408,32 @@ class DDRMService extends cds.ApplicationService {
         console.error(error.message);
         this._errorMessage(error.message, req, "getProcessData");
         return (error.message);
-        
+
       }
     }
 
-    this._getProcessStatus =  function (oData, req) {
+    this._getProcessStatus = function (oData, req) {
       try {
 
-        console.log("=====>>>>getProcessStatus: >>>" );
-        let  lv_ProcessStatusID = oData[0].processStatusID_ID;
-        console.log("=====>>>>Status>>>" + lv_ProcessStatusID);
+        //     console.log("=====>>>>getProcessStatus: >>>");
+        let lv_ProcessStatusID = oData[0].processStatusID_ID;
+        //      console.log("=====>>>>Status>>>" + lv_ProcessStatusID);
         return lv_ProcessStatusID;
       } catch (error) {
         // Handle errors during API call
 
         console.error(error.message);
-        console.log("=====>>>>ERROR >>> getProcessStatus" );
+        console.log("=====>>>>ERROR >>> getProcessStatus");
         this._errorMessage(error.message, req, "getProcessStatus");
         return (error.message);
-      
+
       }
     }
 
     this._getProcessType = async function (oData, req) {
       try {
         const lv_ProcessTypeID = oData[0].processTypeID_ID;
-        console.log("=====>>>>TYPE >>>" + lv_ProcessTypeID);
+        //      console.log("=====>>>>TYPE >>>" + lv_ProcessTypeID);
 
         return lv_ProcessTypeID;
 
@@ -347,25 +447,32 @@ class DDRMService extends cds.ApplicationService {
     }
 
     this._errorMessage = function (eMessage, req, loc) {
-    var messageString;
-     console.error(eMessage);
-     messageString = this._getMessage(req, 'BTP_ERROR') + " " + eMessage + "(" + loc + ")";
-     req.error(400, messageString);
- 
+      var messageString;
+      console.error(eMessage);
+      messageString = this._getMessage(req, 'BTP_ERROR') + " " + eMessage + "(" + loc + ")";
+      req.error(400, messageString);
+
     }
 
     this._warningMessage = function (eMessage, req, loc) {
-    var messageString;
-     console.error(eMessage);
-     messageString = this._getMessage(req, 'BTP_WARNING') + " " + eMessage + "(" + loc + ")";
-     req.notify(400, messageString);
- 
+      var messageString;
+      console.error(eMessage);
+      messageString = this._getMessage(req, 'BTP_WARNING') + " " + eMessage + "(" + loc + ")";
+      req.notify(400, messageString);
+
     }
 
+      this._infoMessage = function (eMessage, req, loc) {
+      var messageString;
+      console.error(eMessage);
+      messageString = this._getMessage(req, 'INFO') + " " + eMessage ;
+      req.notify(400, messageString);
+
+    }
     this._callAPI = async function (oURL, oLicencePlate, oDriverName) {
       try {
         const apiURL = oURL + '(LKW_Kennzeichen = \'' + oLicencePlate + '\', Fahrername = \'' + oDriverName + '\' )';
-        console.log("=====>>>>API URL>>>" + apiURL);
+        //       console.log("=====>>>>API URL>>>" + apiURL);
 
         // temp
         const jsonReturn = {
@@ -373,15 +480,16 @@ class DDRMService extends cds.ApplicationService {
 
           "WaageScheinDate": new Date(),
           //      "WaageScheinTime": new Date().toLocaleTimeString(),
-          "WaageScheinBruto":  Math.floor(Math.random() * 10000),
-          "WaageScheinNetto":  Math.floor(Math.random() * 8000),
-          "WaageScheinTara":  Math.floor(Math.random() * 2000),
-          "FSEAlternativeMenge":  Math.floor(Math.random() * 500),
-          "FSETrockenGehalt":  Math.floor(Math.random() * 10),
-          "FSEAGewicht":  Math.floor(Math.random() * 400)
+          "WaageScheinBruto": Math.floor(Math.random() * 10000),
+          "WaageScheinNetto": Math.floor(Math.random() * 8000),
+          "WaageScheinTara": Math.floor(Math.random() * 2000),
+          "FSEDate": new Date(),
+          "FSEAlternativeMenge": Math.floor(Math.random() * 500),
+          "FSETrockenGehalt": Math.floor(Math.random() * 10),
+          "FSEAGewicht": Math.floor(Math.random() * 400)
         };
-        console.log("=====>>>>Date Call API >>>" + jsonReturn.WaageScheinDate);
-      //  console.log("=====>>>>Time CALL API >>>" + jsonReturn.WaageScheinTime);
+        //    console.log("=====>>>>Date Call API >>>" + jsonReturn.WaageScheinDate);
+        //  console.log("=====>>>>Time CALL API >>>" + jsonReturn.WaageScheinTime);
 
 
         //    console.log("=====>>>>FSA Menge >>>" + jsonReturn.FSEAlternativeMenge);
@@ -391,7 +499,7 @@ class DDRMService extends cds.ApplicationService {
 
         WaageScheinNr: Decimal;
         WaageScheinDate: DateTime;
-   //     WaageScheinTime: Time;
+        //     WaageScheinTime: Time;
         WaageScheinBruto: Decimal;
         WaageScheinNetto: Decimal;
         WaageScheinTara: Decimal;
@@ -421,12 +529,12 @@ class DDRMService extends cds.ApplicationService {
     /**
        * Fill in defaults for new Bookings when editing LKW Process.
        */
-    
+
     this.before('CREATE', 'Process.drafts', async (req) => {
       debugger;
       req.data.processStatusID_ID = '20 - Frei zur Einfahrt';
     })
-  
+
     this.on("UPDATE", "Process/mediaFile", async (req, next) => {
       const { MediaFile } = cds.entities;
       const { originalUrl } = req.req;

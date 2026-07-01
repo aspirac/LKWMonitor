@@ -17,7 +17,8 @@
     "axion": "^0.1.0",
     "axios": "^1.18.0",
     "cfenv": "^1.2.6",
-    "express": "^4.22.2"
+    "express": "^4.22.2",
+    "hana": "^0.0.2"
   },
   "devDependencies": {
     "@cap-js/sqlite": "^2.4.0",

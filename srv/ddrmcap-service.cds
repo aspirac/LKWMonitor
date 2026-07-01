@@ -101,8 +101,15 @@ annotate db.Process @(Common : {
 });
 
 annotate db.Process @(Common : {
+    SideEffects #WaageChanged2  : {
+        SourceProperties : ['WaageScheinDate2'],
+        TargetProperties : ['WaageScheinDate2', 'WaageScheinBruto2', 'WaageScheinNetto2', 'WaageScheinTara2'],
+    }
+});
+
+annotate db.Process @(Common : {
     SideEffects #FSEChanged  : {
-        SourceProperties : ['FSEAlternativeMenge'],
-        TargetProperties : ['FSEAlternativeMenge', 'FSETrockenGehalt', 'FSEAGewicht'],
+        SourceProperties : ['FSEDate'],
+        TargetProperties : ['FSEDate', 'FSEAlternativeMenge', 'FSETrockenGehalt', 'FSEAGewicht'],
     }
 });
