@@ -47,7 +47,12 @@ annotate service.Process with @(
         {
             $Type : 'UI.DataFieldForAction',
             Action: 'DDRMService.callInterfaceScale',  
-            Label :  '{@i18n>callinterface}',
+            Label :  '{@i18n>callinterfaceWAAGE}',
+        },
+       {
+            $Type : 'UI.DataFieldForAction',
+            Action: 'DDRMService.callInterfaceFSE',  
+            Label :  '{@i18n>callinterfaceFSE}',
         },
  
     ],
@@ -57,7 +62,12 @@ annotate service.Process with @(
       {
             $Type : 'UI.DataFieldForAction',
             Action: 'DDRMService.callInterfaceScale',  
-            Label :  '{@i18n>callinterface}',
+            Label :  '{@i18n>callinterfaceWAAGE}',
+        },
+         {
+            $Type : 'UI.DataFieldForAction',
+            Action: 'DDRMService.callInterfaceFSE',  
+            Label :  '{@i18n>callinterfaceFSE}',
         },
         {
             $Type : 'UI.DataFieldForAction',

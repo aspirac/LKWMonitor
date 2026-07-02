@@ -33,11 +33,22 @@ class DDRMService extends cds.ApplicationService {
 
     this.on('callInterfaceScale', 'Process', async req => {
 
-      let result = await this._updateProcessData(req, false);
+      let result = await this._updateProcessDataScale(req, false);
 
       //      let result =  this._performInsertScale(req, false);
     })
 
+    this.on('callInterfaceFSE', 'Process.drafts', async req => {
+      const messageString = this._getMessage(req, 'MUST_NOT_BE_DRAFT');
+      req.error(400, messageString);
+    })
+
+    this.on('callInterfaceFSE', 'Process', async req => {
+
+      let result = await this._updateProcessDataFSE(req, false);
+
+      //      let result =  this._performInsertScale(req, false);
+    })
     this.on('callSetStatus20', 'Process.drafts', req => {
 
       const messageString = this._getMessage(req, 'MUST_NOT_BE_DRAFT');
@@ -108,7 +119,7 @@ class DDRMService extends cds.ApplicationService {
       return bundle.getText(oMessageKey);
     }
 
-    this._updateProcessData = async function (req) {
+    this._updateProcessDataScale = async function (req) {
       try {
         var ProcessId = req.params[0].ID;
         var messageString;
@@ -167,17 +178,6 @@ class DDRMService extends cds.ApplicationService {
 
 
 
-        if (lv_type.startsWith("10") || lv_type.startsWith("20")) {
-          let result_fse = await this._callAPI(lv_url_fse, lv_LicencePlate, lv_DriverName);
-          lv_url_fse = this._getOdataUrl("FSEInfo");
-          this._performUpdateFSE(req, result_fse);
-          messageString = this._getMessage(req, 'INTERFACE_CALLED_FSE');
-          req.notify(messageString);
-
-        } else {
-          messageString = this._getMessage(req, 'INTERFACE_NOT_CALLED_FSE');
-          req.notify(messageString);
-        }
 
         return;
 
@@ -190,6 +190,57 @@ class DDRMService extends cds.ApplicationService {
       }
     }
 
+
+    this._updateProcessDataFSE = async function (req) {
+      try {
+        var ProcessId = req.params[0].ID;
+        var messageString;
+        var q1;
+        var lv_url_fse;
+
+
+        q1 = await SELECT.from(Process).where`ID=${ProcessId}`
+        let lv_fse_date = q1[0].FSEDate;
+        const lv_status = await this._getProcessStatus(q1, req);
+        const lv_type = await this._getProcessType(q1, req);
+
+        if (!lv_status.startsWith("20")) {
+          messageString = this._getMessage(req, 'STATUS_MUST_BE_20');
+          req.error(400, messageString);
+          return null;
+        }
+
+
+        if (lv_type.startsWith("10") || lv_type.startsWith("20")) {
+          if (lv_fse_date) {
+            messageString = this._getMessage(req, 'FSE_INFO_ALREADY_EXISTS');
+            req.error(400, messageString);
+            return null;
+
+          }
+          const lv_LicencePlate = q1[0].LKW_Kennzeichen;
+          const lv_DriverName = q1[0].Fahrername;
+          let result_fse = await this._callAPI(lv_url_fse, lv_LicencePlate, lv_DriverName);
+          lv_url_fse = this._getOdataUrl("FSEInfo");
+          this._performUpdateFSE(req, result_fse);
+          messageString = this._getMessage(req, 'INTERFACE_CALLED_FSE');
+          req.notify(messageString);
+
+        } else {
+          messageString = this._getMessage(req, 'INTERFACE_NOT_CALLED_FSE');
+          req.error(400, messageString);
+        }
+
+        return;
+
+      } catch (error) {
+        // Handle errors during API call<
+        console.error(error.message);
+        this._errorMessage(error.message, req, "updateProcessData");
+        return (error.message);
+
+      }
+    }
 
 
 
@@ -245,7 +296,11 @@ class DDRMService extends cds.ApplicationService {
     this._performUpdateFSE = async function (req, oData) {
       try {
         var ProcessId = req.params[0].ID;
-
+        let date = new Date();
+        let timeString = this._getTime();
+          let messageString = this._getMessage(req, 'BTP_UPDATE_FSE') + date.toString() + " " + timeString;
+       
+          this._infoMessage(messageString, req, "performUpdateFSE");
         await UPDATE.entity(Process, ProcessId)
           .set({ FSEDate: oData.FSEDate, FSEAlternativeMenge: oData.FSEAlternativeMenge, FSETrockenGehalt: oData.FSETrockenGehalt, FSEAGewicht: oData.FSEAGewicht });
         return;
@@ -462,10 +517,10 @@ class DDRMService extends cds.ApplicationService {
 
     }
 
-      this._infoMessage = function (eMessage, req, loc) {
+    this._infoMessage = function (eMessage, req, loc) {
       var messageString;
       console.error(eMessage);
-      messageString = this._getMessage(req, 'INFO') + " " + eMessage ;
+      messageString = this._getMessage(req, 'INFO') + " " + eMessage;
       req.notify(400, messageString);
 
     }

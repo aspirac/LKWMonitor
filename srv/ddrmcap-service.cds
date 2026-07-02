@@ -16,6 +16,7 @@ service DDRMService @(requires: 'authenticated-user') {
   entity Process as projection on db.Process actions{
     action setSStatus20();
     action callInterfaceScale() returns Result;
+    action callInterfaceFSE() returns Result;
     action callSetStatus20() returns Result;
      };
 
