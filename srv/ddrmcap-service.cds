@@ -14,11 +14,28 @@ service DDRMService @(requires: 'authenticated-user') {
   //@odata.draft.bypass
  
   entity Process as projection on db.Process actions{
+  
     action setSStatus20();
+      @(Common.SideEffects :{
+        TargetProperties: ['WaageNummer','WaageScheinNr','WaageScheinDate', 'WaageScheinBruto', 'WaageScheinNetto', 'WaageScheinTara',
+                            'WaageNummer2','WaageScheinNr2','WaageScheinDate2', 'WaageScheinBruto2', 'WaageScheinNetto2', 'WaageScheinTara2'
+                            ],
+                         
+    })
     action callInterfaceScale() returns Result;
+         @(Common.SideEffects :{
+        TargetProperties: ['FSEDate','FSEAlternativeMenge','FSETrockenGehalt', 'FSEAGewicht'],
+                         
+    })
     action callInterfaceFSE() returns Result;
+  
+         @(Common.SideEffects :{
+        TargetProperties: ['processStatusID_ID', 'processStatusID.description'],
+                         
+    })
+  
     action callSetStatus20() returns Result;
-     };
+};
 
  // entity Process as projection on db.Process {
  //   *,
@@ -37,7 +54,7 @@ service DDRMService @(requires: 'authenticated-user') {
    
 //     action setStatus20();
    
-// };
+// }; };
 
   entity ProcessStatus             as projection on db.ProcessStatus;
   entity ProcessType               as projection on db.ProcessType;
@@ -93,6 +110,7 @@ Annotate db.Process with {
       
 };
 
+/*
 
 annotate db.Process @(Common : {
     SideEffects #WaageChanged  : {
@@ -100,6 +118,7 @@ annotate db.Process @(Common : {
         TargetProperties : ['WaageScheinDate', 'WaageScheinBruto', 'WaageScheinNetto', 'WaageScheinTara'],
     }
 });
+
 
 annotate db.Process @(Common : {
     SideEffects #WaageChanged2  : {
@@ -114,3 +133,12 @@ annotate db.Process @(Common : {
         TargetProperties : ['FSEDate', 'FSEAlternativeMenge', 'FSETrockenGehalt', 'FSEAGewicht'],
     }
 });
+
+annotate db.ProcessType @(Common : {
+    SideEffects #ProcessTypeChanged  : {
+        SourceProperties : ['ID'],
+        TargetProperties : ['description' ],
+    }
+});
+
+*/
