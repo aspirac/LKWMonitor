@@ -712,11 +712,13 @@ annotate service.Process with @(
                 Value: content,
                 Label: '{@i18n>attachmentContent}',
             },
+            /*
            {
                 $Type: 'UI.DataField',
                 Value: fileName,
                 Label: '{@i18n>attachmentFileName}',
             },
+            */
           {
                 $Type: 'UI.DataField',
                 Value: fileType,
