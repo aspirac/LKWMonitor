@@ -1,4 +1,3 @@
-
 using DDRMService as service from '../../srv/ddrmcap-service';
 
 
@@ -402,7 +401,20 @@ annotate service.Process with @(
         ],
     },
 
- 
+      UI.FieldGroup #AttachmentGroup           : {
+        $Type: 'UI.FieldGroupType',
+        Data : [
+            
+          
+                {
+                $Type: 'UI.DataField',
+                Value:  to_ProcessAttachments
+            },
+   
+                 
+        ],
+    },
+
     UI.FieldGroup #DateGroup              : {
         $Type: 'UI.FieldGroupType',
         Data : [
@@ -514,6 +526,13 @@ annotate service.Process with @(
             ID    : 'DateFacet',
             Label : '{@i18n>datesFacet}',
             Target: '@UI.FieldGroup#DateGroup',
+        },
+
+         {
+         $Type : 'UI.ReferenceFacet',
+            ID    : 'ProcessAttachmentsInfo',
+            Label : '{@i18n>ProcessAttachments}',
+              Target: 'to_ProcessAttachments/@UI.PresentationVariant',        
         },
       
     ],
@@ -659,6 +678,68 @@ annotate service.Process with @(
         ]
     }
 );   
+
+   
+
+   annotate service.ProcessAttachments with @(
+    Capabilities.UpdateRestrictions: {Updatable: true},
+    UI                             : {
+        HeaderInfo: {
+            $Type         : 'UI.HeaderInfoType',
+            TypeName      : '{i18n>ProcessAttachments}',
+            TypeNamePlural: '{i18n>ProcessAttachments}'
+        },
+
+        PresentationVariant           : {
+        Visualizations: ['@UI.LineItem'],
+  //      SortOrder     : [{
+  //          $Type     : 'Common.SortOrderType',
+   //         Property  : sapDocumentInID,
+  //          Descending: false
+  //      }]
+      },
+        
+       SelectionFields               : [],
+        LineItem  : [
+
+            {
+                $Type: 'UI.DataField',
+                Value: Title,
+                Label: '{@i18n>attachmentTitle}',
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: content,
+                Label: '{@i18n>attachmentContent}',
+            },
+           {
+                $Type: 'UI.DataField',
+                Value: fileName,
+                Label: '{@i18n>attachmentFileName}',
+            },
+          {
+                $Type: 'UI.DataField',
+                Value: fileType,
+                Label: '{@i18n>attachmentFileType}',
+            },
+          {
+                $Type: 'UI.DataField',
+                Value: createdBy,
+                Label: '{@i18n>attachmentCreatedBy}',
+            },
+       {
+                $Type: 'UI.DataField',
+                Value: createdAt,
+                Label: '{@i18n>attachmentCreatedAt}',
+            },
+        
+           
+          
+           
+        ]
+    }
+);   
+
 /*
 //Insolvenz List Report in Object page
 annotate service.InsolvencyMeasures with @(
@@ -1100,4 +1181,3 @@ annotate service.Process with {
 };
 
 */
-

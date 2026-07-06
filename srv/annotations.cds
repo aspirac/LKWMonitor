@@ -85,7 +85,13 @@ annotate DDRMService.Process with {
 
 }
 
-
+annotate  DDRMService.ProcessAttachments  with {
+  
+       Title                     @title: '{@i18n>attachmentTitle}';
+       fileName                  @title: '{@i18n>attachmentFileName}';
+       fileType                  @title: '{@i18n>attachmentFileType}';
+       content              @title: '{@i18n>attachmentContent}';
+}
 annotate DDRMService.Process with {
     @UI.MultiLineText
     Bemerkung_1
@@ -108,6 +114,9 @@ annotate DDRMService.Process with {
 
 };
 
-
+annotate DDRMService.ProcessAttachments with {
+ //   fileName @readonly; 
+ //   fileType @readonly; 
+}
 
 

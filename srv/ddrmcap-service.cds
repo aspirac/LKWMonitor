@@ -89,6 +89,7 @@ TargetEntities   : [ProcessStatus, ProcessStatus.description]
     entity ProcessSAPDocumentIn  as projection on db.ProcessSAPDocumentIn;
     entity ProcessWeighDocument  as projection on db.ProcessWeighDocument;
     entity ProcessFSADocument    as projection on db.ProcessFSADocument;
+    entity ProcessAttachments    as projection on db.ProcessAttachments;
 
 
 //entity MediaFile                 as projection on db.MediaFile;

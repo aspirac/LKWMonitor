@@ -35,6 +35,10 @@ entity Process : managed {
         FSEAlternativeMenge      : Decimal;
         FSETrockenGehalt         : Decimal;
         FSEAGewicht              : Decimal;
+        fileName                 : String;
+        fileType                 : String      @Core.IsMediaType;
+        content                  : LargeBinary @Core.MediaType                  : fileType
+                                               @Core.ContentDisposition.Filename: fileName;
 
         to_ProcessSAPDocumentOut : Composition of many ProcessSAPDocumentOut
                                        on to_ProcessSAPDocumentOut.Process = $self;
@@ -47,9 +51,11 @@ entity Process : managed {
 
         to_ProcessFSADocument    : Composition of many ProcessFSADocument
                                        on to_ProcessFSADocument.Process = $self;
-
-
-        attachment               : Composition of many Attachments
+                                       
+        to_ProcessAttachments       : Composition of many ProcessAttachments
+                                          on to_ProcessAttachments.Process = $self;
+                                                    
+  //      attachment               : Composition of many Attachments
 
 
 }
@@ -90,6 +96,15 @@ entity ProcessSAPDocumentIn : managed {
         Process         : Association to Process
 }
 
+entity ProcessAttachments : managed {
+    key ID              : UUID    @(Core.Computed: true);
+       Title                   : String(100);
+       fileName                 : String;
+       fileType                 : String      @Core.IsMediaType;
+       content                  : LargeBinary @Core.MediaType                  : fileType
+                                               @Core.ContentDisposition.Filename: fileName;
+        Process         : Association to Process
+}
 entity SAPDocument : managed {
         //    key MANDT: String(5);
     key DocNumber            : String(30);
