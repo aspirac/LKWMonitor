@@ -6,7 +6,12 @@ using DDRMService as service from '../../srv/ddrmcap-service';
 
 annotate service.Process with @(
 
-    
+ Common : {
+    SideEffects #ProcessStatusChanged : {
+        SourceProperties : ['processStatusID_ID'],
+        TargetEntities   : [ProcessStatus, ProcessStatus.description]
+    }
+},
 
    
     Analytics.AggregatedProperty #ProcessID_countdistinct : {
