@@ -79,7 +79,8 @@ Perform the following:
  -cds add hana – use the hana database
 -	cds add xsuaa
 -	npm install --package-lock-only (For good measure)
--	cds up**
+-	cds up
+- cf push ddrm-srv
 
 
 
