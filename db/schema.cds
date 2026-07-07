@@ -1,7 +1,7 @@
 namespace com.jrs.lkwvor;
 
 using {managed} from '@sap/cds/common';
-using {Attachments} from '@cap-js/attachments';
+// using {Attachments} from '@cap-js/attachments';
 
 entity Process : managed {
 
