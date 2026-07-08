@@ -35,6 +35,13 @@ In order to run the app locally, using sqlite:
 
 **npm add @cap-js/sqlite --save**
 
+IF YOU JUST INSTALLED THE APP FROM GIT Run:
+
+cds deploy
+
+This will create the database
+
+
 - **Perform cds watch.**
 
 **.  2	       Running the app as a hybrid**
