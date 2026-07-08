@@ -120,3 +120,12 @@ annotate DDRMService.ProcessAttachments with {
 }
 
 
+annotate DDRMService.Process with @(Common.SideEffects : {
+    SourceEntities  : [Process],
+    SourceProperties : [processStatusID_ID],
+    TargetEntities  : [ProcessStatus],
+  //  TargetProperties : [
+  //      'processStatusID.description'
+  //  ]
+});
+

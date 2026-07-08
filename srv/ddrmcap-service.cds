@@ -35,7 +35,7 @@ service DDRMService @(requires: 'authenticated-user') {
 
             })
             action callInterfaceScale() returns Result;
-            @(Common.SideEffects: {TargetProperties: [
+            @(Common.ects: {TargetProperties: [
                 'FSEDate',
                 'FSEAlternativeMenge',
                 'FSETrockenGehalt',
@@ -47,18 +47,9 @@ service DDRMService @(requires: 'authenticated-user') {
 
             @(Common.SideEffects #StatusChanged: {TargetProperties: [
                 'processStatusID_ID',
-                'processStatusID_ID.description'
+                'processStatusID.description'
             ],
-TargetEntities   : [ProcessStatus, ProcessStatus.description]
-            })
-
-
-         
-
-         
-
-       
-
+ })
             action callSetStatus20()    returns Result;
         };
 
@@ -66,20 +57,7 @@ TargetEntities   : [ProcessStatus, ProcessStatus.description]
     //   *,
 
 
-    // ***Process Type ID***
-    //    processTypeID.description                                    as ProcessTypeDescription,
-    //  @Common.Text:  ProcessTypeDescription
-    //   processTypeID,
-    // ***Process Status ID***
-    //   processStatusID.description                                   as ProcessStatusDescription,
-    //   @Common.Text:  ProcessStatusDescription
-    //  processStatusID,
 
-    // } actions {
-
-    //     action setStatus20();
-
-    // }; };
 
     entity ProcessStatus         as projection on db.ProcessStatus;
     entity ProcessType           as projection on db.ProcessType;
@@ -137,35 +115,3 @@ annotate db.Process with {
 };
 
 
-/*
-
-annotate db.Process @(Common : {
-    SideEffects #WaageChanged  : {
-        SourceProperties : ['WaageScheinDate'],
-        TargetProperties : ['WaageScheinDate', 'WaageScheinBruto', 'WaageScheinNetto', 'WaageScheinTara'],
-    }
-});
-
-
-annotate db.Process @(Common : {
-    SideEffects #WaageChanged2  : {
-        SourceProperties : ['WaageScheinDate2'],
-        TargetProperties : ['WaageScheinDate2', 'WaageScheinBruto2', 'WaageScheinNetto2', 'WaageScheinTara2'],
-    }
-});
-
-annotate db.Process @(Common : {
-    SideEffects #FSEChanged  : {
-        SourceProperties : ['FSEDate'],
-        TargetProperties : ['FSEDate', 'FSEAlternativeMenge', 'FSETrockenGehalt', 'FSEAGewicht'],
-    }
-});
-
-annotate db.ProcessType @(Common : {
-    SideEffects #ProcessTypeChanged  : {
-        SourceProperties : ['ID'],
-        TargetProperties : ['description' ],
-    }
-});
-
-*/
