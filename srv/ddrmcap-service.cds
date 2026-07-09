@@ -35,7 +35,7 @@ service DDRMService @(requires: 'authenticated-user') {
 
             })
             action callInterfaceScale() returns Result;
-            @(Common.ects: {TargetProperties: [
+            @(Common.SideEffects: {TargetProperties: [
                 'FSEDate',
                 'FSEAlternativeMenge',
                 'FSETrockenGehalt',
@@ -69,6 +69,8 @@ service DDRMService @(requires: 'authenticated-user') {
     entity ProcessFSADocument    as projection on db.ProcessFSADocument;
     entity ProcessAttachments    as projection on db.ProcessAttachments;
 
+   
+   
 
 //entity MediaFile                 as projection on db.MediaFile;
 }

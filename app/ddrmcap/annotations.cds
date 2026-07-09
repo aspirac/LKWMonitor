@@ -5,29 +5,32 @@ using DDRMService as service from '../../srv/ddrmcap-service';
 
 annotate service.Process with @(
 
+   Aggregation.ApplySupported: {
+    Transformations: [
+      'aggregate',
+      'topcount',
+      'bottomcount',
+      'identity',
+      'concat',
+      'groupby',
+      'filter',
+      'expand',
+      'search'      
+    ],
 
-
-
-   
-    Analytics.AggregatedProperty #ProcessID_countdistinct : {
-        $Type : 'Analytics.AggregatedPropertyType',
-        Name : 'ProcessID_countdistinct',
-        AggregatableProperty : ProcessID,
-        AggregationMethod : 'countdistinct',
-        ![@Common.Label] : '{i18n>Processes}',
-    },
+    GroupableProperties: [
+      ID,
+      processStatusID_ID,
+      processTypeID_ID
     
-    UI.Chart #alpChart : {
-        $Type : 'UI.ChartDefinitionType',
-        ChartType : #Column,
-        Dimensions : [
-            processStatusID_ID,
-        ],
-        DynamicMeasures : [
-            '@Analytics.AggregatedProperty#ProcessID_countdistinct',
-        ],
-        Title : '{i18n>TravelsByCustomerCountry}',
-    },
+    ],
+
+    AggregatableProperties: [{
+      $Type : 'Aggregation.AggregatablePropertyType',
+      Property: stock
+    }]
+  },
+
 
     UI.SelectionFields                    : [
         processTypeID_ID,
