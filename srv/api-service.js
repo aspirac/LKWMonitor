@@ -410,6 +410,7 @@ performUpdateScale = async function (ID, obj, o_weigh) {
             ];
             const { res1 } = await UPSERT.into(Process).entries(UpdPro1);
             console.log("=====>>>>UPDATE SCALE Date: >>>" + date + " " + o_weigh + " " + ProcessId);
+                    console.console.log(res1);
         }
         if (o_weigh == 2) {
             const UpdPro2 = [
@@ -448,13 +449,16 @@ performUpdateFSE = async function (ID, obj) {
         const UpdPro1 = [
             {
                 ID: ProcessId,
+                FSEDate: date,
                 FSEAlternativeMenge: obj.FSEAlternativeMenge,
                 FSETrockenGehalt: obj.FSETrockenGehalt,
                 FSEAGewicht: obj.FSEAGewicht
             }
         ];
         const { res1 } = await UPSERT.into(Process).entries(UpdPro1);
-        console.log("=====>>>>UPDATE FSE Date: >>>" + date + " " + ProcessId);
+        console.console.log(res1);
+  
+        console.log("=====>>>>UPDATE FSE Date: >>>" + date + " " + ProcessId+ " " + obj.FSEAlternativeMenge + " " + obj.FSETrockenGehalt + " " + obj.FSEAGewicht);
 
 
 

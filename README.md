@@ -33,7 +33,7 @@ In order to run the app locally, using sqlite:
 
 - Specify sqlite as the database:
 
-**npm add @cap-js/sqlite --save**
+**npm add @cap-js/sqlite **
 
 IF YOU JUST INSTALLED THE APP FROM GIT Run:
 
