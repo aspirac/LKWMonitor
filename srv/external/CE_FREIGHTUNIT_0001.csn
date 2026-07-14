@@ -1,0 +1,3221 @@
+{
+ "meta": {
+  "creator": "cds-dk 9.9.1"
+ },
+ "$version": "2.0",
+ "definitions": {
+  "CE_FREIGHTUNIT_0001.SAP__Message": {
+   "kind": "type",
+   "@cds.external": true,
+   "elements": {
+    "code": {
+     "type": "cds.String",
+     "notNull": true
+    },
+    "message": {
+     "type": "cds.String",
+     "notNull": true
+    },
+    "target": {
+     "type": "cds.String"
+    },
+    "additionalTargets": {
+     "items": {
+      "type": "cds.String",
+      "notNull": true
+     }
+    },
+    "transition": {
+     "type": "cds.Boolean",
+     "notNull": true
+    },
+    "numericSeverity": {
+     "type": "cds.Integer",
+     "@odata.Type": "Edm.Byte",
+     "notNull": true
+    },
+    "longtextUrl": {
+     "type": "cds.String"
+    }
+   }
+  },
+  "CE_FREIGHTUNIT_0001": {
+   "kind": "service",
+   "@cds.external": true,
+   "@CodeList.UnitsOfMeasure.Url": "../../../../default/iwbep/common/0001/$metadata",
+   "@CodeList.UnitsOfMeasure.CollectionPath": "UnitsOfMeasure",
+   "@Common.ApplyMultiUnitBehaviorForSortingAndFiltering": true,
+   "@Capabilities.FilterFunctions": [
+    "eq",
+    "ne",
+    "gt",
+    "ge",
+    "lt",
+    "le",
+    "and",
+    "or",
+    "contains",
+    "startswith",
+    "endswith",
+    "any",
+    "all"
+   ],
+   "@SAP__support.TechnicalInfoLinks.Url": "../../../../default/iwbep/common/0001/$metadata",
+   "@SAP__support.TechnicalInfoLinks.FunctionImport": "GetTechnicalInfoLinks",
+   "@Capabilities.SupportedFormats": [
+    "application/json",
+    "application/pdf"
+   ],
+   "@PDF.Features.DocumentDescriptionReference": "../../../../default/iwbep/common/0001/$metadata",
+   "@PDF.Features.DocumentDescriptionCollection": "MyDocumentDescriptions",
+   "@PDF.Features.ArchiveFormat": true,
+   "@PDF.Features.Border": true,
+   "@PDF.Features.CoverPage": true,
+   "@PDF.Features.FitToPage": true,
+   "@PDF.Features.FontName": true,
+   "@PDF.Features.FontSize": true,
+   "@PDF.Features.HeaderFooter": true,
+   "@PDF.Features.IANATimezoneFormat": true,
+   "@PDF.Features.Margin": true,
+   "@PDF.Features.Padding": true,
+   "@PDF.Features.ResultSizeDefault": 20000,
+   "@PDF.Features.ResultSizeMaximum": 20000,
+   "@PDF.Features.Signature": true,
+   "@PDF.Features.TextDirectionLayout": true,
+   "@PDF.Features.Treeview": true,
+   "@PDF.Features.UploadToFileShare": true,
+   "@Capabilities.KeyAsSegmentSupported": true,
+   "@Capabilities.AsynchronousRequestsSupported": true
+  },
+  "CE_FREIGHTUNIT_0001.FreightUnit": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "TransportationOrderUUID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Transportation Order UUID"
+    },
+    "TransportationOrder": {
+     "type": "cds.String",
+     "length": 20,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Transportation Order"
+    },
+    "TransportationOrderType": {
+     "type": "cds.String",
+     "length": 4,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TransportationOrderType",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Transportation Order Type"
+    },
+    "TransportationOrderCategory": {
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TransportationOrderCategory",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Transportation Order Category"
+    },
+    "TransportationMode": {
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TransportationMode",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Transportation Mode"
+    },
+    "TransportationModeCategory": {
+     "type": "cds.String",
+     "length": 1,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TransportationModeCategory",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Transportation Mode Category"
+    },
+    "ShipperUUID": {
+     "type": "cds.UUID",
+     "@Core.Computed": true,
+     "@Common.Label": "Shipper UUID",
+     "@Common.QuickInfo": "Shipper Universally Unique Identifier"
+    },
+    "Shipper": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Shipper"
+    },
+    "ShipperAddressID": {
+     "type": "cds.String",
+     "length": 40,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Shipper Address ID"
+    },
+    "ConsigneeUUID": {
+     "type": "cds.UUID",
+     "@Core.Computed": true,
+     "@Common.Label": "Ship-to Party UUID"
+    },
+    "Consignee": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Ship-to Party"
+    },
+    "ConsigneeAddressID": {
+     "type": "cds.String",
+     "length": 40,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Ship-to Party Address ID"
+    },
+    "TranspOrdResponsiblePerson": {
+     "type": "cds.String",
+     "length": 12,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Person Responsible",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=%2FSCMTMS%2FRESP_PERSON"
+    },
+    "TranspOrdLifeCycleStatus": {
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrderLifecycleStatus",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Lifecycle Status",
+     "@Common.QuickInfo": "Transportation Order Lifecycle Status"
+    },
+    "TranspOrderDngrsGdsSts": {
+     "type": "cds.String",
+     "length": 1,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrdDangerousGoodsStatus",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Dangerous Goods Sts",
+     "@Common.QuickInfo": "Transportation Order Dangerous Goods Status"
+    },
+    "TranspOrdPlanningBlock": {
+     "type": "cds.String",
+     "length": 1,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrderPlanningBlock",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Planning Block",
+     "@Common.QuickInfo": "Transportation Order Planning Block"
+    },
+    "TranspOrdExecutionIsBlocked": {
+     "type": "cds.Boolean",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Execution Block",
+     "@Common.QuickInfo": "Transportation Order Execution Block"
+    },
+    "TranspOrdGoodsMovementStatus": {
+     "type": "cds.String",
+     "length": 1,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrdGoodsMovementStatus",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Goods Mvmt. Status",
+     "@Common.Heading": "GM Status",
+     "@Common.QuickInfo": "Delivery Goods Movement Status"
+    },
+    "TranspOrdPlanningStatus": {
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrdPlanningStatus",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Planning Status",
+     "@Common.QuickInfo": "Transportation Order Planning Status"
+    },
+    "TranspOrdWhseProcessingStatus": {
+     "type": "cds.String",
+     "length": 1,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrdWhseProcessingStatus",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Whse Proc. Status",
+     "@Common.Heading": "Warehouse Processing Status",
+     "@Common.QuickInfo": "Warehouse Processing Status",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=%2FSCMTMS%2FWH_PROCESSING_STATUS"
+    },
+    "TransportationOrderCrtnType": {
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrderCreationType",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Creation Type"
+    },
+    "CreatedByUser": {
+     "type": "cds.String",
+     "length": 12,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Created By",
+     "@Common.QuickInfo": "Created By User"
+    },
+    "CreationDateTime": {
+     "type": "cds.DateTime",
+     "@odata.Precision": 0,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@Core.Computed": true,
+     "@Common.Label": "Creation Date Time",
+     "@Common.QuickInfo": "Transportation Order Creation Date Time"
+    },
+    "LastChangedByUser": {
+     "type": "cds.String",
+     "length": 12,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Changed By",
+     "@Common.QuickInfo": "Last Changed By User"
+    },
+    "ChangedDateTime": {
+     "type": "cds.DateTime",
+     "@odata.Precision": 0,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@Core.Computed": true,
+     "@Common.Label": "Transportation Order Changed Date Time",
+     "@Common.QuickInfo": "Transportation Order Changed Date and Time"
+    },
+    "SAP__Messages": {
+     "items": {
+      "type": "CE_FREIGHTUNIT_0001.SAP__Message",
+      "notNull": true
+     }
+    },
+    "_ConsigneeAddrDfltRprstn": {
+     "type": "cds.Association",
+     "target": "CE_FREIGHTUNIT_0001.FrtUnitMainBPAddrDfltRprstn",
+     "cardinality": {
+      "max": 1
+     },
+     "keys": []
+    },
+    "_FreightUnitBusinessPartner": {
+     "type": "cds.Composition",
+     "target": "CE_FREIGHTUNIT_0001.FreightUnitBusinessPartner",
+     "cardinality": {
+      "max": "*"
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightUnitBusinessPartner",
+        "_FreightUnit"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "$self"
+       ]
+      }
+     ],
+     "@Common.Composition": true
+    },
+    "_FreightUnitDocumentReference": {
+     "type": "cds.Composition",
+     "target": "CE_FREIGHTUNIT_0001.FreightUnitDocumentReference",
+     "cardinality": {
+      "max": "*"
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightUnitDocumentReference",
+        "_FreightUnit"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "$self"
+       ]
+      }
+     ],
+     "@Common.Composition": true
+    },
+    "_FreightUnitItem": {
+     "type": "cds.Composition",
+     "target": "CE_FREIGHTUNIT_0001.FreightUnitItem",
+     "cardinality": {
+      "max": "*"
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightUnitItem",
+        "_FreightUnit"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "$self"
+       ]
+      }
+     ],
+     "@Common.Composition": true
+    },
+    "_FreightUnitStop": {
+     "type": "cds.Composition",
+     "target": "CE_FREIGHTUNIT_0001.FreightUnitStop",
+     "cardinality": {
+      "max": "*"
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightUnitStop",
+        "_FreightUnit"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "$self"
+       ]
+      }
+     ],
+     "@Common.Composition": true
+    },
+    "_FrtUnitMainBPAddrDfltRprstn": {
+     "type": "cds.Composition",
+     "target": "CE_FREIGHTUNIT_0001.FrtUnitMainBPAddrDfltRprstn",
+     "cardinality": {
+      "max": "*"
+     },
+     "on": [
+      {
+       "ref": [
+        "_FrtUnitMainBPAddrDfltRprstn",
+        "_FreightUnit"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "$self"
+       ]
+      }
+     ],
+     "@Common.Composition": true
+    },
+    "_ShipperAddrDfltRprstn": {
+     "type": "cds.Association",
+     "target": "CE_FREIGHTUNIT_0001.FrtUnitMainBPAddrDfltRprstn",
+     "cardinality": {
+      "max": 1
+     },
+     "keys": []
+    }
+   },
+   "@Common.Label": "Freight Unit",
+   "@Common.Messages": {
+    "=": "SAP__Messages"
+   },
+   "@Capabilities.SearchRestrictions.Searchable": false,
+   "@Capabilities.UpdateRestrictions.DeltaUpdateSupported": true,
+   "@Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties": [
+    "_ConsigneeAddrDfltRprstn",
+    "_FreightUnitBusinessPartner",
+    "_FreightUnitDocumentReference",
+    "_FreightUnitItem",
+    "_FreightUnitStop",
+    "_FrtUnitMainBPAddrDfltRprstn",
+    "_ShipperAddrDfltRprstn"
+   ],
+   "@Capabilities.UpdateRestrictions.QueryOptions.SelectSupported": true,
+   "@Capabilities.DeepUpdateSupport.ContentIDSupported": true,
+   "@Capabilities.InsertRestrictions.Insertable": false,
+   "@Capabilities.DeleteRestrictions.Deletable": false,
+   "@Core.OptimisticConcurrency": [
+    "ChangedDateTime"
+   ]
+  },
+  "CE_FREIGHTUNIT_0001.FreightUnitBusinessPartner": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "TransportationOrderBusPartUUID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Transp. Order Business Partner UUID",
+     "@Common.QuickInfo": "Transportation Order Business Partner UUID"
+    },
+    "TransportationOrderUUID": {
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Transportation Order UUID"
+    },
+    "BusinessPartnerUUID": {
+     "type": "cds.UUID",
+     "@Common.Label": "BP GUID",
+     "@Common.Heading": "Business Partner GUID",
+     "@Common.QuickInfo": "Business Partner GUID"
+    },
+    "BusinessPartner": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Business Partner",
+     "@Common.QuickInfo": "Business Partner Number",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=BU_PARTNER"
+    },
+    "TranspOrdBizPartnerFunction": {
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "PartnerFunction",
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Partner Function",
+     "@Common.Heading": "Function"
+    },
+    "TranspOrdBizPartnerAddressID": {
+     "type": "cds.String",
+     "length": 40,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Address ID",
+     "@Common.QuickInfo": "Unique Identifier for Address (APC_V_ADDRESS_ID)"
+    },
+    "_FreightUnit": {
+     "type": "cds.Association",
+     "target": "CE_FREIGHTUNIT_0001.FreightUnit",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightUnit",
+        "TransportationOrderUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TransportationOrderUUID"
+       ]
+      }
+     ]
+    },
+    "_FrtUnitBPAddrDfltRprstn": {
+     "type": "cds.Composition",
+     "target": "CE_FREIGHTUNIT_0001.FrtUnitBPAddrDfltRprstn",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FrtUnitBPAddrDfltRprstn",
+        "_FreightUnitBusinessPartner"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "$self"
+       ]
+      }
+     ],
+     "@Common.Composition": true
+    }
+   },
+   "@Common.Label": "Freight Unit Business Partner",
+   "@Capabilities.NavigationRestrictions.RestrictedProperties": [
+    {
+     "NavigationProperty": {
+      "=": "_FreightUnit"
+     },
+     "DeepUpdateSupport": {
+      "Supported": false
+     }
+    }
+   ],
+   "@Capabilities.SearchRestrictions.Searchable": false,
+   "@Capabilities.InsertRestrictions.Insertable": false,
+   "@Capabilities.DeleteRestrictions.Deletable": false,
+   "@Capabilities.UpdateRestrictions.Updatable": false,
+   "@Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties": [
+    "_FreightUnit",
+    "_FrtUnitBPAddrDfltRprstn"
+   ],
+   "@Capabilities.UpdateRestrictions.QueryOptions.SelectSupported": true,
+   "@Core.OptimisticConcurrency": [
+    "_FreightUnit/ChangedDateTime"
+   ]
+  },
+  "CE_FREIGHTUNIT_0001.FreightUnitDocumentReference": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "TransportationOrderDocRefUUID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Transp. Order Document Reference UUID"
+    },
+    "TransportationOrderUUID": {
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Transportation Order UUID"
+    },
+    "TranspOrdDocReferenceID": {
+     "type": "cds.String",
+     "length": 35,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Business Tr. Doc. ID",
+     "@Common.Heading": "Business Transaction Document ID",
+     "@Common.QuickInfo": "Bus. Trans. Document ID"
+    },
+    "TranspOrdDocReferenceType": {
+     "type": "cds.String",
+     "length": 5,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspBizTransacDocTypeCode",
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Document Type",
+     "@Common.Heading": "Document Type for Business Transaction",
+     "@Common.QuickInfo": "Document Type for Business Transaction",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=%2FSCMTMS%2FBTD_TYPE_CODE"
+    },
+    "TranspOrdDocReferenceItmID": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "BTD Item ID"
+    },
+    "TranspOrdDocReferenceItmType": {
+     "type": "cds.String",
+     "length": 5,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspBizTransacDocItmTypeCode",
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Base Doc. Item Type",
+     "@Common.Heading": "Base Document Item Type f. Business Transaction",
+     "@Common.QuickInfo": "Base Document Item Type Code for Business Transaction"
+    },
+    "TranspOrdDocumentReferenceDate": {
+     "type": "cds.Date",
+     "@Common.Label": "Business Tr. DocDate",
+     "@Common.Heading": "Business Transaction Document Date",
+     "@Common.QuickInfo": "Business Transaction Document Date"
+    },
+    "TranspOrdDocRefIssuerName": {
+     "type": "cds.String",
+     "length": 40,
+     "notNull": true,
+     "@Common.Label": "Issuing Party",
+     "@Common.Heading": "Issuing Party of Bus. Trans. Document",
+     "@Common.QuickInfo": "Issuing Party of Business Transaction Document"
+    },
+    "_FreightUnit": {
+     "type": "cds.Association",
+     "target": "CE_FREIGHTUNIT_0001.FreightUnit",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightUnit",
+        "TransportationOrderUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TransportationOrderUUID"
+       ]
+      }
+     ]
+    }
+   },
+   "@Common.Label": "Freight Unit Document Reference",
+   "@Capabilities.NavigationRestrictions.RestrictedProperties": [
+    {
+     "NavigationProperty": {
+      "=": "_FreightUnit"
+     },
+     "DeepUpdateSupport": {
+      "Supported": false
+     }
+    }
+   ],
+   "@Capabilities.SearchRestrictions.Searchable": false,
+   "@Capabilities.InsertRestrictions.Insertable": false,
+   "@Capabilities.DeleteRestrictions.Deletable": false,
+   "@Capabilities.UpdateRestrictions.Updatable": false,
+   "@Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties": [
+    "_FreightUnit"
+   ],
+   "@Capabilities.UpdateRestrictions.QueryOptions.SelectSupported": true,
+   "@Core.OptimisticConcurrency": [
+    "_FreightUnit/ChangedDateTime"
+   ]
+  },
+  "CE_FREIGHTUNIT_0001.FreightUnitItem": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "TransportationOrderItemUUID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item UUID",
+     "@Common.QuickInfo": "Transportation Order Item UUID"
+    },
+    "TransportationOrderUUID": {
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Transportation Order UUID"
+    },
+    "TranspOrdItem": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Item"
+    },
+    "TranspOrdItemType": {
+     "type": "cds.String",
+     "length": 4,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TransportationOrderItemType",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Item Type",
+     "@Common.Heading": "Item Type of Transportation Order",
+     "@Common.QuickInfo": "Transportation Order Item Type"
+    },
+    "TranspOrdItemCategory": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrderItemCategory",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Item Category"
+    },
+    "TranspOrdItemParentItemUUID": {
+     "type": "cds.UUID",
+     "@Core.Computed": true,
+     "@Common.Label": "Parent Item UUID",
+     "@Common.QuickInfo": "Transportation Order Parent Item UUID"
+    },
+    "TranspOrdItemDesc": {
+     "type": "cds.String",
+     "length": 40,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item Description"
+    },
+    "IsMainCargoItem": {
+     "type": "cds.Boolean",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Main Cargo Item"
+    },
+    "TranspOrdItemSorting": {
+     "type": "cds.String",
+     "length": 6,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Item Sorting",
+     "@Common.QuickInfo": "Transportation Order Item Sorting"
+    },
+    "TranspOrdItemShippingCondition": {
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "ShippingCondition",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Transportation Service Level (Sales)",
+     "@Common.QuickInfo": "Transportation Service Level Code for Sales"
+    },
+    "SourceStopUUID": {
+     "type": "cds.UUID",
+     "@Core.Computed": true,
+     "@Common.Label": "Source Stop UUID"
+    },
+    "DestinationStopUUID": {
+     "type": "cds.UUID",
+     "@Core.Computed": true,
+     "@Common.Label": "Destination Stop UUID"
+    },
+    "ShipperUUID": {
+     "type": "cds.UUID",
+     "@Core.Computed": true,
+     "@Common.Label": "Shipper UUID",
+     "@Common.QuickInfo": "Shipper Universally Unique Identifier"
+    },
+    "Shipper": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Shipper"
+    },
+    "ShipperAddressID": {
+     "type": "cds.String",
+     "length": 40,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Shipper Address ID"
+    },
+    "ConsigneeUUID": {
+     "type": "cds.UUID",
+     "@Core.Computed": true,
+     "@Common.Label": "Ship-to Party UUID"
+    },
+    "Consignee": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Ship-to Party"
+    },
+    "ConsigneeAddressID": {
+     "type": "cds.String",
+     "length": 40,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Ship-to Party Address ID"
+    },
+    "FreightUnitUUID": {
+     "type": "cds.UUID",
+     "@Core.Computed": true,
+     "@Common.Label": "Freight Unit UUID"
+    },
+    "TranspBaseDocument": {
+     "type": "cds.String",
+     "length": 35,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Business Tr. Doc. ID",
+     "@Common.Heading": "Business Transaction Document ID",
+     "@Common.QuickInfo": "Bus. Trans. Document ID"
+    },
+    "TranspBaseDocumentType": {
+     "type": "cds.String",
+     "length": 5,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspBizTransacDocTypeCode",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Document Type",
+     "@Common.Heading": "Document Type for Business Transaction",
+     "@Common.QuickInfo": "Document Type for Business Transaction",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=%2FSCMTMS%2FBTD_TYPE_CODE"
+    },
+    "TranspBaseDocumentItem": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "BTD Item ID"
+    },
+    "TranspBaseDocumentItemType": {
+     "type": "cds.String",
+     "length": 5,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspBizTransacDocItmTypeCode",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Base Doc. Item Type",
+     "@Common.Heading": "Base Document Item Type f. Business Transaction",
+     "@Common.QuickInfo": "Base Document Item Type Code for Business Transaction"
+    },
+    "TranspOrdItemPackageID": {
+     "type": "cds.String",
+     "length": 35,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Package ID"
+    },
+    "ProductUUID": {
+     "type": "cds.UUID",
+     "@Core.Computed": true,
+     "@Common.Label": "Product GUID",
+     "@Common.QuickInfo": "Internal Unique ID of Product",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=CRMT_PRODUCT_GUID_DB"
+    },
+    "ProductID": {
+     "type": "cds.String",
+     "length": 40,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Product",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=PRODUCTNUMBER"
+    },
+    "MaterialFreightGroup": {
+     "type": "cds.String",
+     "length": 8,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Material Freight Grp",
+     "@Common.Heading": "MatFrtGp",
+     "@Common.QuickInfo": "Material Freight Group",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=MFRGR"
+    },
+    "TransportationGroup": {
+     "type": "cds.String",
+     "length": 4,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Transportation Group",
+     "@Common.Heading": "TGroup",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=TRAGR"
+    },
+    "TranspOrdItmMinTemp": {
+     "type": "cds.Decimal",
+     "precision": 7,
+     "scale": 2,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdItemTemperatureUnit"
+     },
+     "@Common.Label": "Min. Temperature",
+     "@Common.Heading": "Minimum Temperature",
+     "@Common.QuickInfo": "Minimum Temperature"
+    },
+    "TranspOrdItmMaxTemp": {
+     "type": "cds.Decimal",
+     "precision": 7,
+     "scale": 2,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdItemTemperatureUnit"
+     },
+     "@Common.Label": "Max. Temperature",
+     "@Common.Heading": "Maximum Temperature",
+     "@Common.QuickInfo": "Maximum Temperature"
+    },
+    "TranspOrdItemTemperatureUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Temperature UoM",
+     "@Common.Heading": "Unit of Measure of Temperatu",
+     "@Common.QuickInfo": "Unit of Measure of Temperature"
+    },
+    "TranspOrdItemQuantity": {
+     "type": "cds.Decimal",
+     "precision": 31,
+     "scale": 14,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdItemQuantityUnit"
+     },
+     "@Common.Label": "Quantity",
+     "@Common.QuickInfo": "Transportation Order Item Quantity"
+    },
+    "TranspOrdItemQuantityUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Quantity UoM",
+     "@Common.QuickInfo": "Transportation Order Item Quantity Unit of Measure"
+    },
+    "TranspOrdItemGrossWeight": {
+     "type": "cds.Decimal",
+     "precision": 31,
+     "scale": 14,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdItemGrossWeightUnit"
+     },
+     "@Common.Label": "Gross Weight",
+     "@Common.QuickInfo": "Transportation Order Item Gross Weight"
+    },
+    "TranspOrdItemGrossWeightUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Gross Weight UoM",
+     "@Common.QuickInfo": "Transportation Order Item Gross Weight Unit of Measure"
+    },
+    "TranspOrdItemGrossVolume": {
+     "type": "cds.Decimal",
+     "precision": 31,
+     "scale": 14,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdItemGrossVolumeUnit"
+     },
+     "@Common.Label": "Gross Volume",
+     "@Common.QuickInfo": "Transportation Order Item Gross Volume"
+    },
+    "TranspOrdItemGrossVolumeUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item Gross Volume Unit",
+     "@Common.QuickInfo": "Transportation Order Item Gross Volume Unit"
+    },
+    "TranspOrdItemNetWeight": {
+     "type": "cds.Decimal",
+     "precision": 31,
+     "scale": 14,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdItemNetWeightUnit"
+     },
+     "@Common.Label": "Net Weight",
+     "@Common.QuickInfo": "Transportation Order Item Net Weight"
+    },
+    "TranspOrdItemNetWeightUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Net Weight UoM",
+     "@Common.QuickInfo": "Transportation Order Item Net Weight Unit of Measure"
+    },
+    "TranspOrdItemDngrsGdsSts": {
+     "type": "cds.String",
+     "length": 1,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrdDangerousGoodsStatus",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Item Dangerous Goods Status",
+     "@Common.QuickInfo": "Transportation Order Item Dangerous Goods Status"
+    },
+    "SAP__Messages": {
+     "items": {
+      "type": "CE_FREIGHTUNIT_0001.SAP__Message",
+      "notNull": true
+     }
+    },
+    "_FreightUnit": {
+     "type": "cds.Association",
+     "target": "CE_FREIGHTUNIT_0001.FreightUnit",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightUnit",
+        "TransportationOrderUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TransportationOrderUUID"
+       ]
+      }
+     ]
+    },
+    "_FreightUnitItemBatch": {
+     "type": "cds.Composition",
+     "target": "CE_FREIGHTUNIT_0001.FreightUnitItemBatch",
+     "cardinality": {
+      "max": "*"
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightUnitItemBatch",
+        "_FreightUnitItem"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "$self"
+       ]
+      }
+     ],
+     "@Common.Composition": true,
+     "@Validation.MaxItems": 1
+    },
+    "_FreightUnitItemCommodityCode": {
+     "type": "cds.Composition",
+     "target": "CE_FREIGHTUNIT_0001.FreightUnitItemCommodityCode",
+     "cardinality": {
+      "max": "*"
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightUnitItemCommodityCode",
+        "_FreightUnitItem"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "$self"
+       ]
+      }
+     ],
+     "@Common.Composition": true
+    },
+    "_FreightUnitItemDocRef": {
+     "type": "cds.Composition",
+     "target": "CE_FREIGHTUNIT_0001.FreightUnitItemDocRef",
+     "cardinality": {
+      "max": "*"
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightUnitItemDocRef",
+        "_FreightUnitItem"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "$self"
+       ]
+      }
+     ],
+     "@Common.Composition": true
+    },
+    "_FreightUnitItemSerialNumber": {
+     "type": "cds.Composition",
+     "target": "CE_FREIGHTUNIT_0001.FreightUnitItemSerialNumber",
+     "cardinality": {
+      "max": "*"
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightUnitItemSerialNumber",
+        "_FreightUnitItem"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "$self"
+       ]
+      }
+     ],
+     "@Common.Composition": true
+    }
+   },
+   "@Common.Label": "Freight Unit Item",
+   "@Common.Messages": {
+    "=": "SAP__Messages"
+   },
+   "@Capabilities.NavigationRestrictions.RestrictedProperties": [
+    {
+     "NavigationProperty": {
+      "=": "_FreightUnit"
+     },
+     "DeepUpdateSupport": {
+      "Supported": false
+     }
+    }
+   ],
+   "@Capabilities.SearchRestrictions.Searchable": false,
+   "@Capabilities.UpdateRestrictions.DeltaUpdateSupported": true,
+   "@Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties": [
+    "_FreightUnit",
+    "_FreightUnitItemBatch",
+    "_FreightUnitItemCommodityCode",
+    "_FreightUnitItemDocRef",
+    "_FreightUnitItemSerialNumber"
+   ],
+   "@Capabilities.UpdateRestrictions.QueryOptions.SelectSupported": true,
+   "@Capabilities.DeepUpdateSupport.ContentIDSupported": true,
+   "@Capabilities.InsertRestrictions.Insertable": false,
+   "@Capabilities.DeleteRestrictions.Deletable": false,
+   "@Core.OptimisticConcurrency": [
+    "_FreightUnit/ChangedDateTime"
+   ],
+   "@Capabilities.FilterRestrictions.FilterExpressionRestrictions": [
+    {
+     "Property": {
+      "=": "TranspOrdItmMinTemp"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdItmMaxTemp"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdItemQuantity"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdItemGrossWeight"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdItemGrossVolume"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdItemNetWeight"
+     },
+     "AllowedExpressions": "MultiValue"
+    }
+   ]
+  },
+  "CE_FREIGHTUNIT_0001.FreightUnitItemBatch": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "TranspOrdItemBatchUUID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item Batch UUID",
+     "@Common.QuickInfo": "Transportation Order Item Batch UUID"
+    },
+    "TransportationOrderItemUUID": {
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item UUID",
+     "@Common.QuickInfo": "Transportation Order Item UUID"
+    },
+    "TransportationOrderUUID": {
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Transportation Order UUID"
+    },
+    "Batch": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Batch",
+     "@Common.QuickInfo": "Batch Number",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=CHARG_D"
+    },
+    "ProductID": {
+     "type": "cds.String",
+     "length": 40,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Product",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=PRODUCTNUMBER"
+    },
+    "BatchBySupplier": {
+     "type": "cds.String",
+     "length": 15,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Supplier Batch",
+     "@Common.QuickInfo": "Supplier Batch Number",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=LICHN"
+    },
+    "ManufactureDate": {
+     "type": "cds.Date",
+     "@Common.Label": "Date of Manufacture",
+     "@Common.Heading": "Manuf. Dte"
+    },
+    "ShelfLifeExpirationDate": {
+     "type": "cds.Date",
+     "@Common.Label": "SLED/BBD",
+     "@Common.QuickInfo": "Shelf Life Expiration or Best-Before Date",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=VFDAT"
+    },
+    "_FreightUnit": {
+     "type": "cds.Association",
+     "target": "CE_FREIGHTUNIT_0001.FreightUnit",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightUnit",
+        "TransportationOrderUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TransportationOrderUUID"
+       ]
+      }
+     ]
+    },
+    "_FreightUnitItem": {
+     "type": "cds.Association",
+     "target": "CE_FREIGHTUNIT_0001.FreightUnitItem",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightUnitItem",
+        "TransportationOrderItemUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TransportationOrderItemUUID"
+       ]
+      }
+     ]
+    }
+   },
+   "@Common.Label": "Freight Unit Item Batch",
+   "@Capabilities.NavigationRestrictions.RestrictedProperties": [
+    {
+     "NavigationProperty": {
+      "=": "_FreightUnit"
+     },
+     "DeepUpdateSupport": {
+      "Supported": false
+     }
+    },
+    {
+     "NavigationProperty": {
+      "=": "_FreightUnitItem"
+     },
+     "DeepUpdateSupport": {
+      "Supported": false
+     }
+    }
+   ],
+   "@Capabilities.SearchRestrictions.Searchable": false,
+   "@Capabilities.InsertRestrictions.Insertable": false,
+   "@Capabilities.DeleteRestrictions.Deletable": false,
+   "@Capabilities.UpdateRestrictions.Updatable": false,
+   "@Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties": [
+    "_FreightUnit",
+    "_FreightUnitItem"
+   ],
+   "@Capabilities.UpdateRestrictions.QueryOptions.SelectSupported": true
+  },
+  "CE_FREIGHTUNIT_0001.FreightUnitItemCommodityCode": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "TranspOrdItemCommodityCodeUUID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item Commodity Code UUID",
+     "@Common.QuickInfo": "Transportation Order Item Commodity Code UUID"
+    },
+    "TransportationOrderItemUUID": {
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item UUID",
+     "@Common.QuickInfo": "Transportation Order Item UUID"
+    },
+    "TransportationOrderUUID": {
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Transportation Order UUID"
+    },
+    "TranspOrdItemCommodityCode": {
+     "type": "cds.String",
+     "length": 30,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Commodity Code",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=%2FSCMTMS%2FCOMMODITY_CODE"
+    },
+    "TrOrdItmCmmdtyCodeNmbrngSchm": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Numbering Scheme",
+     "@Common.Heading": "Numbering Scheme for Commodity Codes for Transportation",
+     "@Common.QuickInfo": "Numbering Scheme for Commodity Codes for Transportation",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=%2FSCMTMS%2FSTCTS"
+    },
+    "_FreightUnit": {
+     "type": "cds.Association",
+     "target": "CE_FREIGHTUNIT_0001.FreightUnit",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightUnit",
+        "TransportationOrderUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TransportationOrderUUID"
+       ]
+      }
+     ]
+    },
+    "_FreightUnitItem": {
+     "type": "cds.Association",
+     "target": "CE_FREIGHTUNIT_0001.FreightUnitItem",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightUnitItem",
+        "TransportationOrderItemUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TransportationOrderItemUUID"
+       ]
+      }
+     ]
+    }
+   },
+   "@Common.Label": "Freight Unit Item Commodity Code",
+   "@Capabilities.NavigationRestrictions.RestrictedProperties": [
+    {
+     "NavigationProperty": {
+      "=": "_FreightUnit"
+     },
+     "DeepUpdateSupport": {
+      "Supported": false
+     }
+    },
+    {
+     "NavigationProperty": {
+      "=": "_FreightUnitItem"
+     },
+     "DeepUpdateSupport": {
+      "Supported": false
+     }
+    }
+   ],
+   "@Capabilities.SearchRestrictions.Searchable": false,
+   "@Capabilities.InsertRestrictions.Insertable": false,
+   "@Capabilities.DeleteRestrictions.Deletable": false,
+   "@Capabilities.UpdateRestrictions.Updatable": false,
+   "@Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties": [
+    "_FreightUnit",
+    "_FreightUnitItem"
+   ],
+   "@Capabilities.UpdateRestrictions.QueryOptions.SelectSupported": true
+  },
+  "CE_FREIGHTUNIT_0001.FreightUnitItemDocRef": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "TranspOrdItemDocReferenceUUID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item Document Reference UUID",
+     "@Common.QuickInfo": "Transportation Order Item Document Reference UUID"
+    },
+    "TransportationOrderItemUUID": {
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item UUID",
+     "@Common.QuickInfo": "Transportation Order Item UUID"
+    },
+    "TransportationOrderUUID": {
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Transportation Order UUID"
+    },
+    "TranspOrdItemDocReferenceID": {
+     "type": "cds.String",
+     "length": 35,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Business Tr. Doc. ID",
+     "@Common.Heading": "Business Transaction Document ID",
+     "@Common.QuickInfo": "Bus. Trans. Document ID"
+    },
+    "TranspOrdItemDocReferenceType": {
+     "type": "cds.String",
+     "length": 5,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspBizTransacDocTypeCode",
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Document Type",
+     "@Common.Heading": "Document Type for Business Transaction",
+     "@Common.QuickInfo": "Document Type for Business Transaction",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=%2FSCMTMS%2FBTD_TYPE_CODE"
+    },
+    "TranspOrdItmDocReferenceItemID": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "BTD Item ID"
+    },
+    "TranspOrdItmDocRefItemType": {
+     "type": "cds.String",
+     "length": 5,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspBizTransacDocItmTypeCode",
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "BTD Item Type Code",
+     "@Common.Heading": "Business Transaction Document Item Type Code",
+     "@Common.QuickInfo": "Business Transaction Document Item Type Code",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=%2FSCMTMS%2FBTD_ITEM_TYPECODE"
+    },
+    "TranspOrdItmDocRefDate": {
+     "type": "cds.Date",
+     "@Common.Label": "Business Tr. DocDate",
+     "@Common.Heading": "Business Transaction Document Date",
+     "@Common.QuickInfo": "Business Transaction Document Date"
+    },
+    "TranspOrdItemDocRefIssuerName": {
+     "type": "cds.String",
+     "length": 40,
+     "notNull": true,
+     "@Common.Label": "Issuing Party",
+     "@Common.Heading": "Issuing Party of Bus. Trans. Document",
+     "@Common.QuickInfo": "Issuing Party of Business Transaction Document"
+    },
+    "_FreightUnit": {
+     "type": "cds.Association",
+     "target": "CE_FREIGHTUNIT_0001.FreightUnit",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightUnit",
+        "TransportationOrderUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TransportationOrderUUID"
+       ]
+      }
+     ]
+    },
+    "_FreightUnitItem": {
+     "type": "cds.Association",
+     "target": "CE_FREIGHTUNIT_0001.FreightUnitItem",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightUnitItem",
+        "TransportationOrderItemUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TransportationOrderItemUUID"
+       ]
+      }
+     ]
+    }
+   },
+   "@Common.Label": "Freight Unit Item Document Reference",
+   "@Capabilities.NavigationRestrictions.RestrictedProperties": [
+    {
+     "NavigationProperty": {
+      "=": "_FreightUnit"
+     },
+     "DeepUpdateSupport": {
+      "Supported": false
+     }
+    },
+    {
+     "NavigationProperty": {
+      "=": "_FreightUnitItem"
+     },
+     "DeepUpdateSupport": {
+      "Supported": false
+     }
+    }
+   ],
+   "@Capabilities.SearchRestrictions.Searchable": false,
+   "@Capabilities.InsertRestrictions.Insertable": false,
+   "@Capabilities.DeleteRestrictions.Deletable": false,
+   "@Capabilities.UpdateRestrictions.Updatable": false,
+   "@Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties": [
+    "_FreightUnit",
+    "_FreightUnitItem"
+   ],
+   "@Capabilities.UpdateRestrictions.QueryOptions.SelectSupported": true,
+   "@Core.OptimisticConcurrency": [
+    "_FreightUnit/ChangedDateTime"
+   ]
+  },
+  "CE_FREIGHTUNIT_0001.FreightUnitItemSerialNumber": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "TranspOrdItemSerialNumberUUID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item Serial Number UUID",
+     "@Common.QuickInfo": "Transportation Order Item Serial Number UUID"
+    },
+    "TransportationOrderUUID": {
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Transportation Order UUID"
+    },
+    "TransportationOrderItemUUID": {
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item UUID",
+     "@Common.QuickInfo": "Transportation Order Item UUID"
+    },
+    "TranspOrdItemSerialNumber": {
+     "type": "cds.String",
+     "length": 30,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Item Serial Number",
+     "@Common.QuickInfo": "Transportation Order Item Serial Number"
+    },
+    "_FreightUnit": {
+     "type": "cds.Association",
+     "target": "CE_FREIGHTUNIT_0001.FreightUnit",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightUnit",
+        "TransportationOrderUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TransportationOrderUUID"
+       ]
+      }
+     ]
+    },
+    "_FreightUnitItem": {
+     "type": "cds.Association",
+     "target": "CE_FREIGHTUNIT_0001.FreightUnitItem",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightUnitItem",
+        "TransportationOrderItemUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TransportationOrderItemUUID"
+       ]
+      }
+     ]
+    }
+   },
+   "@Common.Label": "Freight Unit Item Serial Number",
+   "@Capabilities.NavigationRestrictions.RestrictedProperties": [
+    {
+     "NavigationProperty": {
+      "=": "_FreightUnit"
+     },
+     "DeepUpdateSupport": {
+      "Supported": false
+     }
+    },
+    {
+     "NavigationProperty": {
+      "=": "_FreightUnitItem"
+     },
+     "DeepUpdateSupport": {
+      "Supported": false
+     }
+    }
+   ],
+   "@Capabilities.SearchRestrictions.Searchable": false,
+   "@Capabilities.InsertRestrictions.Insertable": false,
+   "@Capabilities.DeleteRestrictions.Deletable": false,
+   "@Capabilities.UpdateRestrictions.Updatable": false,
+   "@Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties": [
+    "_FreightUnit",
+    "_FreightUnitItem"
+   ],
+   "@Capabilities.UpdateRestrictions.QueryOptions.SelectSupported": true
+  },
+  "CE_FREIGHTUNIT_0001.FreightUnitStage": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "TransportationOrderStageUUID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Stage UUID",
+     "@Common.QuickInfo": "Transportation Order Stage UUID"
+    },
+    "TransportationOrderUUID": {
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Transportation Order UUID"
+    },
+    "TransportationOrderStage": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Stage",
+     "@Common.QuickInfo": "Transportation Order Stage"
+    },
+    "TranspOrdStageType": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TransportationOrderStageType",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Stage Type",
+     "@Common.QuickInfo": "Transportation Order Stage Type"
+    },
+    "TranspOrdStageCategory": {
+     "type": "cds.String",
+     "length": 1,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrderStageCategory",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Stage Category",
+     "@Common.QuickInfo": "Transportation Order Stage Category"
+    },
+    "TranspOrdStageDistance": {
+     "type": "cds.Decimal",
+     "precision": 28,
+     "scale": 6,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdStageDistanceUnit"
+     },
+     "@Common.Label": "Stage Distance",
+     "@Common.QuickInfo": "Transportation Order Stage Distance"
+    },
+    "TranspOrdStageDistanceUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.IsUnit": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Stage Distance Unit",
+     "@Common.QuickInfo": "Transportation Order Stage Distance Unit"
+    },
+    "TranspOrdStageNetDuration": {
+     "type": "cds.Decimal",
+     "precision": 11,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Stage Net Duration",
+     "@Common.QuickInfo": "Transportation Order Stage Net Duration in hhmmss"
+    },
+    "TranspOrdStageSrceStopUUID": {
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Stage Source Stop UUID",
+     "@Common.QuickInfo": "Transportation Order Stage Source Stop UUID"
+    },
+    "TranspOrdStageDestStopUUID": {
+     "type": "cds.UUID",
+     "@Core.Computed": true,
+     "@Common.Label": "Stage Destination Stop UUID",
+     "@Common.QuickInfo": "Transportation Order Stage Destination Stop UUID"
+    },
+    "SAP__Messages": {
+     "items": {
+      "type": "CE_FREIGHTUNIT_0001.SAP__Message",
+      "notNull": true
+     }
+    },
+    "_FreightUnit": {
+     "type": "cds.Association",
+     "target": "CE_FREIGHTUNIT_0001.FreightUnit",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightUnit",
+        "TransportationOrderUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TransportationOrderUUID"
+       ]
+      }
+     ]
+    },
+    "_FreightUnitStop": {
+     "type": "cds.Association",
+     "target": "CE_FREIGHTUNIT_0001.FreightUnitStop",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightUnitStop",
+        "TransportationOrderStopUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TranspOrdStageSrceStopUUID"
+       ]
+      }
+     ]
+    }
+   },
+   "@Common.Label": "Freight Unit Stage",
+   "@Common.Messages": {
+    "=": "SAP__Messages"
+   },
+   "@Capabilities.NavigationRestrictions.RestrictedProperties": [
+    {
+     "NavigationProperty": {
+      "=": "_FreightUnit"
+     },
+     "DeepUpdateSupport": {
+      "Supported": false
+     }
+    }
+   ],
+   "@Capabilities.SearchRestrictions.Searchable": false,
+   "@Capabilities.UpdateRestrictions.DeltaUpdateSupported": true,
+   "@Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties": [
+    "_FreightUnit",
+    "_FreightUnitStop"
+   ],
+   "@Capabilities.UpdateRestrictions.QueryOptions.SelectSupported": true,
+   "@Capabilities.DeepUpdateSupport.ContentIDSupported": true,
+   "@Capabilities.InsertRestrictions.Insertable": false,
+   "@Capabilities.DeleteRestrictions.Deletable": false,
+   "@Core.OptimisticConcurrency": [
+    "_FreightUnit/ChangedDateTime"
+   ],
+   "@Capabilities.FilterRestrictions.FilterExpressionRestrictions": [
+    {
+     "Property": {
+      "=": "TranspOrdStageDistance"
+     },
+     "AllowedExpressions": "MultiValue"
+    }
+   ]
+  },
+  "CE_FREIGHTUNIT_0001.FreightUnitStop": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "TransportationOrderStopUUID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Stop UUID",
+     "@Common.QuickInfo": "Transportation Order Stop UUID"
+    },
+    "TransportationOrderUUID": {
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Transportation Order UUID"
+    },
+    "TransportationOrderStop": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Stop",
+     "@Common.QuickInfo": "Transportation Order Stop"
+    },
+    "TranspOrdStopCategory": {
+     "type": "cds.String",
+     "length": 1,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrderStopCategory",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Stop Category"
+    },
+    "TranspOrdStopRole": {
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TransportationOrderStopRole",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Role of the Stop"
+    },
+    "LocationAdditionalUUID": {
+     "type": "cds.UUID",
+     "@Common.Label": "Location Additional UUID",
+     "@Common.QuickInfo": "Location Additional UUID (RAW 16)"
+    },
+    "LocationId": {
+     "type": "cds.String",
+     "length": 20,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Location"
+    },
+    "LocationUNCode": {
+     "type": "cds.String",
+     "length": 5,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "UN/LOCODE",
+     "@Common.QuickInfo": "United Nations Code for Trade and Transport Locations",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=%2FSCMTMS%2FLOC_UNLOCODE"
+    },
+    "LocationIATACode": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Airport Code"
+    },
+    "TranspOrdStopAccptblStrtDteTme": {
+     "type": "cds.DateTime",
+     "@odata.Precision": 0,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@Common.Label": "Acceptable Start Date/Time at Stop"
+    },
+    "TranspOrdStopReqStartDteTme": {
+     "type": "cds.DateTime",
+     "@odata.Precision": 0,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@Common.Label": "Requested Start Date/Time at Stop"
+    },
+    "TranspOrdStopReqEndDteTme": {
+     "type": "cds.DateTime",
+     "@odata.Precision": 0,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@Common.Label": "Requested End Date/Time at Stop"
+    },
+    "TranspOrdStopAccptblEndDteTme": {
+     "type": "cds.DateTime",
+     "@odata.Precision": 0,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@Common.Label": "Acceptable End Date/Time at Stop"
+    },
+    "TranspOrdStopDteTme": {
+     "type": "cds.DateTime",
+     "@odata.Precision": 0,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@Core.Computed": true,
+     "@Common.Label": "Actual Event Date/Time",
+     "@Common.QuickInfo": "Actual Date/Time of Event"
+    },
+    "TranspOrdStopSequencePosition": {
+     "type": "cds.String",
+     "length": 1,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Stop Position",
+     "@Common.Heading": "Stop Position in Transportation Stop Sequence",
+     "@Common.QuickInfo": "Stop Position in Transportation Stop Sequence"
+    },
+    "TranspOrdCapacityStopUUID": {
+     "type": "cds.UUID",
+     "@Core.Computed": true,
+     "@Common.Label": "Capacity Stop UUID",
+     "@Common.QuickInfo": "Transportation Order Capacity Stop UUID"
+    },
+    "TranspOrdStopCapacityItemUUID": {
+     "type": "cds.UUID",
+     "@Core.Computed": true,
+     "@Common.Label": "Stop Capacity Item UUID",
+     "@Common.QuickInfo": "Transportation Order Stop Capacity Item UUID"
+    },
+    "TranspOrdStopExecIsBlocked": {
+     "type": "cds.Boolean",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Execution Block",
+     "@Common.QuickInfo": "Transportation Order Execution Block"
+    },
+    "_FreightUnit": {
+     "type": "cds.Association",
+     "target": "CE_FREIGHTUNIT_0001.FreightUnit",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightUnit",
+        "TransportationOrderUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TransportationOrderUUID"
+       ]
+      }
+     ]
+    },
+    "_FreightUnitStage": {
+     "type": "cds.Composition",
+     "target": "CE_FREIGHTUNIT_0001.FreightUnitStage",
+     "cardinality": {
+      "max": "*"
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightUnitStage",
+        "_FreightUnitStop"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "$self"
+       ]
+      }
+     ],
+     "@Common.Composition": true,
+     "@Validation.MaxItems": 1
+    },
+    "_FrtUnitStopLocAddrDfltRprstn": {
+     "type": "cds.Composition",
+     "target": "CE_FREIGHTUNIT_0001.FrtUnitStopLocAddrDfltRprstn",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FrtUnitStopLocAddrDfltRprstn",
+        "_FreightUnitStop"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "$self"
+       ]
+      }
+     ],
+     "@Common.Composition": true
+    }
+   },
+   "@Common.Label": "Freight Unit Stop",
+   "@Capabilities.NavigationRestrictions.RestrictedProperties": [
+    {
+     "NavigationProperty": {
+      "=": "_FreightUnit"
+     },
+     "DeepUpdateSupport": {
+      "Supported": false
+     }
+    }
+   ],
+   "@Capabilities.SearchRestrictions.Searchable": false,
+   "@Capabilities.InsertRestrictions.Insertable": false,
+   "@Capabilities.DeleteRestrictions.Deletable": false,
+   "@Capabilities.UpdateRestrictions.Updatable": false,
+   "@Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties": [
+    "_FreightUnit",
+    "_FreightUnitStage",
+    "_FrtUnitStopLocAddrDfltRprstn"
+   ],
+   "@Capabilities.UpdateRestrictions.QueryOptions.SelectSupported": true,
+   "@Core.OptimisticConcurrency": [
+    "_FreightUnit/ChangedDateTime"
+   ]
+  },
+  "CE_FREIGHTUNIT_0001.FrtUnitBPAddrAddlRprstn": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "TransportationOrderBusPartUUID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "NodeID"
+    },
+    "AddressRepresentationCode": {
+     "key": true,
+     "type": "cds.String",
+     "length": 1,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Address Version",
+     "@Common.Heading": "Version",
+     "@Common.QuickInfo": "Version ID for International Addresses",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_NATION"
+    },
+    "TransportationOrderUUID": {
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Transportation Order UUID"
+    },
+    "AddressID": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Address Number",
+     "@Common.Heading": "Addr. No.",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_ADDRNUM"
+    },
+    "AddresseeFullName": {
+     "type": "cds.String",
+     "length": 80,
+     "notNull": true,
+     "@Common.Label": "Full Name",
+     "@Common.QuickInfo": "Full Name of Person",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_NAMTEXT"
+    },
+    "CityName": {
+     "type": "cds.String",
+     "length": 40,
+     "notNull": true,
+     "@Common.Label": "City",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_CITY1"
+    },
+    "PostalCode": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Postal Code",
+     "@Common.Heading": "Post. Code",
+     "@Common.QuickInfo": "City Postal Code",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_PSTCD1"
+    },
+    "StreetName": {
+     "type": "cds.String",
+     "length": 60,
+     "notNull": true,
+     "@Common.Label": "Street",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_STREET"
+    },
+    "HouseNumber": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.Label": "House Number",
+     "@Common.Heading": "House No.",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_HSNM1"
+    },
+    "Country": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Country/Region Key",
+     "@Common.Heading": "C/R",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=LAND1"
+    },
+    "Region": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Region",
+     "@Common.Heading": "Rg",
+     "@Common.QuickInfo": "Region (State, Province, County)",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=REGIO"
+    },
+    "_FreightUnit": {
+     "type": "cds.Association",
+     "target": "CE_FREIGHTUNIT_0001.FreightUnit",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightUnit",
+        "TransportationOrderUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TransportationOrderUUID"
+       ]
+      }
+     ]
+    },
+    "_FrtUnitBPAddrDfltRprstn": {
+     "type": "cds.Association",
+     "target": "CE_FREIGHTUNIT_0001.FrtUnitBPAddrDfltRprstn",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FrtUnitBPAddrDfltRprstn",
+        "TransportationOrderBusPartUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TransportationOrderBusPartUUID"
+       ]
+      }
+     ]
+    }
+   },
+   "@Common.Label": "Freight Unit BP Addr Addl Rprstn",
+   "@Capabilities.NavigationRestrictions.RestrictedProperties": [
+    {
+     "NavigationProperty": {
+      "=": "_FreightUnit"
+     },
+     "DeepUpdateSupport": {
+      "Supported": false
+     }
+    }
+   ],
+   "@Capabilities.SearchRestrictions.Searchable": false,
+   "@Capabilities.InsertRestrictions.Insertable": false,
+   "@Capabilities.DeleteRestrictions.Deletable": false,
+   "@Capabilities.UpdateRestrictions.Updatable": false,
+   "@Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties": [
+    "_FreightUnit",
+    "_FrtUnitBPAddrDfltRprstn"
+   ],
+   "@Capabilities.UpdateRestrictions.QueryOptions.SelectSupported": true
+  },
+  "CE_FREIGHTUNIT_0001.FrtUnitBPAddrDfltRprstn": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "TransportationOrderBusPartUUID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "NodeID"
+    },
+    "TransportationOrderUUID": {
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Transportation Order UUID"
+    },
+    "AddressID": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Address Number",
+     "@Common.Heading": "Addr. No.",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_ADDRNUM"
+    },
+    "AddresseeFullName": {
+     "type": "cds.String",
+     "length": 80,
+     "notNull": true,
+     "@Common.Label": "Full Name",
+     "@Common.QuickInfo": "Full Name of Person",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_NAMTEXT"
+    },
+    "CityName": {
+     "type": "cds.String",
+     "length": 40,
+     "notNull": true,
+     "@Common.Label": "City",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_CITY1"
+    },
+    "PostalCode": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Postal Code",
+     "@Common.Heading": "Post. Code",
+     "@Common.QuickInfo": "City Postal Code",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_PSTCD1"
+    },
+    "StreetName": {
+     "type": "cds.String",
+     "length": 60,
+     "notNull": true,
+     "@Common.Label": "Street",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_STREET"
+    },
+    "HouseNumber": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.Label": "House Number",
+     "@Common.Heading": "House No.",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_HSNM1"
+    },
+    "Country": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Country/Region Key",
+     "@Common.Heading": "C/R",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=LAND1"
+    },
+    "Region": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Region",
+     "@Common.Heading": "Rg",
+     "@Common.QuickInfo": "Region (State, Province, County)",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=REGIO"
+    },
+    "EmailAddress": {
+     "type": "cds.String",
+     "length": 241,
+     "notNull": true,
+     "@Common.Label": "Email Address",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_SMTPADR"
+    },
+    "InternationalPhoneNumber": {
+     "type": "cds.String",
+     "length": 30,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Telephone Number",
+     "@Common.QuickInfo": "Complete Number: Dialing Code+Number+Extension",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_TELNRLG"
+    },
+    "InternationalMobilePhoneNumber": {
+     "type": "cds.String",
+     "length": 30,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Telephone Number",
+     "@Common.QuickInfo": "Complete Number: Dialing Code+Number+Extension",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_TELNRLG"
+    },
+    "InternationalFaxNumber": {
+     "type": "cds.String",
+     "length": 30,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Fax Number",
+     "@Common.QuickInfo": "Complete Number: Dialing Code+Number+Extension",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_FXNRLNG"
+    },
+    "_FreightUnit": {
+     "type": "cds.Association",
+     "target": "CE_FREIGHTUNIT_0001.FreightUnit",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightUnit",
+        "TransportationOrderUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TransportationOrderUUID"
+       ]
+      }
+     ]
+    },
+    "_FreightUnitBusinessPartner": {
+     "type": "cds.Association",
+     "target": "CE_FREIGHTUNIT_0001.FreightUnitBusinessPartner",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightUnitBusinessPartner",
+        "TransportationOrderBusPartUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TransportationOrderBusPartUUID"
+       ]
+      }
+     ]
+    },
+    "_FrtUnitBPAddrAddlRprstn": {
+     "type": "cds.Composition",
+     "target": "CE_FREIGHTUNIT_0001.FrtUnitBPAddrAddlRprstn",
+     "cardinality": {
+      "max": "*"
+     },
+     "on": [
+      {
+       "ref": [
+        "_FrtUnitBPAddrAddlRprstn",
+        "_FrtUnitBPAddrDfltRprstn"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "$self"
+       ]
+      }
+     ],
+     "@Common.Composition": true
+    }
+   },
+   "@Common.Label": "Freight Unit BP Addr Dflt Rprstn",
+   "@Capabilities.NavigationRestrictions.RestrictedProperties": [
+    {
+     "NavigationProperty": {
+      "=": "_FreightUnit"
+     },
+     "DeepUpdateSupport": {
+      "Supported": false
+     }
+    }
+   ],
+   "@Capabilities.SearchRestrictions.Searchable": false,
+   "@Capabilities.InsertRestrictions.Insertable": false,
+   "@Capabilities.DeleteRestrictions.Deletable": false,
+   "@Capabilities.UpdateRestrictions.Updatable": false,
+   "@Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties": [
+    "_FreightUnit",
+    "_FreightUnitBusinessPartner",
+    "_FrtUnitBPAddrAddlRprstn"
+   ],
+   "@Capabilities.UpdateRestrictions.QueryOptions.SelectSupported": true
+  },
+  "CE_FREIGHTUNIT_0001.FrtUnitMainBPAddrAddlRprstn": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "TransportationOrderUUID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Transportation Order UUID"
+    },
+    "TranspOrdBizPartnerFunction": {
+     "key": true,
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Partner Function",
+     "@Common.Heading": "Function"
+    },
+    "AddressRepresentationCode": {
+     "key": true,
+     "type": "cds.String",
+     "length": 1,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Address Version",
+     "@Common.Heading": "Version",
+     "@Common.QuickInfo": "Version ID for International Addresses",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_NATION"
+    },
+    "AddressID": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Address Number",
+     "@Common.Heading": "Addr. No.",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_ADDRNUM"
+    },
+    "AddresseeFullName": {
+     "type": "cds.String",
+     "length": 80,
+     "notNull": true,
+     "@Common.Label": "Full Name",
+     "@Common.QuickInfo": "Full Name of Person",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_NAMTEXT"
+    },
+    "CityName": {
+     "type": "cds.String",
+     "length": 40,
+     "notNull": true,
+     "@Common.Label": "City",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_CITY1"
+    },
+    "PostalCode": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Postal Code",
+     "@Common.Heading": "Post. Code",
+     "@Common.QuickInfo": "City Postal Code",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_PSTCD1"
+    },
+    "StreetName": {
+     "type": "cds.String",
+     "length": 60,
+     "notNull": true,
+     "@Common.Label": "Street",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_STREET"
+    },
+    "HouseNumber": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.Label": "House Number",
+     "@Common.Heading": "House No.",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_HSNM1"
+    },
+    "Country": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Country/Region Key",
+     "@Common.Heading": "C/R",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=LAND1"
+    },
+    "Region": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Region",
+     "@Common.Heading": "Rg",
+     "@Common.QuickInfo": "Region (State, Province, County)",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=REGIO"
+    },
+    "_FreightUnit": {
+     "type": "cds.Association",
+     "target": "CE_FREIGHTUNIT_0001.FreightUnit",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightUnit",
+        "TransportationOrderUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TransportationOrderUUID"
+       ]
+      }
+     ]
+    },
+    "_FrtUnitMainBPAddrDfltRprstn": {
+     "type": "cds.Association",
+     "target": "CE_FREIGHTUNIT_0001.FrtUnitMainBPAddrDfltRprstn",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FrtUnitMainBPAddrDfltRprstn",
+        "TranspOrdBizPartnerFunction"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TranspOrdBizPartnerFunction"
+       ]
+      }
+     ]
+    }
+   },
+   "@Common.Label": "Freight Unit Main BP Addr Addl Rprstn",
+   "@Capabilities.NavigationRestrictions.RestrictedProperties": [
+    {
+     "NavigationProperty": {
+      "=": "_FreightUnit"
+     },
+     "DeepUpdateSupport": {
+      "Supported": false
+     }
+    }
+   ],
+   "@Capabilities.SearchRestrictions.Searchable": false,
+   "@Capabilities.InsertRestrictions.Insertable": false,
+   "@Capabilities.DeleteRestrictions.Deletable": false,
+   "@Capabilities.UpdateRestrictions.Updatable": false,
+   "@Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties": [
+    "_FreightUnit",
+    "_FrtUnitMainBPAddrDfltRprstn"
+   ],
+   "@Capabilities.UpdateRestrictions.QueryOptions.SelectSupported": true
+  },
+  "CE_FREIGHTUNIT_0001.FrtUnitMainBPAddrDfltRprstn": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "TransportationOrderUUID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Transportation Order UUID"
+    },
+    "TranspOrdBizPartnerFunction": {
+     "key": true,
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Partner Function",
+     "@Common.Heading": "Function"
+    },
+    "AddressID": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Address Number",
+     "@Common.Heading": "Addr. No.",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_ADDRNUM"
+    },
+    "AddresseeFullName": {
+     "type": "cds.String",
+     "length": 80,
+     "notNull": true,
+     "@Common.Label": "Full Name",
+     "@Common.QuickInfo": "Full Name of Person",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_NAMTEXT"
+    },
+    "CityName": {
+     "type": "cds.String",
+     "length": 40,
+     "notNull": true,
+     "@Common.Label": "City",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_CITY1"
+    },
+    "PostalCode": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Postal Code",
+     "@Common.Heading": "Post. Code",
+     "@Common.QuickInfo": "City Postal Code",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_PSTCD1"
+    },
+    "StreetName": {
+     "type": "cds.String",
+     "length": 60,
+     "notNull": true,
+     "@Common.Label": "Street",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_STREET"
+    },
+    "HouseNumber": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.Label": "House Number",
+     "@Common.Heading": "House No.",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_HSNM1"
+    },
+    "Country": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Country/Region Key",
+     "@Common.Heading": "C/R",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=LAND1"
+    },
+    "Region": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Region",
+     "@Common.Heading": "Rg",
+     "@Common.QuickInfo": "Region (State, Province, County)",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=REGIO"
+    },
+    "EmailAddress": {
+     "type": "cds.String",
+     "length": 241,
+     "notNull": true,
+     "@Common.Label": "Email Address",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_SMTPADR"
+    },
+    "InternationalPhoneNumber": {
+     "type": "cds.String",
+     "length": 30,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Telephone Number",
+     "@Common.QuickInfo": "Complete Number: Dialing Code+Number+Extension",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_TELNRLG"
+    },
+    "InternationalMobilePhoneNumber": {
+     "type": "cds.String",
+     "length": 30,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Telephone Number",
+     "@Common.QuickInfo": "Complete Number: Dialing Code+Number+Extension",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_TELNRLG"
+    },
+    "InternationalFaxNumber": {
+     "type": "cds.String",
+     "length": 30,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Fax Number",
+     "@Common.QuickInfo": "Complete Number: Dialing Code+Number+Extension",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_FXNRLNG"
+    },
+    "_FreightUnit": {
+     "type": "cds.Association",
+     "target": "CE_FREIGHTUNIT_0001.FreightUnit",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightUnit",
+        "TransportationOrderUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TransportationOrderUUID"
+       ]
+      }
+     ]
+    },
+    "_FrtUnitMainBPAddrAddlRprstn": {
+     "type": "cds.Composition",
+     "target": "CE_FREIGHTUNIT_0001.FrtUnitMainBPAddrAddlRprstn",
+     "cardinality": {
+      "max": "*"
+     },
+     "on": [
+      {
+       "ref": [
+        "_FrtUnitMainBPAddrAddlRprstn",
+        "_FrtUnitMainBPAddrDfltRprstn"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "$self"
+       ]
+      }
+     ],
+     "@Common.Composition": true
+    }
+   },
+   "@Common.Label": "Freight Unit Main BP Addr Dflt Rprstn",
+   "@Capabilities.NavigationRestrictions.RestrictedProperties": [
+    {
+     "NavigationProperty": {
+      "=": "_FreightUnit"
+     },
+     "DeepUpdateSupport": {
+      "Supported": false
+     }
+    }
+   ],
+   "@Capabilities.SearchRestrictions.Searchable": false,
+   "@Capabilities.InsertRestrictions.Insertable": false,
+   "@Capabilities.DeleteRestrictions.Deletable": false,
+   "@Capabilities.UpdateRestrictions.Updatable": false,
+   "@Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties": [
+    "_FreightUnit",
+    "_FrtUnitMainBPAddrAddlRprstn"
+   ],
+   "@Capabilities.UpdateRestrictions.QueryOptions.SelectSupported": true
+  },
+  "CE_FREIGHTUNIT_0001.FrtUnitStopLocAddrAddlRprstn": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "TransportationOrderStopUUID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "NodeID"
+    },
+    "AddressRepresentationCode": {
+     "key": true,
+     "type": "cds.String",
+     "length": 1,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Address Version",
+     "@Common.Heading": "Version",
+     "@Common.QuickInfo": "Version ID for International Addresses",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_NATION"
+    },
+    "TransportationOrderUUID": {
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Transportation Order UUID"
+    },
+    "AddressID": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Address Number",
+     "@Common.Heading": "Addr. No.",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_ADDRNUM"
+    },
+    "AddresseeFullName": {
+     "type": "cds.String",
+     "length": 80,
+     "notNull": true,
+     "@Common.Label": "Full Name",
+     "@Common.QuickInfo": "Full Name of Person",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_NAMTEXT"
+    },
+    "CityName": {
+     "type": "cds.String",
+     "length": 40,
+     "notNull": true,
+     "@Common.Label": "City",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_CITY1"
+    },
+    "PostalCode": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Postal Code",
+     "@Common.Heading": "Post. Code",
+     "@Common.QuickInfo": "City Postal Code",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_PSTCD1"
+    },
+    "StreetName": {
+     "type": "cds.String",
+     "length": 60,
+     "notNull": true,
+     "@Common.Label": "Street",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_STREET"
+    },
+    "HouseNumber": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.Label": "House Number",
+     "@Common.Heading": "House No.",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_HSNM1"
+    },
+    "Country": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Country/Region Key",
+     "@Common.Heading": "C/R",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=LAND1"
+    },
+    "Region": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Region",
+     "@Common.Heading": "Rg",
+     "@Common.QuickInfo": "Region (State, Province, County)",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=REGIO"
+    },
+    "_FreightUnit": {
+     "type": "cds.Association",
+     "target": "CE_FREIGHTUNIT_0001.FreightUnit",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightUnit",
+        "TransportationOrderUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TransportationOrderUUID"
+       ]
+      }
+     ]
+    },
+    "_FrtUnitStopLocAddrDfltRprstn": {
+     "type": "cds.Association",
+     "target": "CE_FREIGHTUNIT_0001.FrtUnitStopLocAddrDfltRprstn",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FrtUnitStopLocAddrDfltRprstn",
+        "TransportationOrderStopUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TransportationOrderStopUUID"
+       ]
+      }
+     ]
+    }
+   },
+   "@Common.Label": "Freight Unit Stop Loc Addr Addl Rpn",
+   "@Capabilities.NavigationRestrictions.RestrictedProperties": [
+    {
+     "NavigationProperty": {
+      "=": "_FreightUnit"
+     },
+     "DeepUpdateSupport": {
+      "Supported": false
+     }
+    }
+   ],
+   "@Capabilities.SearchRestrictions.Searchable": false,
+   "@Capabilities.InsertRestrictions.Insertable": false,
+   "@Capabilities.DeleteRestrictions.Deletable": false,
+   "@Capabilities.UpdateRestrictions.Updatable": false,
+   "@Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties": [
+    "_FreightUnit",
+    "_FrtUnitStopLocAddrDfltRprstn"
+   ],
+   "@Capabilities.UpdateRestrictions.QueryOptions.SelectSupported": true
+  },
+  "CE_FREIGHTUNIT_0001.FrtUnitStopLocAddrDfltRprstn": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "TransportationOrderStopUUID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "NodeID"
+    },
+    "TransportationOrderUUID": {
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Transportation Order UUID"
+    },
+    "AddressID": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Address Number",
+     "@Common.Heading": "Addr. No.",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_ADDRNUM"
+    },
+    "AddresseeFullName": {
+     "type": "cds.String",
+     "length": 80,
+     "notNull": true,
+     "@Common.Label": "Full Name",
+     "@Common.QuickInfo": "Full Name of Person",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_NAMTEXT"
+    },
+    "CityName": {
+     "type": "cds.String",
+     "length": 40,
+     "notNull": true,
+     "@Common.Label": "City",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_CITY1"
+    },
+    "PostalCode": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Postal Code",
+     "@Common.Heading": "Post. Code",
+     "@Common.QuickInfo": "City Postal Code",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_PSTCD1"
+    },
+    "StreetName": {
+     "type": "cds.String",
+     "length": 60,
+     "notNull": true,
+     "@Common.Label": "Street",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_STREET"
+    },
+    "HouseNumber": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.Label": "House Number",
+     "@Common.Heading": "House No.",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=AD_HSNM1"
+    },
+    "Country": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Country/Region Key",
+     "@Common.Heading": "C/R",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=LAND1"
+    },
+    "Region": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Region",
+     "@Common.Heading": "Rg",
+     "@Common.QuickInfo": "Region (State, Province, County)",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=REGIO"
+    },
+    "_FreightUnit": {
+     "type": "cds.Association",
+     "target": "CE_FREIGHTUNIT_0001.FreightUnit",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightUnit",
+        "TransportationOrderUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TransportationOrderUUID"
+       ]
+      }
+     ]
+    },
+    "_FreightUnitStop": {
+     "type": "cds.Association",
+     "target": "CE_FREIGHTUNIT_0001.FreightUnitStop",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightUnitStop",
+        "TransportationOrderStopUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TransportationOrderStopUUID"
+       ]
+      }
+     ]
+    },
+    "_FrtUnitStopLocAddrAddlRprstn": {
+     "type": "cds.Composition",
+     "target": "CE_FREIGHTUNIT_0001.FrtUnitStopLocAddrAddlRprstn",
+     "cardinality": {
+      "max": "*"
+     },
+     "on": [
+      {
+       "ref": [
+        "_FrtUnitStopLocAddrAddlRprstn",
+        "_FrtUnitStopLocAddrDfltRprstn"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "$self"
+       ]
+      }
+     ],
+     "@Common.Composition": true
+    }
+   },
+   "@Common.Label": "Freight Unit Stop Loc Addr Dflt Rpn",
+   "@Capabilities.NavigationRestrictions.RestrictedProperties": [
+    {
+     "NavigationProperty": {
+      "=": "_FreightUnit"
+     },
+     "DeepUpdateSupport": {
+      "Supported": false
+     }
+    }
+   ],
+   "@Capabilities.SearchRestrictions.Searchable": false,
+   "@Capabilities.InsertRestrictions.Insertable": false,
+   "@Capabilities.DeleteRestrictions.Deletable": false,
+   "@Capabilities.UpdateRestrictions.Updatable": false,
+   "@Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties": [
+    "_FreightUnit",
+    "_FreightUnitStop",
+    "_FrtUnitStopLocAddrAddlRprstn"
+   ],
+   "@Capabilities.UpdateRestrictions.QueryOptions.SelectSupported": true
+  }
+ }
+}

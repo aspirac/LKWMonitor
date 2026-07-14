@@ -100,6 +100,26 @@
         },
         "csrf": true,
         "csrfInBatch": true
+      },
+      "CE_FREIGHTORDER_0001": {
+        "kind": "odata",
+        "model": "srv/external/CE_FREIGHTORDER_0001",
+        "credentials": {
+          "destination": "LKWBackend",
+          "path": "/sap/opu/odata/sap/CE_FREIGHTORDER_0001"
+        },
+        "csrf": true,
+        "csrfInBatch": true
+      },
+      "CE_FREIGHTUNIT_0001": {
+        "kind": "odata",
+        "model": "srv/external/CE_FREIGHTUNIT_0001",
+        "credentials": {
+          "destination": "LKWBackend",
+          "path": "/sap/opu/odata/sap/CE_FREIGHTUNIT_0001"
+        },
+        "csrf": true,
+        "csrfInBatch": true
       }
     },
     "fiori": {
