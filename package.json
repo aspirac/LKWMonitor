@@ -23,7 +23,7 @@
     "hana": "^0.0.2"
   },
   "devDependencies": {
-    "@cap-js/sqlite": "^2.4.0",
+    "@cap-js/sqlite": "^2.4.1",
     "@sap/cds-dk": "^9.8.4",
     "cds-plugin-ui5": "^0.13.0",
     "mbt": "^1.2.34",
@@ -96,10 +96,22 @@
         "model": "srv/external/API_SALES_ORDER_SRV",
         "credentials": {
           "destination": "LKWBackend",
-          "path": "/sap/opu/odata/sap/API_SALES_ORDER_SRV"
+          "path": "/sap/opu/odata/sap/ZAPI_SALES_ORDER_SRV"
         },
         "csrf": true,
-        "csrfInBatch": true
+        "csrfInBatch": true,
+        "forwardAuthToken": true
+      },
+      "OP_API_SALES_ORDER_SRV_0001": {
+        "kind": "odata-v2",
+        "model": "srv/external/OP_API_SALES_ORDER_SRV_0001",
+        "credentials": {
+          "destination": "LKWBackend",
+          "path": "/sap/opu/odata/sap/OP_API_SALES_ORDER_SRV_0001"
+        },
+        "csrf": true,
+        "csrfInBatch": true,
+        "forwardAuthToken": true
       },
       "CE_FREIGHTORDER_0001": {
         "kind": "odata",

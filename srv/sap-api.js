@@ -1,21 +1,22 @@
+
+
 const cds = require('@sap/cds');
-module.exports = cds.service.impl(async function (srv) {
 
-    const { SalesOrder } = this.entities;
-
-    // connects to the remote service
-    const order = await cds.connect.to('API_SALES_ORDER_SRV');
-
-    // Handle GET call
-    srv.on('READ', 'SalesOrder', async req => {
-
-         console.log("=====>>>>API_SALES_ORDER_SRV>>>" );
-    const order = await cds.connect.to('API_SALES_ORDER_SRV');
-        return order.run(req.query);
-        
-    });
+module.exports = async (srv) => {
+ 
 
     
-
-
-});
+    srv.on('READ', 'SalesOrder', async (req) => {
+        debugger;
+    console.log("=====>>>>API_SALES_ORDER_SRV>>> BEFORE CONNECT" );
+  const s4hana = await cds.connect.to('API_SALES_ORDER_SRV');
+    
+         
+    const { A_SalesOrder } = s4hana.entities;
+    console.log("=====>>>>API_SALES_ORDER_SRV>>>" + s4hana);
+        // Call the OP_API_SALES_ORDER_SRV_0001 service using CQN
+         // return await order.run(SELECT.from(SalesOrder).limit(10));
+          return await s4hana.run(SELECT.from(A_SalesOrder).limit(10));
+   //     return await salesOrderService.run(SELECT.from('API_SALES_ORDER_SRV.A_SalesOrder').limit(10));
+    });
+};

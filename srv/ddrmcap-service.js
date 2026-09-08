@@ -113,7 +113,17 @@ class DDRMService extends cds.ApplicationService {
     }
 
     this._getMessage = function (req, oMessageKey) {
-      const locale = req.locale.substring(0, req.locale.indexOf("_"));;
+
+//var complete_url = window.location.href;
+
+
+      var navLang = navigator.language || navigator.userLanguage ;
+   //   var sValue = jQuery.sap.getUriParameters().get("myUriParam");
+       console.log("=====>>>>LANGUAGE " + navLang+ " ");
+  
+   //   const locale = req.locale.substring(0, req.locale.indexOf("_"));
+      const locale = req.locale;
+            console.log("=====>>>>locale " +  req.locale);
       const loc = ('./i18n/' + 'i18n_' + locale);
       const bundle = new TextBundle(loc, locale);
       return bundle.getText(oMessageKey);

@@ -32,8 +32,8 @@ Learn more at https://cap.cloud.sap/docs/get-started/.
 In order to run the app locally, using sqlite:
 
 - Specify sqlite as the database:
-
-**npm add @cap-js/sqlite **
+npm add @cap-js/sqlite
+** **
 
 IF YOU JUST INSTALLED THE APP FROM GIT Run:
 
@@ -84,6 +84,8 @@ Perform the following:
 **- cf login --sso  # to log on to BTP
  - Choose the space
  -cds add hana – use the hana database
+ MAKE SURE THAT in package.json:
+  "@cap-js/hana": "^2", instead of ^3 !!!
 -	cds add xsuaa
 -	npm install --package-lock-only (For good measure)
 -	cds up
