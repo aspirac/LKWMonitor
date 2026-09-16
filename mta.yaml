@@ -28,6 +28,7 @@ modules:
       - name: ddrm-auth
       - name: ddrm-db
       - name: ddrm-destination
+      - name: ddrm-destination-service
   #      - name: ddrm-attachments
 
   - name: ddrm-db-deployer
@@ -164,6 +165,33 @@ resources:
     requires:
       - name: srv-api
 
+  - name: ddrm-destination-service
+    type: org.cloudfoundry.managed-service
+    parameters:
+      config:
+        HTML5Runtime_enabled: false
+        init_data:
+          instance:
+            destinations:
+            - Authentication: NoAuthentication
+              HTML5.DynamicDestination: true
+              HTML5.ForwardAuthToken: true
+              Name: btp-api
+              ProxyType: Internet
+              Type: HTTP
+              URL: ~{srv-api/srv-url}
+            - Authentication: NoAuthentication
+              Name: ui5
+              ProxyType: Internet
+              Type: HTTP
+              URL: https://ui5.sap.com
+            existing_destinations_policy: update
+        version: 1.0.0
+      service: destination
+      service-name: ddrm-destination-service
+      service-plan: lite
+    requires:
+    - name: srv-api
   - name: ddrm-html5-repo-host
     type: org.cloudfoundry.managed-service
     parameters:

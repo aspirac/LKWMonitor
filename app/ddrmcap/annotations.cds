@@ -52,7 +52,7 @@ annotate service.Process with @(
         {
             $Type : 'UI.DataFieldForAction',
             Action: 'DDRMService.callInterfaceScale',  
-            Label :  '{@i18n>callinterfaceWAAGE}',
+            Label :  '{@i18n>callinterfaceWAAG2}',
         },
        {
             $Type : 'UI.DataFieldForAction',
@@ -395,9 +395,9 @@ annotate service.Process with @(
                 $Type: 'UI.DataField',
                 Value:  to_ProcessSAPDocumentOut
             },
-   
-                 
+        
         ],
+
     },
 
       UI.FieldGroup #AttachmentGroup           : {
@@ -409,7 +409,7 @@ annotate service.Process with @(
                 $Type: 'UI.DataField',
                 Value:  to_ProcessAttachments
             },
-   
+  
                  
         ],
     },
@@ -477,6 +477,7 @@ annotate service.Process with @(
 //            Target: '@UI.FieldGroup#SAPGroup',
               Target: 'to_ProcessSAPDocumentOut/@UI.PresentationVariant',        
         },
+        
      {
          $Type : 'UI.ReferenceFacet',
             ID    : 'SAPInfoIn',
@@ -613,6 +614,7 @@ annotate service.Process with @(
         ]
     }
 );
+
  annotate service.ProcessSAPDocumentOut with @(
     Capabilities.UpdateRestrictions: {Updatable: true},
     UI                             : {
@@ -621,7 +623,16 @@ annotate service.Process with @(
             TypeName      : '{i18n>SapDocumentOut}',
             TypeNamePlural: '{i18n>SapDocumentOut}'
         },
-
+          UI.Identification        : [
+        // Object Page
+                  {
+            $Type : 'UI.DataFieldForAction',
+            Action: 'DDRMService.callSetStatus20',  
+            Label :  '{@i18n>setStatus20}',
+        }
+        
+ 
+    ],
         PresentationVariant           : {
         Visualizations: ['@UI.LineItem'],
   //      SortOrder     : [{
@@ -630,8 +641,10 @@ annotate service.Process with @(
   //          Descending: false
   //      }]
       },
-        
+          
        SelectionFields               : [],
+
+
         LineItem  : [
 
             {

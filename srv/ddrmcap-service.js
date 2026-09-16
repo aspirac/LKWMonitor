@@ -15,7 +15,7 @@ class DDRMService extends cds.ApplicationService {
     /**
      * Reflect definitions from the service's CDS model
      */
-    const { Process, ProcessType, ProcessStatus } = this.entities
+    const { Process, ProcessType, ProcessStatus, SalesOrder } = this.entities
     /**
      * Fill in primary keys for Process.
      * Note: In contrast to Bookings and BookingSupplements that has to happen
@@ -75,32 +75,45 @@ class DDRMService extends cds.ApplicationService {
       console.log("=====>>>>BEFORE CREATE PROCESS SAP DOCUMENT IN>>>");
 
       const { maxID } = await SELECT.one`max(sapDocumentInID) as maxID`.from(ProcessSAPDocumentIn)
+
       console.log("=====>>>>AFTER QUERY PROCESS SAP DOCUMENT IN>>>");
       req.data.sapDocumentInID = maxID + 1;
+      
+     
 
     })
 
     this.before('CREATE', 'ProcessSAPDocumentIn.drafts', async (req) => {
       debugger;
-      const { ProcessSAPDocumentIn } = cds.entities;
-      console.log("=====>>>>BEFORE CREATE PROCESS SAP DOCUMENT IN DRAFTS>>>");
+      const { ProcessSAPDocumentIn, SalesOrder} = cds.entities;
 
+      console.log("=====>>>>BEFORE CREATE PROCESS SAP DOCUMENT IN DRAFTS>>>");
+  
       const { maxID } = await SELECT.one`max(sapDocumentInID) as maxID`.from(ProcessSAPDocumentIn)
       console.log("=====>>>>AFTER QUERY PROCESS SAP DOCUMENT IN>>>");
       req.data.sapDocumentInID = maxID + 1;
 
+        console.log("=====>>>>BEFORE READ SALES ORDER DRAFTS PROCESS SAP DOCUMENT IN>>>");
+
+    
+      const order = await cds.connect.to('API_SALES_ORDER_SRV');
+
+      console.log("=====>>>>AFTER SALES ORDER DRAFTS PROCESS QUERY PROCESS SAP DOCUMENT IN>>>");
+
+
     })
 
-    this.before('CREATE', 'ProcessSAPDocumentOut.drafts', async (req) => {
+        this.before('CREATE', 'ProcessSAPDocumentOut.drafts', async (req) => {
       debugger;
       const { ProcessSAPDocumentOut } = cds.entities;
-      console.log("=====>>>>BEFORE CREATE PROCESS SAP DOCUMENT IN>>>");
+      console.log("=====>>>>BEFORE CREATE PROCESS SAP DOCUMENT OUT>>>");
 
       const { maxID } = await SELECT.one`max(sapDocumentOutID) as maxID`.from(ProcessSAPDocumentOut)
-      console.log("=====>>>>AFTER QUERY PROCESS SAP DOCUMENT IN>>>");
+      console.log("=====>>>>AFTER QUERY PROCESS SAP DOCUMENT OUT>>>");
       req.data.sapDocumentOutID = maxID + 1;
 
     })
+
 
     this._getOdataUrl = function (oData) {
       //   console.log("=====>>>>BEFORE get URL: ");
@@ -333,7 +346,7 @@ class DDRMService extends cds.ApplicationService {
         let dateString = this._getDate();
         let date = new Date();
         let timeString = this._getTime();
-        console.log("=====>>>>UPDATE SCALE Date: >>>" + date);
+        console.log("=====>>>>UPDATE SCALE Date - ddrmcap-service: >>>" + date);
         let messageString = this._getMessage(req, 'BTP_UPDATE_SCALE') + date.toString() + " " + timeString;
         this._infoMessage(messageString, req, "performUpdateScale");
         if (o_weigh == 1) {
