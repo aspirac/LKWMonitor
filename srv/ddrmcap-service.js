@@ -1,12 +1,16 @@
 
 const cds = require('@sap/cds');
 const { redacted } = require('@sap/cds/lib/utils/cds-utils');
+const {cloudSdk}  = require('@sap-cloud-sdk/connectivity');
+
+//import { registerDestination } from '@sap-cloud-sdk/connectivity';
 const { Readable, PassThrough } = require("stream");
 const axios = require('axios');
 const express = require("express");
 const cfenv = require('cfenv');
 const TextBundle = require('@sap/textbundle').TextBundle;
 const { current_transaction_isolation_level } = require('@cap-js/hana/lib/cql-functions');
+const { SELECT } = require('@sap/cds/lib/ql/cds-ql');
 //import { getOdataUrl } from './handlers/utilities.js';
 
 class DDRMService extends cds.ApplicationService {
@@ -72,34 +76,36 @@ class DDRMService extends cds.ApplicationService {
     this.before('CREATE', 'ProcessSAPDocumentIn', async (req) => {
       debugger;
       const { ProcessSAPDocumentIn } = cds.entities;
-      console.log("=====>>>>BEFORE CREATE PROCESS SAP DOCUMENT IN>>>");
+      console.log("=====>>>>BEFORE CREATE PROCESS SAP DOCUMENT IN - NON DRAFT>>>");
 
       const { maxID } = await SELECT.one`max(sapDocumentInID) as maxID`.from(ProcessSAPDocumentIn)
 
       console.log("=====>>>>AFTER QUERY PROCESS SAP DOCUMENT IN>>>");
       req.data.sapDocumentInID = maxID + 1;
-      
-     
+
+
 
     })
 
     this.before('CREATE', 'ProcessSAPDocumentIn.drafts', async (req) => {
       debugger;
-      const { ProcessSAPDocumentIn, SalesOrder} = cds.entities;
+      const { ProcessSAPDocumentIn , SalesOrder} = cds.entities;
+      const { SalesOrderService } = cds.services;
+       debugger;
+       console.log("=====>>>>BEFORE READ SALES ORDER DRAFTS>>>");
+    
+
+
+       const s4 = await cds.connect.to('OP_API_SALES_ORDER_SRV_0001');
+       const data = await s4.read('SalesOrder').limit(10);
+       console.log("=====>>>>AFTER CONNECTION DRAFTS>>>");
+     //  await SELECT.from (SalesOrder).columns ('SalesOrder', 'SalesOrderType');
 
       console.log("=====>>>>BEFORE CREATE PROCESS SAP DOCUMENT IN DRAFTS>>>");
-  
+
       const { maxID } = await SELECT.one`max(sapDocumentInID) as maxID`.from(ProcessSAPDocumentIn)
       console.log("=====>>>>AFTER QUERY PROCESS SAP DOCUMENT IN>>>");
       req.data.sapDocumentInID = maxID + 1;
-
-        console.log("=====>>>>BEFORE READ SALES ORDER DRAFTS PROCESS SAP DOCUMENT IN>>>");
-
-    
-      const order = await cds.connect.to('API_SALES_ORDER_SRV');
-
-      console.log("=====>>>>AFTER SALES ORDER DRAFTS PROCESS QUERY PROCESS SAP DOCUMENT IN>>>");
-
 
     })
 

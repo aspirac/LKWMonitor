@@ -10,12 +10,13 @@
   "main": "webapp/index.html",
   "dependencies": {
     "@cap-js/hana": "^2",
+    "@sap/approuter": "23.0.0",
     "@sap/xssec": "^4"
   },
   "devDependencies": {
     "@sap/cds-dk": "^9",
     "@sap/ux-ui5-tooling": "^1.20.3",
-    "@ui5/cli": "^4.0.16",
+    "@ui5/cli": "^2.14.20",
     "ui5-middleware-simpleproxy": "^3.6.2",
     "ui5-task-zipper": "^3"
   },

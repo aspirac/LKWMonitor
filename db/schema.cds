@@ -1,4 +1,5 @@
 namespace com.jrs.lkwvor;
+using {com.jrs.sapApi as sapApi} from '../srv/sap-api';
 
 using {managed} from '@sap/cds/common';
 // using {Attachments} from '@cap-js/attachments';
@@ -92,6 +93,7 @@ entity ProcessSAPDocumentIn : managed {
     key ID              : UUID    @(Core.Computed: true);
         sapDocumentInID : Integer @Core.Computed;
         to_SapDocument  : Association to SAPDocument;
+  //      to_SalesOrder : Association to sapApi.SalesOrderService.SalesOrder;
         //   DocNumber          : String(30);
         Process         : Association to Process
 }

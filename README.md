@@ -48,7 +48,7 @@ This will create the database
 
 - **Login to BTP using cf login
 - Choose the appropriate space
-- Perform cds watch --profile hybrid**
+- Perform cds serve --profile development --resolve-bindings
 
 
 
@@ -83,7 +83,8 @@ Perform the following:
 
 **- cf login --sso  # to log on to BTP
  - Choose the space
- -cds add hana – use the hana database
+ - cds add hana
+  – use the hana database
  MAKE SURE THAT in package.json:
   "@cap-js/hana": "^2", instead of ^3 !!!
 -	cds add xsuaa
