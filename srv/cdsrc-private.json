@@ -1,0 +1,75 @@
+{
+  "requires": {
+    "[hybrid]": {
+      "LKWMonitor": {
+        "binding": {
+          "type": "cf",
+          "apiEndpoint": "https://api.cf.eu10-004.hana.ondemand.com",
+          "org": "J._Rettenmaier & Söhne GmbH & Co. KG_3mln35294m9lwb9k",
+          "space": "dev_LKWMonitor",
+          "instance": "LKWMonitor",
+          "key": "LKWMonitor-key"
+        },
+        "vcap": {
+          "name": "LKWMonitor"
+        }
+      },
+      "db": {
+        "binding": {
+          "type": "cf",
+          "apiEndpoint": "https://api.cf.eu10-004.hana.ondemand.com",
+          "org": "J._Rettenmaier & Söhne GmbH & Co. KG_3mln35294m9lwb9k",
+          "space": "dev_LKWMonitor",
+          "instance": "ddrm-db",
+          "key": "ddrm-db-key"
+        },
+        "kind": "hana-cloud",
+        "vcap": {
+          "name": "db"
+        }
+      },
+      "destinations": {
+        "binding": {
+          "type": "cf",
+          "apiEndpoint": "https://api.cf.eu10-004.hana.ondemand.com",
+          "org": "J._Rettenmaier & Söhne GmbH & Co. KG_3mln35294m9lwb9k",
+          "space": "dev_LKWMonitor",
+          "instance": "S4HANA_D400",
+          "key": "S4HANA_D400"
+        },
+        "kind": "destinations",
+        "vcap": {
+          "name": "destinations"
+        }
+      },
+      "auth": {
+        "binding": {
+          "type": "cf",
+          "apiEndpoint": "https://api.cf.eu10-004.hana.ondemand.com",
+          "org": "J._Rettenmaier & Söhne GmbH & Co. KG_3mln35294m9lwb9k",
+          "space": "dev_LKWMonitor",
+          "instance": "ddrm-auth",
+          "key": "ddrm-auth-key"
+        },
+        "kind": "mocked",
+        "vcap": {
+          "name": "auth"
+        }
+      },
+      "ddrm": {
+        "binding": {
+          "type": "cf",
+          "apiEndpoint": "https://api.cf.eu10-004.hana.ondemand.com",
+          "org": "J._Rettenmaier & Söhne GmbH & Co. KG_3mln35294m9lwb9k",
+          "space": "dev_LKWMonitor",
+          "instance": "S4HANA_D400",
+          "key": "S4HANA_D400-key"
+        },
+        "vcap": {
+          "name": "ddrm"
+        },
+        "kind": "destinations"
+      }
+    }
+  }
+}
