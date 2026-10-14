@@ -48,6 +48,31 @@ This will create the database
 
 - **Login to BTP using cf login
 - Choose the appropriate space
+cds bind -2 S4HANA_D400
+cds bind -2 lkwMonitor-db
+cds bind -2 ddrm-destination-service
+cds bind -2 ddrm-destination
+cds bind -2 ddrm-auth
+cds bind -2 ddrm-connectivity
+in the file .cdsrc-private.json:
+
+  "auth": {
+        "binding": {
+          "type": "cf",
+          "apiEndpoint": "https://api.cf.eu10-004.hana.ondemand.com",
+          "org": "J._Rettenmaier & Söhne GmbH & Co. KG_3mln35294m9lwb9k",
+          "space": "dev_LKWMonitor",
+          "instance": "ddrm-auth",
+          "key": "ddrm-auth-key"
+        },
+        "kind": "mocked",
+        "vcap": {
+          "name": "auth"
+        }
+      },
+
+Ensure that  "kind": "mocked"
+
 - Perform cds watch --profile hybrid**
 
 
@@ -120,7 +145,7 @@ In order to push the developments to Gitlab do:
 **-	git init
 -	git add .
 -	git commit -m "Push LKWMonitor project to GitLab" 
--	git remote add origin https://github.com/aspirac/LKWMonitor.git
+-	git remote add origin https://github.com/aspirac/LKWMonitorFinal.git
 -	git push 
 
 

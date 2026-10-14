@@ -8,8 +8,8 @@ module.exports = async (srv) => {
     
     srv.on('READ', 'SalesOrder', async (req) => {
         debugger;
-    console.log("=====>>>>API_SALES_ORDER_SRV>>> BEFORE CONNECT" );
-  const s4hana = await cds.connect.to('API_SALES_ORDER_SRV');
+    console.log("=====>>>>API_SALES_ORDER_SRV>>> BEFORE CONNECT READ" );
+    const s4hana = await cds.connect.to('OP_API_SALES_ORDER_SRV_0001');
     
          
     const { A_SalesOrder } = s4hana.entities;
