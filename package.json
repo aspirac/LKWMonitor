@@ -145,7 +145,7 @@
         "model": "srv/external/sap-s4-OP_API_FREIGHTORDER_0001-v1",
              "credentials": {
           "destination": "S4HANA_D400",
-          "path": "/sap/opu/odata4/sap/api_freightorder_2/srvd_a2x/sap/freightorder/0001"
+          "path": "/sap/opu/odata4/sap/api_freightorder_2/srvd_a2x/sap/freightorder/0000"
         },
         "csrf": true,
         "csrfInBatch": true,
