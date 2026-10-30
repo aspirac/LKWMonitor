@@ -14,8 +14,9 @@ module.exports = async (srv) => {
 
         // case 1. Sales orders
 
-        var s4hanaSales = await cds.connect.to('OP_API_SALES_ORDER_SRV_0001');
-        var s4hanaFreight = await cds.connect.to('sap_s4_OP_API_FREIGHTORDER_0001_v1');
+         var s4hanaFreight = await cds.connect.to('sap_s4_OP_API_FREIGHTORDER_0001_v1');
+         var s4hanaSales = await cds.connect.to('OP_API_SALES_ORDER_SRV_0001');
+       
 
         const objectType = req.target.name;
         var result;
