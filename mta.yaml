@@ -89,6 +89,8 @@ modules:
             ProxyType: Internet
             HTML5.ForwardAuthToken: true
             HTML5.DynamicDestination: true
+            ForwardAuthToken: true
+            DynamicDestination: true
 
   - name: ddrmddrmcap
     type: html5
@@ -209,6 +211,12 @@ resources:
     parameters:
       service: hana
       service-plan: hdi-shared
+
+#  - name: ddrm-db
+#    type: com.sap.xs.hdi-container
+#    parameters:
+#      service: hana
+#      service-plan: hdi-shared
 
 #
 #  - name: ddrm-attachments

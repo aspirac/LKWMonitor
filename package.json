@@ -93,22 +93,22 @@
       "portal": false,
       "destinations": true,
       "workzone": true,
-      "OP_API_SALES_ORDER_SRV_0001": {
+      "OP_API_SALES_ORDER_SRV_0000": {
         "kind": "odata-v2",
         "model": "srv/external/OP_API_SALES_ORDER_SRV_0001",
         "credentials": {
           "destination": "S4HANA_D400",
-          "path": "/sap/opu/odata/sap/API_SALES_ORDER_SRV"
+          "path": "/sap/opu/odata/sap/API_SALES_ORDER_SR"
         },
         "csrf": true,
         "csrfInBatch": true,
         "forwardAuthToken": true
       },
-      "CE_FREIGHTORDER_0001": {
+      "CE_FREIGHTORDER_0000": {
         "kind": "odata",
         "model": "srv/external/CE_FREIGHTORDER_0001",
         "credentials": {
-          "destination": "LKWBackend",
+          "destination": "S4HANA_D400",
           "path": "/sap/opu/odata/sap/CE_FREIGHTORDER_0001"
         },
         "csrf": true,
@@ -139,6 +139,17 @@
         },
         "csrf": true,
         "csrfInBatch": true
+      },
+      "sap_s4_OP_API_FREIGHTORDER_0001_v1": {
+        "kind": "odata-v4",
+        "model": "srv/external/sap-s4-OP_API_FREIGHTORDER_0001-v1",
+             "credentials": {
+          "destination": "S4HANA_D400",
+          "path": "/sap/opu/odata4/sap/api_freightorder_2/srvd_a2x/sap/freightorder/0001"
+        },
+        "csrf": true,
+        "csrfInBatch": true,
+        "forwardAuthToken": true
       }
     },
     "fiori": {

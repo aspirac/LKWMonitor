@@ -9,7 +9,7 @@ const express = require("express");
 const cfenv = require('cfenv');
 const TextBundle = require('@sap/textbundle').TextBundle;
 const { current_transaction_isolation_level } = require('@cap-js/hana/lib/cql-functions');
-const { SELECT } = require('@sap/cds/lib/ql/cds-ql');
+const { SELECT, INSERT } = require('@sap/cds/lib/ql/cds-ql');
 //import { getOdataUrl } from './handlers/utilities.js';
 
 class DDRMService extends cds.ApplicationService {
@@ -74,6 +74,13 @@ class DDRMService extends cds.ApplicationService {
 
     this.before('CREATE', 'ProcessSAPDocumentIn', async (req) => {
       debugger;
+        var results = [];
+        var res;
+      
+      results = await this._getSAPDocuments(req);
+      console.log("=====>>>>BEFORE CREATE PROCESS SAP DOCUMENT IN NON DRAFTS >>>");
+      res = await this._performUpsertSAPDocuments (req, results);
+    
       const { ProcessSAPDocumentIn } = cds.entities;
       console.log("=====>>>>BEFORE CREATE PROCESS SAP DOCUMENT IN - NON DRAFT>>>");
 
@@ -87,29 +94,29 @@ class DDRMService extends cds.ApplicationService {
     })
 
     this.before('CREATE', 'ProcessSAPDocumentIn.drafts', async (req) => {
-      debugger;
-      const { ProcessSAPDocumentIn , SalesOrder} = cds.entities;
-      const { SalesOrderService } = cds.services;
-       debugger;
-       console.log("=====>>>>BEFORE READ SALES ORDER DRAFTS>>>");
+        var results = [];
+        var res;
+      
+      results = await this._getSAPDocuments(req);
+      console.log("=====>>>>BEFORE CREATE PROCESS SAP DOCUMENT IN DRAFTS >>>");
+      res = await this._performUpsertSAPDocuments (req, results);
     
-
-
-       const s4 = await cds.connect.to('OP_API_SALES_ORDER_SRV_0001');
-       const data = await s4.read('SalesOrder').limit(10);
-       console.log("=====>>>>AFTER CONNECTION DRAFTS>>>");
-     //  await SELECT.from (SalesOrder).columns ('SalesOrder', 'SalesOrderType');
-
-      console.log("=====>>>>BEFORE CREATE PROCESS SAP DOCUMENT IN DRAFTS>>>");
-
+      const { ProcessSAPDocumentIn } = cds.entities;
       const { maxID } = await SELECT.one`max(sapDocumentInID) as maxID`.from(ProcessSAPDocumentIn)
-      console.log("=====>>>>AFTER QUERY PROCESS SAP DOCUMENT IN>>>");
+   
       req.data.sapDocumentInID = maxID + 1;
 
     })
 
         this.before('CREATE', 'ProcessSAPDocumentOut.drafts', async (req) => {
       debugger;
+         var results = [];
+        var res;
+      
+      results = await this._getSAPDocuments(req);
+      console.log("=====>>>>BEFORE CREATE PROCESS SAP DOCUMENT OUT DRAFTS >>>");
+      res =  this._performUpsertSAPDocuments (req, results);
+    
       const { ProcessSAPDocumentOut } = cds.entities;
       console.log("=====>>>>BEFORE CREATE PROCESS SAP DOCUMENT OUT>>>");
 
@@ -119,6 +126,84 @@ class DDRMService extends cds.ApplicationService {
 
     })
 
+    this._performUpsertSAPDocuments = async function (req, oData) {
+      try {
+        const { SAPDocument } = cds.entities;      
+        const { UPSERT } = cds.ql;
+        var newSapDocument;
+        var newSapDocumentEntries = [];
+        // parse the documents
+        oData.forEach((item, index) => {
+       
+         
+      newSapDocument =
+      {
+            DocNumber: oData[index].SalesOrder,
+            DocType: oData[index].SalesOrderType,
+            CustomerNumber:oData[index].SoldToParty,
+            DocTypeDesc: "               ",
+            description : "               ",
+            CustomerName  : "               ",
+           
+            
+          };
+          newSapDocumentEntries.push(newSapDocument);
+          UPSERT.into(SAPDocument).entries(newSapDocumentEntries);
+ 
+          console.log(newSapDocumentEntries);
+          newSapDocumentEntries = [];
+       });
+      
+       
+       console.log(newSapDocumentEntries);
+       const { result } = UPSERT.into(SAPDocument).entries(newSapDocumentEntries);
+       console.log(result);
+   
+        return;
+      } catch (error) {
+        // Handle errors during API call<
+        console.error(error.message);
+        this._errorMessage(error.message, req, "performInsertSAP");
+        return (error.message);
+
+      }
+    }
+
+ this._getSAPDocuments = async function ( req) {
+      try {
+
+      var s4hanaSales = await cds.connect.to('OP_API_SALES_ORDER_SRV_0001');
+      var s4hanaFreight = await cds.connect.to('CE_FREIGHTORDER_0001');
+     
+      var result;
+
+    
+        const {A_SalesOrder, A_SalesOrderItem} = s4hanaSales.entities;
+        const {FreightOrder} = s4hanaFreight.entities;
+
+       debugger;
+    //   console.log("=====>>>>BEFORE READ SALES ORDER>>>");
+    
+
+      var results = [];
+
+      
+    //   results = await s4hanaSales.run(SELECT.from(A_SalesOrder).limit(50));
+         results = await s4hanaSales.run(SELECT.from(A_SalesOrder));
+     
+   
+    //   console.log("=====>>>>AFTER QUERY PROCESS SAP DOCUMENT IN getSAPDocuments>>>"+results);
+        return results;
+      } catch (error) {
+        // Handle errors during API call
+
+        console.error(error.message);
+        console.log("=====>>>>ERROR >>> getSAPDocuments");
+        this._errorMessage(error.message, req, "getSAPDocuments");
+        return (error.message);
+
+      }
+    }
 
     this._getOdataUrl = function (oData) {
       //   console.log("=====>>>>BEFORE get URL: ");

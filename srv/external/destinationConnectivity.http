@@ -1,0 +1,2 @@
+GET http://vhjrtds4ci.sap.jrs.de:44300/sap/opu/odata/sap/API_SALES_ORDER_SRV/A_SalesOrder?$top=10
+Content-Type: application/json
