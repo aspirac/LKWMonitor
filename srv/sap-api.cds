@@ -2,7 +2,7 @@ namespace com.jrs.sapApi;
 
 using {OP_API_SALES_ORDER_SRV_0001 as order} from '../srv/external/OP_API_SALES_ORDER_SRV_0001';
 //using {sap_s4_OP_API_FREIGHTORDER_0001_v1 as freightOrder} from '../srv/external/sap-s4-OP_API_FREIGHTORDER_0001-v1';
-using {API_BUSINESS_PARTNER as businessPartner} from '../srv/external/API_BUSINESS_PARTNER';
+
 using {sap_s4_OP_API_FREIGHTORDER_0001_v1 as freightOrder} from '../srv/external/sap-s4-OP_API_FREIGHTORDER_0001-v1';
 
 
@@ -33,8 +33,8 @@ service FreightOrderService @(path : '/FreightOrder') {
 
 
 
-service BusinessPartnerService @(path : '/BusinessPartner') {
+//service BusinessPartnerService @(path : '/BusinessPartner') {
  
- entity BusinessPartner as projection on businessPartner.A_Customer;
+ //entity BusinessPartner as projection on businessPartner.A_Customer;
 
-};
+//};
