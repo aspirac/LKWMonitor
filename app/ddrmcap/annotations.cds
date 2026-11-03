@@ -1,83 +1,86 @@
 using DDRMService as service from '../../srv/ddrmcap-service';
 
 
-
-
 annotate service.Process with @(
 
-   Aggregation.ApplySupported: {
-    Transformations: [
-      'aggregate',
-      'topcount',
-      'bottomcount',
-      'identity',
-      'concat',
-      'groupby',
-      'filter',
-      'expand',
-      'search'      
-    ],
+    Aggregation.ApplySupported    : {
+        Transformations       : [
+            'aggregate',
+            'topcount',
+            'bottomcount',
+            'identity',
+            'concat',
+            'groupby',
+            'filter',
+            'expand',
+            'search'
+        ],
 
-    GroupableProperties: [
-      ID,
-      processStatusID_ID,
-      processTypeID_ID
-    
-    ],
+        GroupableProperties   : [
+            ID,
+            processStatusID_ID,
+            processTypeID_ID
 
-    AggregatableProperties: [{
-      $Type : 'Aggregation.AggregatablePropertyType',
-      Property: stock
-    }]
-  },
+        ],
+
+        AggregatableProperties: [{
+            $Type   : 'Aggregation.AggregatablePropertyType',
+            Property: stock
+        }]
+    },
 
 
-    UI.SelectionFields                    : [
+    UI.SelectionFields            : [
         processTypeID_ID,
         processStatusID_ID,
         LKW_Kennzeichen,
         Fahrername,
-      //   Frachtfuehrername,
-      //  Containernummer_1,
-      //  Containernummer_2,
+    //   Frachtfuehrername,
+    //  Containernummer_1,
+    //  Containernummer_2,
     ],
 
-    UI.Identification        : [
+    UI.Identification             : [
         // Object Page
-                  {
+        {
             $Type : 'UI.DataFieldForAction',
-            Action: 'DDRMService.callSetStatus20',  
-            Label :  '{@i18n>setStatus20}',
+            Action: 'DDRMService.callSetStatus20',
+            Label : '{@i18n>setStatus20}',
         },
         {
             $Type : 'UI.DataFieldForAction',
-            Action: 'DDRMService.callInterfaceScale',  
-            Label :  '{@i18n>callinterfaceWAAG2}',
+            Action: 'DDRMService.callInterfaceScale',
+            Label : '{@i18n>callinterfaceWAAG2}',
         },
-       {
+        {
             $Type : 'UI.DataFieldForAction',
-            Action: 'DDRMService.callInterfaceFSE',  
-            Label :  '{@i18n>callinterfaceFSE}',
+            Action: 'DDRMService.callInterfaceFSE',
+            Label : '{@i18n>callinterfaceFSE}',
         },
- 
+   //     {
+   //         $Type : 'UI.DataFieldForAction',
+   //         Action: 'DDRMService.updateSAPDocuments',
+   //         Label : '{@i18n>updateSAPDocuments}',
+   //     },
+
     ],
 
-    UI.LineItem                           : [
+    UI.LineItem                   : [
 
-      {
+        {
             $Type : 'UI.DataFieldForAction',
-            Action: 'DDRMService.callInterfaceScale',  
-            Label :  '{@i18n>callinterfaceWAAGE}',
-        },
-         {
-            $Type : 'UI.DataFieldForAction',
-            Action: 'DDRMService.callInterfaceFSE',  
-            Label :  '{@i18n>callinterfaceFSE}',
+            Action: 'DDRMService.callInterfaceScale',
+            Label : '{@i18n>callinterfaceWAAGE}',
         },
         {
             $Type : 'UI.DataFieldForAction',
-            Action: 'DDRMService.callSetStatus20',  
-            Label :  '{@i18n>setStatus20}',
+            Action: 'DDRMService.callInterfaceFSE',
+            Label : '{@i18n>callinterfaceFSE}',
+        },
+        {
+            $Type : 'UI.DataFieldForAction',
+            Action: 'DDRMService.callSetStatus20',
+            Label : '{@i18n>setStatus20}',
         },
         {
             $Type: 'UI.DataField',
@@ -90,73 +93,73 @@ annotate service.Process with @(
             Value: processTypeID.description,
             Label: '{@i18n>ProcessTypeDescription}',
         },
- 
+
         {
             $Type: 'UI.DataField',
             Value: processStatusID.description_ID,
             Label: '{@i18n>processStatus}',
         },
- 
-     {
+
+        {
             $Type: 'UI.DataField',
             Value: processStatusID.description,
             Label: '{@i18n>ProcessStatusDescription}',
         },
-     {
-            $Type: 'UI.DataField',
-            Value: processID,
-          
+        {
+            $Type    : 'UI.DataField',
+            Value    : processID,
+
             Updatable: false,
-            Label: '{@i18n>processID}',
+            Label    : '{@i18n>processID}',
         },
-      {
+        {
             $Type: 'UI.DataField',
             Value: LKW_Kennzeichen,
             Label: '{@i18n>LKWKennzeichen}',
         },
-      {
+        {
             $Type: 'UI.DataField',
             Value: Trailer_Kennzeichen,
             Label: '{@i18n>TrailerKennzeichen}',
         },
-   
-    
+
+
         {
             $Type: 'UI.DataField',
             Value: Fahrername,
             Label: '{@i18n>Fahrername}',
         },
-      
-       {
+
+        {
             $Type: 'UI.DataField',
             Value: Frachtfuehrername,
             Label: '{@i18n>Frachtfuehrername}',
         },
- 
-      {
+
+        {
             $Type: 'UI.DataField',
             Value: Containernummer_1,
             Label: '{@i18n>Containernummer_1}',
         },
-   {
+        {
             $Type: 'UI.DataField',
             Value: Siegelnummer,
             Label: '{@i18n>Siegelnummer}',
         },
- 
-     {
+
+        {
             $Type: 'UI.DataField',
             Value: Bemerkung_1,
             Label: '{@i18n>Bemerkung_1}',
         },
 
- {
+        {
             $Type: 'UI.DataField',
             Value: Bemerkung_2,
             Label: '{@i18n>Bemerkung_2}',
         },
 
-    
+
     ],
     // UI.SelectionPresentationVariant #tableView : {
     //     $Type              : 'UI.SelectionPresentationVariantType',
@@ -190,65 +193,65 @@ annotate service.Process with @(
     //To allow updatable on child "InsolvencyMeasures" entity
 
     //To allow updatable on child "SapDocumentIn" entity
- //   Capabilities                          : {NavigationRestrictions: {RestrictedProperties: [
- //       {
- //           NavigationProperty: to_ProcessSAPDocumentIn,
- //           UpdateRestrictions: {Updatable: true}
-//        },
-//      {
-//            NavigationProperty: to_ProcessSAPDocumentOut,
-//            UpdateRestrictions: {Updatable: true}
-//        },
+    //   Capabilities                          : {NavigationRestrictions: {RestrictedProperties: [
+    //       {
+    //           NavigationProperty: to_ProcessSAPDocumentIn,
+    //           UpdateRestrictions: {Updatable: true}
+    //        },
+    //      {
+    //            NavigationProperty: to_ProcessSAPDocumentOut,
+    //            UpdateRestrictions: {Updatable: true}
+    //        },
 
-//        {
-//            NavigationProperty: to_CrisisMeasures,
-//            UpdateRestrictions: {Updatable: true}
-//        },
- //   ]}, },
+    //        {
+    //            NavigationProperty: to_CrisisMeasures,
+    //            UpdateRestrictions: {Updatable: true}
+    //        },
+    //   ]}, },
 
 
-    UI.FieldGroup #CreateGroup            : {
+    UI.FieldGroup #CreateGroup    : {
         $Type: 'UI.FieldGroupType',
         Data : [
-      
+
             {
                 $Type: 'UI.DataField',
                 Value: processTypeID_ID
-                  },
+            },
 
-           {
+            {
                 $Type: 'UI.DataField',
                 Value: processTypeID.description,
-                
-            }, 
-          {
-                $Type: 'UI.DataField',
-                Value: processID,
-                     Updatable: false,
-                Label: '{@i18n>processID}',
-                
-            }, 
+
+            },
+            {
+                $Type    : 'UI.DataField',
+                Value    : processID,
+                Updatable: false,
+                Label    : '{@i18n>processID}',
+
+            },
 
         ],
     },
 
-    UI.FieldGroup #CommonGroup            : {
+    UI.FieldGroup #CommonGroup    : {
         $Type: 'UI.FieldGroupType',
         Data : [
             {
                 $Type: 'UI.DataField',
                 Value: processStatusID_ID
             },
-          {
+            {
                 $Type: 'UI.DataField',
                 Value: processStatusID.description,
-                
-            }, 
+
+            },
 
         ],
     },
 
-      UI.FieldGroup #LKWGroup            : {
+    UI.FieldGroup #LKWGroup       : {
         $Type: 'UI.FieldGroupType',
         Data : [
             {
@@ -257,47 +260,46 @@ annotate service.Process with @(
             },
             {
                 $Type: 'UI.DataField',
-                Value: Trailer_Kennzeichen ,
+                Value: Trailer_Kennzeichen,
             },
-          {
+            {
                 $Type: 'UI.DataField',
-                Value: Fahrername ,
+                Value: Fahrername,
             },
-           {
+            {
                 $Type: 'UI.DataField',
-                Value: Frachtfuehrername ,
+                Value: Frachtfuehrername,
             },
-         {
+            {
                 $Type: 'UI.DataField',
-                Value: Containernummer_1 ,
+                Value: Containernummer_1,
             },
-          
-         {
+
+            {
                 $Type: 'UI.DataField',
-                Value: Siegelnummer ,
+                Value: Siegelnummer,
             },
-                 {
+            {
                 $Type: 'UI.DataField',
-                Value: Bemerkung_1 ,
+                Value: Bemerkung_1,
             },
-           {
+            {
                 $Type: 'UI.DataField',
-                Value: Bemerkung_2 ,
+                Value: Bemerkung_2,
             },
-    
 
 
         ],
     },
 
-     UI.FieldGroup #WaageGroup           : {
+    UI.FieldGroup #WaageGroup     : {
         $Type: 'UI.FieldGroupType',
         Data : [
             {
                 $Type: 'UI.DataField',
                 Value: WaageNummer,
             },
-          {
+            {
                 $Type: 'UI.DataField',
                 Value: WaageScheinNr,
             },
@@ -305,36 +307,36 @@ annotate service.Process with @(
                 $Type: 'UI.DataField',
                 Value: WaageScheinDate,
             },
- //         {
- //               $Type: 'UI.DataField',
- //              Value: WaageScheinTime ,
- //               visible: false,
- //           },
-           {
+            //         {
+            //               $Type: 'UI.DataField',
+            //              Value: WaageScheinTime ,
+            //               visible: false,
+            //           },
+            {
                 $Type: 'UI.DataField',
-                Value: WaageScheinBruto ,
+                Value: WaageScheinBruto,
             },
-         {
+            {
                 $Type: 'UI.DataField',
-                Value: WaageScheinNetto ,
+                Value: WaageScheinNetto,
             },
-          
-         {
+
+            {
                 $Type: 'UI.DataField',
                 Value: WaageScheinTara,
             },
-           
+
         ],
     },
 
-   UI.FieldGroup #WaageGroup2           : {
+    UI.FieldGroup #WaageGroup2    : {
         $Type: 'UI.FieldGroupType',
         Data : [
             {
                 $Type: 'UI.DataField',
                 Value: WaageNummer2,
             },
-          {
+            {
                 $Type: 'UI.DataField',
                 Value: WaageScheinNr2,
             },
@@ -342,36 +344,36 @@ annotate service.Process with @(
                 $Type: 'UI.DataField',
                 Value: WaageScheinDate2,
             },
- //         {
- //               $Type: 'UI.DataField',
- //              Value: WaageScheinTime ,
- //               visible: false,
- //           },
-           {
+            //         {
+            //               $Type: 'UI.DataField',
+            //              Value: WaageScheinTime ,
+            //               visible: false,
+            //           },
+            {
                 $Type: 'UI.DataField',
-                Value: WaageScheinBruto2 ,
+                Value: WaageScheinBruto2,
             },
-         {
+            {
                 $Type: 'UI.DataField',
-                Value: WaageScheinNetto2 ,
+                Value: WaageScheinNetto2,
             },
-          
-         {
+
+            {
                 $Type: 'UI.DataField',
                 Value: WaageScheinTara2,
             },
-           
+
         ],
     },
 
-     UI.FieldGroup #FSEGroup           : {
+    UI.FieldGroup #FSEGroup       : {
         $Type: 'UI.FieldGroupType',
         Data : [
             {
                 $Type: 'UI.DataField',
                 Value: FSEDate,
             },
-         {
+            {
                 $Type: 'UI.DataField',
                 Value: FSEAlternativeMenge,
             },
@@ -379,42 +381,42 @@ annotate service.Process with @(
                 $Type: 'UI.DataField',
                 Value: FSETrockenGehalt,
             },
-          {
+            {
                 $Type: 'UI.DataField',
-                Value: FSEAGewicht ,
+                Value: FSEAGewicht,
             },
-                 
+
         ],
     },
-     UI.FieldGroup #SAPGroup           : {
+    UI.FieldGroup #SAPGroup       : {
         $Type: 'UI.FieldGroupType',
         Data : [
-            
-          
-                {
-                $Type: 'UI.DataField',
-                Value:  to_ProcessSAPDocumentOut
-            },
-        
+
+
+        {
+            $Type: 'UI.DataField',
+            Value: to_ProcessSAPDocumentOut
+        },
+
         ],
 
     },
 
-      UI.FieldGroup #AttachmentGroup           : {
+    UI.FieldGroup #AttachmentGroup: {
         $Type: 'UI.FieldGroupType',
         Data : [
-            
-          
-                {
-                $Type: 'UI.DataField',
-                Value:  to_ProcessAttachments
-            },
-  
-                 
+
+
+        {
+            $Type: 'UI.DataField',
+            Value: to_ProcessAttachments
+        },
+
+
         ],
     },
 
-    UI.FieldGroup #DateGroup              : {
+    UI.FieldGroup #DateGroup      : {
         $Type: 'UI.FieldGroupType',
         Data : [
             {
@@ -436,8 +438,8 @@ annotate service.Process with @(
         ],
     },
 
-    
-    UI.Collection                         : [{
+
+    UI.Collection                 : [{
         ID   : 'MeasuresInfoCollection',
         // ID for the collection
         Label: 'Measures',
@@ -448,7 +450,7 @@ annotate service.Process with @(
     ],
 
 
-    UI.Facets                             : [
+    UI.Facets                     : [
         {
             $Type : 'UI.ReferenceFacet',
             ID    : 'Create',
@@ -456,54 +458,54 @@ annotate service.Process with @(
             Target: '@UI.FieldGroup#CreateGroup',
         },
         {
-            $Type        : 'UI.ReferenceFacet',
-            ID           : 'Common',
-            Label        : '{@i18n>commonFacet}',
-            Target       : '@UI.FieldGroup#CommonGroup',
+            $Type : 'UI.ReferenceFacet',
+            ID    : 'Common',
+            Label : '{@i18n>commonFacet}',
+            Target: '@UI.FieldGroup#CommonGroup',
 
         },
 
-      {
+        {
             $Type : 'UI.ReferenceFacet',
             ID    : 'LKWInfo',
             Label : '{@i18n>LKWFacet}',
             Target: '@UI.FieldGroup#LKWGroup',
         },
- 
-      {
-         $Type : 'UI.ReferenceFacet',
+
+        {
+            $Type : 'UI.ReferenceFacet',
             ID    : 'SAPInfoOut',
             Label : '{@i18n>sapFacetOut}',
-//            Target: '@UI.FieldGroup#SAPGroup',
-              Target: 'to_ProcessSAPDocumentOut/@UI.PresentationVariant',        
+            //            Target: '@UI.FieldGroup#SAPGroup',
+            Target: 'to_ProcessSAPDocumentOut/@UI.PresentationVariant',
         },
-        
-     {
-         $Type : 'UI.ReferenceFacet',
+
+        {
+            $Type : 'UI.ReferenceFacet',
             ID    : 'SAPInfoIn',
             Label : '{@i18n>sapFacetIn}',
-//            Target: '@UI.FieldGroup#SAPGroup',
-              Target: 'to_ProcessSAPDocumentIn/@UI.PresentationVariant',        
+            //            Target: '@UI.FieldGroup#SAPGroup',
+            Target: 'to_ProcessSAPDocumentIn/@UI.PresentationVariant',
         },
- 
 
-       {
+
+        {
             $Type : 'UI.ReferenceFacet',
             ID    : 'WaageInfo',
             Label : '{@i18n>waageFacet}',
             Target: '@UI.FieldGroup#WaageGroup',
         },
-          {
+        {
             $Type : 'UI.ReferenceFacet',
             ID    : 'WaageInfo2',
             Label : '{@i18n>waageFacet2}',
             Target: '@UI.FieldGroup#WaageGroup2',
         },
-     {
-            $Type : 'UI.ReferenceFacet',
-            ID    : 'FSEInfo',
-            Label : '{@i18n>fseFacet}',
-            Target: '@UI.FieldGroup#FSEGroup',
+        {
+            $Type        : 'UI.ReferenceFacet',
+            ID           : 'FSEInfo',
+            Label        : '{@i18n>fseFacet}',
+            Target       : '@UI.FieldGroup#FSEGroup',
             ![@UI.Hidden]: {$edmJson: {$If: [
                 {$Or: [
                     {$Eq: [
@@ -520,7 +522,7 @@ annotate service.Process with @(
             ]}}
         },
 
-   
+
         {
             $Type : 'UI.ReferenceFacet',
             ID    : 'DateFacet',
@@ -528,15 +530,15 @@ annotate service.Process with @(
             Target: '@UI.FieldGroup#DateGroup',
         },
 
-         {
-         $Type : 'UI.ReferenceFacet',
+        {
+            $Type : 'UI.ReferenceFacet',
             ID    : 'ProcessAttachmentsInfo',
             Label : '{@i18n>ProcessAttachments}',
-              Target: 'to_ProcessAttachments/@UI.PresentationVariant',        
+            Target: 'to_ProcessAttachments/@UI.PresentationVariant',
         },
-      
+
     ],
-    UI.HeaderInfo                         : {
+    UI.HeaderInfo                 : {
         TypeName      : '{@i18n>RootEntities}',
         TypeNamePlural: '{@i18n>RootEntities}',
         Title         : {
@@ -551,27 +553,56 @@ annotate service.Process with @(
 
 );
 
- annotate service.ProcessSAPDocumentIn with @(
+annotate service.ProcessSAPDocumentIn with @(
     Capabilities.UpdateRestrictions: {Updatable: true},
     UI                             : {
-        HeaderInfo: {
+        HeaderInfo         : {
             $Type         : 'UI.HeaderInfoType',
             TypeName      : '{i18n>SapDocumentIn}',
             TypeNamePlural: '{i18n>SapDocumentIn}'
         },
 
-        PresentationVariant           : {
-        Visualizations: ['@UI.LineItem'],
-  //      SortOrder     : [{
-  //          $Type     : 'Common.SortOrderType',
-   //         Property  : sapDocumentInID,
-  //          Descending: false
-  //      }]
-      },
-        
-       SelectionFields               : [],
-        LineItem  : [
+        PresentationVariant: {Visualizations: ['@UI.LineItem'],
+                                                                //      SortOrder     : [{
+                                                                //          $Type     : 'Common.SortOrderType',
+                                                                //         Property  : sapDocumentInID,
+                                                                //          Descending: false
+                                                                //      }]
+                                              },
 
+        SelectionFields    : [],
+        LineItem           : [
+
+            {
+                $Type : 'UI.DataFieldForAction',
+                Action: 'DDRMService.updateSAPDocuments',
+                Label : '{@i18n>updateSAPDocuments}',
+            },
+            // {
+            //                $Type : 'UI.DataFieldForAction',
+            //                Action: 'DDRMService.callSAPSalesOrderIn',
+            //                Label : '{@i18n>callSAPSalesOrder}',
+            //            },
+            //            {
+            //                $Type : 'UI.DataFieldForAction',
+            //                Action: 'DDRMService.callSAPInboundDeliveryIn',
+            //                Label : '{@i18n>callSAPInboundDelivery}',
+            //            },
+            //            {
+            //                $Type : 'UI.DataFieldForAction',
+            //                Action: 'DDRMService.callSAPOutboundDeliveryIn',
+            //                Label : '{@i18n>callSAPOutboundDelivery}',
+            //            },
+            //            {
+            //                $Type : 'UI.DataFieldForAction',
+            //                Action: 'DDRMService.callSAPFreightOrderIn',
+            //                Label : '{@i18n>callSAPFreightOrder}',
+            //            },
+            //            {
+            //                $Type : 'UI.DataFieldForAction',
+            //                Action: 'DDRMService.callSAPFreightBookingIn',
+            //                Label : '{@i18n>callSAPFreightBooking}',
+            //            },
             {
                 $Type: 'UI.DataField',
                 Value: sapDocumentInID,
@@ -582,137 +613,201 @@ annotate service.Process with @(
                 Value: to_SapDocument_DocNumber,
                 Label: '{@i18n>sapDocumentInNumber}',
             },
-           
-          
-             {
+
+           {
+                $Type: 'UI.DataField',
+                Value: to_SapDocument.DocumentKindCode,
+                Label: '{@i18n>DocumentKindCode}',
+            },
+    {
+                $Type: 'UI.DataField',
+                Value: to_SapDocument.DocumentKindDescription,
+                Label: '{@i18n>DocumentKindDescription}',
+            },
+      
+           {
+                $Type: 'UI.DataField',
+                Value: to_SapDocument.DocumentKindDescriptionDE,
+                Label: '{@i18n>DocumentKindDescriptionDE}',
+            },
+            {
                 $Type: 'UI.DataField',
                 Value: to_SapDocument.DocType,
-   
+
             },
-              {
+            {
                 $Type: 'UI.DataField',
                 Value: to_SapDocument.DocTypeDesc,
-       
+
             },
-           {
-                $Type: 'UI.DataField',
-                Value: to_SapDocument.description,
-          
-            },
-           {
+       //     {
+       //         $Type: 'UI.DataField',
+       //         Value: to_SapDocument.description,
+
+     //       },
+            {
                 $Type: 'UI.DataField',
                 Value: to_SapDocument.CustomerNumber,
-          
+
             },
-     
-          {
-                $Type: 'UI.DataField',
-                Value: to_SapDocument.CustomerName,
-          
-            },         
-           
+
+      //      {
+      //          $Type: 'UI.DataField',
+      //          Value: to_SapDocument.CustomerName,
+
+      //      },
+
         ]
     }
 );
 
- annotate service.ProcessSAPDocumentOut with @(
+
+annotate service.ProcessSAPDocumentOut with @(
     Capabilities.UpdateRestrictions: {Updatable: true},
     UI                             : {
-        HeaderInfo: {
+        HeaderInfo         : {
             $Type         : 'UI.HeaderInfoType',
             TypeName      : '{i18n>SapDocumentOut}',
             TypeNamePlural: '{i18n>SapDocumentOut}'
         },
-          UI.Identification        : [
-        // Object Page
-                  {
+        UI.Identification  : [
+                              // Object Page
+                             {
             $Type : 'UI.DataFieldForAction',
-            Action: 'DDRMService.callSetStatus20',  
-            Label :  '{@i18n>setStatus20}',
+            Action: 'DDRMService.callSetStatus20',
+            Label : '{@i18n>setStatus20}',
         }
-        
- 
-    ],
-        PresentationVariant           : {
-        Visualizations: ['@UI.LineItem'],
-  //      SortOrder     : [{
-  //          $Type     : 'Common.SortOrderType',
-   //         Property  : sapDocumentInID,
-  //          Descending: false
-  //      }]
-      },
-          
-       SelectionFields               : [],
 
 
-        LineItem  : [
+        ],
+        PresentationVariant: {Visualizations: ['@UI.LineItem'],
+                                                                //      SortOrder     : [{
+                                                                //          $Type     : 'Common.SortOrderType',
+                                                                //         Property  : sapDocumentInID,
+                                                                //          Descending: false
+                                                                //      }]
+                                              },
+
+        SelectionFields    : [],
+
+
+        LineItem           : [
+            {
+
+                $Type  : 'UI.DataFieldForAction',
+                Action : 'DDRMService.updateSAPDocuments',
+                Label  : '{@i18n>updateSAPDocuments}',
+                visible: false,
+            },
+            //        {
+            //            $Type : 'UI.DataFieldForAction',
+            //            Action: 'DDRMService.callSAPSalesOrderOut',
+            //            Label : '{@i18n>callSAPSalesOrder}',
+            //             visible:false,
+            //        },
+            //        {
+            //            $Type : 'UI.DataFieldForAction',
+            //            Action: 'DDRMService.callSAPInboundDeliveryOut',
+            //            Label : '{@i18n>callSAPInboundDelivery}',
+            //            visible:false,
+            //        },
+            //        {
+            //            $Type : 'UI.DataFieldForAction',
+            //            Action: 'DDRMService.callSAPOutboundDeliveryOut',
+            //            Label : '{@i18n>callSAPOutboundDelivery}',
+            //             visible:false,
+            //        },
+            //        {
+            //            $Type : 'UI.DataFieldForAction',
+            //            Action: 'DDRMService.callSAPFreightOrderOut',
+            //            Label : '{@i18n>callSAPFreightOrder}',
+            //             visible:false,
+            //        },
+            //        {
+            //            $Type : 'UI.DataFieldForAction',
+            //            Action: 'DDRMService.callSAPFreightBookingOut',
+            //            Label : '{@i18n>callSAPFreightBooking}',
+            //             visible:false,
+            //        },
 
             {
                 $Type: 'UI.DataField',
                 Value: sapDocumentOutID,
                 Label: '{@i18n>sapDocumentOutID}',
             },
-      
+
             {
                 $Type: 'UI.DataField',
                 Value: to_SapDocument_DocNumber,
                 Label: '{@i18n>sapDocumentOutNumber}',
             },
-             {
+            {
                 $Type: 'UI.DataField',
                 Value: to_SapDocument.DocType,
-   
+
             },
-              {
+            {
                 $Type: 'UI.DataField',
                 Value: to_SapDocument.DocTypeDesc,
-       
+
+            },
+                      {
+                $Type: 'UI.DataField',
+                Value: to_SapDocument.DocumentKindCode,
+                Label: '{@i18n>DocumentKindCode}',
             },
            {
                 $Type: 'UI.DataField',
-                Value: to_SapDocument.description,
-          
+                Value: to_SapDocument.DocumentKindDescription,
+                Label: '{@i18n>DocumentKindDescription}',
             },
            {
+                $Type: 'UI.DataField',
+                Value: to_SapDocument.DocumentKindDescriptionDE,
+                Label: '{@i18n>DocumentKindDescriptionDE}',
+            },
+     //       {
+     //           $Type: 'UI.DataField',
+     //           Value: to_SapDocument.description,
+
+     //       },
+            {
                 $Type: 'UI.DataField',
                 Value: to_SapDocument.CustomerNumber,
-          
+
             },
-     
-          {
-                $Type: 'UI.DataField',
-                Value: to_SapDocument.CustomerName,
-          
-            },
-     
-          
-           
+
+         //   {
+         //       $Type: 'UI.DataField',
+         //       Value: to_SapDocument.CustomerName,
+
+         //   },
+
+
         ]
     }
-);   
+);
 
-   
 
-   annotate service.ProcessAttachments with @(
+annotate service.ProcessAttachments with @(
     Capabilities.UpdateRestrictions: {Updatable: true},
     UI                             : {
-        HeaderInfo: {
+        HeaderInfo         : {
             $Type         : 'UI.HeaderInfoType',
             TypeName      : '{i18n>ProcessAttachments}',
             TypeNamePlural: '{i18n>ProcessAttachments}'
         },
 
-        PresentationVariant           : {
-        Visualizations: ['@UI.LineItem'],
-  //      SortOrder     : [{
-  //          $Type     : 'Common.SortOrderType',
-   //         Property  : sapDocumentInID,
-  //          Descending: false
-  //      }]
-      },
-        
-       SelectionFields               : [],
-        LineItem  : [
+        PresentationVariant: {Visualizations: ['@UI.LineItem'],
+                                                                //      SortOrder     : [{
+                                                                //          $Type     : 'Common.SortOrderType',
+                                                                //         Property  : sapDocumentInID,
+                                                                //          Descending: false
+                                                                //      }]
+                                              },
+
+        SelectionFields    : [],
+        LineItem           : [
 
             {
                 $Type: 'UI.DataField',
@@ -731,28 +826,26 @@ annotate service.Process with @(
                 Label: '{@i18n>attachmentFileName}',
             },
             */
-          {
+            {
                 $Type: 'UI.DataField',
                 Value: fileType,
                 Label: '{@i18n>attachmentFileType}',
             },
-          {
+            {
                 $Type: 'UI.DataField',
                 Value: createdBy,
                 Label: '{@i18n>attachmentCreatedBy}',
             },
-       {
+            {
                 $Type: 'UI.DataField',
                 Value: createdAt,
                 Label: '{@i18n>attachmentCreatedAt}',
             },
-        
-           
-          
-           
+
+
         ]
     }
-);   
+);
 
 /*
 //Insolvenz List Report in Object page
@@ -1070,7 +1163,7 @@ annotate service.Process with {
     processTypeID @Common.ValueList: {
         $Type         : 'Common.ValueListType',
         CollectionPath: 'ProcessType',
-     
+
         Parameters    : [
             {
                 $Type            : 'Common.ValueListParameterInOut',
@@ -1084,7 +1177,6 @@ annotate service.Process with {
         ],
     }
 };
-
 
 
 annotate service.Process with {
@@ -1115,30 +1207,45 @@ annotate service.ProcessSAPDocumentIn with {
                 LocalDataProperty: to_SapDocument_DocNumber,
                 ValueListProperty: 'DocNumber',
             },
-                      {
+            {
                 $Type            : 'Common.ValueListParameterDisplayOnly',
                 ValueListProperty: 'DocType',
             },
             {
                 $Type            : 'Common.ValueListParameterDisplayOnly',
                 ValueListProperty: 'DocTypeDesc',
-                 },
-            {
+            },
+           {
                 $Type            : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty: 'description',
-                 },
+                ValueListProperty: 'DocumentKindCode',
+            },
+           {
+                $Type            : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty: 'DocumentKindDescriptionDE',
+            },
+           {
+                $Type            : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty: 'DocumentKindDescription',
+            },
+
+    //        {
+    //            $Type            : 'Common.ValueListParameterDisplayOnly',
+    //            ValueListProperty: 'description',
+    //        },
             {
                 $Type            : 'Common.ValueListParameterDisplayOnly',
                 ValueListProperty: 'CustomerNumber',
             },
-            {
-                $Type            : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty: 'CustomerName',
-            },
-            
+    //        {
+    //            $Type            : 'Common.ValueListParameterDisplayOnly',
+    //            ValueListProperty: 'CustomerName',
+    //        },
+
         ],
     }
 };
+
+
 annotate service.ProcessSAPDocumentOut with {
     to_SapDocument @Common.ValueList: {
         $Type         : 'Common.ValueListType',
@@ -1156,20 +1263,32 @@ annotate service.ProcessSAPDocumentOut with {
             {
                 $Type            : 'Common.ValueListParameterDisplayOnly',
                 ValueListProperty: 'DocTypeDesc',
-                 },
-            {
+            },
+              {
                 $Type            : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty: 'description',
-                 },
+                ValueListProperty: 'DocumentKindCode',
+            },
+           {
+                $Type            : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty: 'DocumentKindDescriptionDE',
+            },
+           {
+                $Type            : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty: 'DocumentKindDescription',
+            },
+//            {
+//                $Type            : 'Common.ValueListParameterDisplayOnly',
+//                ValueListProperty: 'description',
+//            },
             {
                 $Type            : 'Common.ValueListParameterDisplayOnly',
                 ValueListProperty: 'CustomerNumber',
             },
-            {
-                $Type            : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty: 'CustomerName',
-            },
-    
+    //        {
+    //            $Type            : 'Common.ValueListParameterDisplayOnly',
+    //            ValueListProperty: 'CustomerName',
+    //        },
+
         ],
     }
 };

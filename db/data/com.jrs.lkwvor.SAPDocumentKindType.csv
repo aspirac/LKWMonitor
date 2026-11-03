@@ -1,0 +1,6 @@
+ID;description;descriptionDE
+OUDELIVERY;Outbound Delivery;Lieferung ausgehende
+INDELIVERY;Inbound Delivery;Lieferung eingehende
+SALESORDER;Sales Order;Kundenauftrag
+FREIGHTORD;Freight Order;Frachtauftrag
+FREIGHTBK;Freight Booking;Seefrachtbuchung

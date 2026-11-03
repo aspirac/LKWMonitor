@@ -48,8 +48,7 @@ service DDRMService @(requires: 'authenticated-user') {
             @(Common.SideEffects #StatusChanged: {TargetProperties: [
                 'processStatusID_ID',
                 'processStatusID.description'
-            ],
- })
+            ], })
             action callSetStatus20()    returns Result;
         };
 
@@ -57,20 +56,39 @@ service DDRMService @(requires: 'authenticated-user') {
     //   *,
 
 
-
-
     entity ProcessStatus         as projection on db.ProcessStatus;
     entity ProcessType           as projection on db.ProcessType;
     entity SAPDocument           as projection on db.SAPDocument;
-
-    entity ProcessSAPDocumentOut as projection on db.ProcessSAPDocumentOut;
-    entity ProcessSAPDocumentIn  as projection on db.ProcessSAPDocumentIn;
     entity ProcessWeighDocument  as projection on db.ProcessWeighDocument;
     entity ProcessFSADocument    as projection on db.ProcessFSADocument;
     entity ProcessAttachments    as projection on db.ProcessAttachments;
+    entity SalesOrder            as projection on db.SalesOrder;
+    entity InboundDelivery       as projection on db.InboundDelivery;
+    entity OutboundDelivery      as projection on db.OutboundDelivery;
+    entity FreightOrder          as projection on db.FreightOrder;
+    entity FreightBooking        as projection on db.FreightBooking;
 
+    entity ProcessSAPDocumentOut as projection on db.ProcessSAPDocumentOut
+        actions {
+            action updateSAPDocuments() returns Result;
    
-   
+            action callSAPSalesOrderOut(SalesOrder: Decimal)       returns db.SalesOrderType;
+            action callSAPInboundDeliveryOut()  returns InboundDelivery;
+            action callSAPOutboundDeliveryOut() returns OutboundDelivery;
+            action callSAPFreightOrderOut()     returns FreightOrder;
+            action callSAPFreightBookingOut()   returns FreightBooking;
+        };
+
+    entity ProcessSAPDocumentIn  as projection on db.ProcessSAPDocumentIn
+        actions {
+            action updateSAPDocuments()        returns Result;
+            action callSAPSalesOrderIn()       returns SalesOrder;
+            action callSAPInboundDeliveryIn()  returns InboundDelivery;
+            action callSAPOutboundDeliveryIn() returns OutboundDelivery;
+            action callSAPFreightOrderIn()     returns FreightOrder;
+            action callSAPFreightBookingIn()   returns FreightBooking;
+        };
+
 
 //entity MediaFile                 as projection on db.MediaFile;
 }
@@ -115,5 +133,3 @@ annotate db.Process with {
     }
 
 };
-
-

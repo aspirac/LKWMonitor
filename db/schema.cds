@@ -1,12 +1,13 @@
 namespace com.jrs.lkwvor;
 
 using {managed} from '@sap/cds/common';
+
 // using {Attachments} from '@cap-js/attachments';
 
 entity Process : managed {
 
-    key ID                       : UUID    @(Core.Computed: true);
-        processID                : Integer @Core.Computed;
+    key ID                       : UUID        @(Core.Computed: true);
+        processID                : Integer     @Core.Computed;
         processTypeID            : Association to ProcessType;
         processStatusID          : Association to ProcessStatus;
         LKW_Kennzeichen          : String(20);
@@ -17,21 +18,21 @@ entity Process : managed {
         Siegelnummer             : String(20);
         Bemerkung_1              : LargeString;
         Bemerkung_2              : LargeString;
-        WaageNummer                : Integer;
+        WaageNummer              : Integer;
         WaageScheinNr            : Decimal;
         WaageScheinDate          : DateTime;
         //     WaageScheinTime:Time;
         WaageScheinBruto         : Decimal;
         WaageScheinNetto         : Decimal;
         WaageScheinTara          : Decimal;
-        WaageNummer2               : Integer;
-        WaageScheinNr2            : Decimal;
-        WaageScheinDate2          : DateTime;
+        WaageNummer2             : Integer;
+        WaageScheinNr2           : Decimal;
+        WaageScheinDate2         : DateTime;
         //     WaageScheinTime:Time;
-        WaageScheinBruto2         : Decimal;
-        WaageScheinNetto2         : Decimal;
-        WaageScheinTara2          : Decimal;
-        FSEDate          : DateTime;
+        WaageScheinBruto2        : Decimal;
+        WaageScheinNetto2        : Decimal;
+        WaageScheinTara2         : Decimal;
+        FSEDate                  : DateTime;
         FSEAlternativeMenge      : Decimal;
         FSETrockenGehalt         : Decimal;
         FSEAGewicht              : Decimal;
@@ -46,16 +47,16 @@ entity Process : managed {
                                        on to_ProcessSAPDocumentIn.Process = $self;
 
         to_ProcessWeighDocument  : Composition of many ProcessWeighDocument
-                                      on to_ProcessWeighDocument.Process = $self;
+                                       on to_ProcessWeighDocument.Process = $self;
 
 
         to_ProcessFSADocument    : Composition of many ProcessFSADocument
                                        on to_ProcessFSADocument.Process = $self;
-                                       
-        to_ProcessAttachments       : Composition of many ProcessAttachments
-                                          on to_ProcessAttachments.Process = $self;
-                                                    
-  //      attachment               : Composition of many Attachments
+
+        to_ProcessAttachments    : Composition of many ProcessAttachments
+                                       on to_ProcessAttachments.Process = $self;
+
+//      attachment               : Composition of many Attachments
 
 
 }
@@ -97,24 +98,38 @@ entity ProcessSAPDocumentIn : managed {
 }
 
 entity ProcessAttachments : managed {
-    key ID              : UUID    @(Core.Computed: true);
-       Title                   : String(100);
-       fileName                 : String;
-       fileType                 : String      @Core.IsMediaType;
-       content                  : LargeBinary @Core.MediaType                  : fileType
-                                               @Core.ContentDisposition.Filename: fileName;
-        Process         : Association to Process
+    key ID       : UUID        @(Core.Computed: true);
+        Title    : String(100);
+        fileName : String;
+        fileType : String      @Core.IsMediaType;
+        content  : LargeBinary @Core.MediaType                  : fileType
+                               @Core.ContentDisposition.Filename: fileName;
+        Process  : Association to Process
 }
+
+entity SAPDocumentKindType : managed {
+
+    key ID            : String(30);
+        description   : String(100);
+        descriptionDE : String(100);
+//       SAPDocument        : Association to many SAPDocument
+//                            on SAPDocument.DocumentKindCode = $self;
+
+}
+
 entity SAPDocument : managed {
         //    key MANDT: String(5);
-    key DocNumber            : String(30);
-        DocType              : String(5);
-        DocTypeDesc          : String(50);
-        description          : String(60);
-        CustomerNumber       : String(20);
-        CustomerName         : String(100);
-        ProcessSapDocumentIn : Association to many ProcessSAPDocumentIn
-                                   on ProcessSapDocumentIn.to_SapDocument = $self;
+    key DocNumber                 : String(30);
+        DocType                   : String(5);
+        DocTypeDesc               : String(50);
+        DocumentKindCode          : String(30);
+        DocumentKindDescriptionDE : String(30);
+        DocumentKindDescription   : String(30);
+    //    description               : String(60);
+        CustomerNumber            : String(20);
+  //      CustomerName              : String(100);
+        ProcessSapDocumentIn      : Association to many ProcessSAPDocumentIn
+                                        on ProcessSapDocumentIn.to_SapDocument = $self;
 
 
 }
@@ -139,7 +154,6 @@ entity ProcessWeighDocument : managed {
         Process          : Association to Process;
 }
 
-  
 
 entity ProcessFSADocument : managed {
     key ID                  : UUID    @(Core.Computed: true);
@@ -148,4 +162,112 @@ entity ProcessFSADocument : managed {
         FSETrockenGehalt    : Decimal;
         FSEAGewicht         : Decimal;
         Process             : Association to Process;
+}
+
+entity SalesOrder : managed {
+    key SalesOrder           : Integer;
+        SalesOrderType       : String(10);
+        SalesOrganization    : String(10);
+        DistributionChannel  : String(10);
+        OrganizationDivision : String(10);
+        SalesGroup           : String(10);
+        SalesOffice          : String(10);
+        SalesDistrict        : String(10);
+        SoldToParty          : String(30);
+        CreationDate         : Date;
+        CreatedByUser        : String(30);
+        SalesOrderDate       : Date;
+}
+
+type SalesOrderType {
+    SalesOrder           : Integer;
+    SalesOrderType       : String(10);
+    SalesOrganization    : String(10);
+    DistributionChannel  : String(10);
+    OrganizationDivision : String(10);
+    SalesGroup           : String(10);
+    SalesOffice          : String(10);
+    SalesDistrict        : String(10);
+    SoldToParty          : String(30);
+    CreationDate         : Date;
+    CreatedByUser        : String(30);
+    SalesOrderDate       : Date;
+}
+
+entity InboundDelivery {
+    key DeliveryDocument               : String(30);
+        ReceivingLocationTimeZone      : String(10);
+        ActualDeliveryRoute            : String(30);
+        ActualGoodsMovementDate        : Date;
+        ActualGoodsMovementTime        : Time;
+        BillingDocumentDate            : DateTime;
+        BillOfLading                   : String(30);
+        CompleteDeliveryIsDefined      : Boolean;
+        ConfirmationTime               : Time;
+        CreatedByUser                  : String(30);
+        CreationDate                   : DateTime;
+        CreationTime                   : Time;
+        CustomerGroup                  : String(30);
+        DeliveryBlockReason            : String(30);
+        DeliveryDate                   : DateTime;
+        DeliveryDocumentBySupplier     : String(100);
+        DeliveryDocumentType           : String(100);
+        DeliveryIsInPlant              : Boolean;
+        DeliveryPriority               : String(30);
+        DeliveryTime                   : Time;
+        DeliveryVersion                : String(30);
+        DepreciationPercentage         : Decimal;
+        DistrStatusByDecentralizedWrhs : String(30);
+        DocumentDate                   : DateTime;
+        ExternalIdentificationType     : String(30);
+        ExternalTransportSystem        : String(30);
+        FactoryCalendarByCustomer      : String(30);
+        Supplier                       : String(30);
+
+}
+
+entity OutboundDelivery {
+    key DeliveryDocument               : String(30);
+        ShipingLocationTimeZone        : String(10);
+        ActualDeliveryRoute            : String(30);
+        ActualGoodsMovementDate        : Date;
+        ReceivingLocationTimeZone      : String(10);
+        ActualGoodsMovementTime        : Time;
+        BillingDocumentDate            : DateTime;
+        BillOfLading                   : String(30);
+        CompleteDeliveryIsDefined      : Boolean;
+        ConfirmationTime               : Time;
+        CreatedByUser                  : String(30);
+        CreationDate                   : DateTime;
+        CreationTime                   : Time;
+        CustomerGroup                  : String(30);
+        DeliveryBlockReason            : String(30);
+        DeliveryDate                   : DateTime;
+        DeliveryDocumentBySupplier     : String(100);
+        DeliveryDocumentType           : String(100);
+        DeliveryIsInPlant              : Boolean;
+        DeliveryPriority               : String(30);
+        DeliveryTime                   : Time;
+        DeliveryVersion                : String(30);
+        DepreciationPercentage         : Decimal;
+        DistrStatusByDecentralizedWrhs : String(30);
+        DocumentDate                   : DateTime;
+        ExternalIdentificationType     : String(30);
+        ExternalTransportSystem        : String(30);
+        FactoryCalendarByCustomer      : String(30);
+        SoldToParty                    : String(30);
+}
+
+entity FreightOrder {
+    key DeliveryDocument : String(30);
+}
+
+entity FreightBooking {
+    key DeliveryDocument : String(30);
+}
+
+entity BusinessPartner {
+    key BPID     : String(20);
+        Supplier : String(20);
+        Name     : String(40);
 }

@@ -1,0 +1,3358 @@
+{
+ "meta": {
+  "creator": "cds-dk 10.1.2"
+ },
+ "$version": "2.0",
+ "definitions": {
+  "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.D_TrOrdUnassignCsgnmtOrdsKeyP": {
+   "kind": "type",
+   "@cds.external": true,
+   "elements": {
+    "ConsignmentOrderUUID": {
+     "type": "cds.UUID",
+     "@Common.Label": "Consignment Order UUID"
+    }
+   }
+  },
+  "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.D_FreightUnitAssignParameter": {
+   "kind": "type",
+   "@cds.external": true,
+   "elements": {
+    "FreightUnitUUID": {
+     "type": "cds.UUID",
+     "@Common.Label": "Freight Unit UUID"
+    }
+   }
+  },
+  "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.D_FreightUnitUnassignParameter": {
+   "kind": "type",
+   "@cds.external": true,
+   "elements": {
+    "FreightUnitUUID": {
+     "type": "cds.UUID",
+     "@Common.Label": "Freight Unit UUID"
+    }
+   }
+  },
+  "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.D_TranspOrdAssgCsgnmtOrdsKeyP": {
+   "kind": "type",
+   "@cds.external": true,
+   "elements": {
+    "ConsignmentOrderUUID": {
+     "type": "cds.UUID",
+     "@Common.Label": "Consignment Order UUID"
+    }
+   }
+  },
+  "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.SAP__Message": {
+   "kind": "type",
+   "@cds.external": true,
+   "elements": {
+    "code": {
+     "type": "cds.String",
+     "notNull": true
+    },
+    "message": {
+     "type": "cds.String",
+     "notNull": true
+    },
+    "target": {
+     "type": "cds.String"
+    },
+    "additionalTargets": {
+     "items": {
+      "type": "cds.String",
+      "notNull": true
+     }
+    },
+    "transition": {
+     "type": "cds.Boolean",
+     "notNull": true
+    },
+    "numericSeverity": {
+     "type": "cds.Integer",
+     "@odata.Type": "Edm.Byte",
+     "notNull": true
+    },
+    "longtextUrl": {
+     "type": "cds.String"
+    }
+   }
+  },
+  "sap_s4_OP_API_FREIGHTBOOKING_0001_v1": {
+   "kind": "service",
+   "@cds.external": true,
+   "@CodeList.UnitsOfMeasure.Url": "../../../../default/iwbep/common/0001/$metadata",
+   "@CodeList.UnitsOfMeasure.CollectionPath": "UnitsOfMeasure",
+   "@CodeList.CurrencyCodes.Url": "../../../../default/iwbep/common/0001/$metadata",
+   "@CodeList.CurrencyCodes.CollectionPath": "Currencies",
+   "@Common.ApplyMultiUnitBehaviorForSortingAndFiltering": true,
+   "@Capabilities.FilterFunctions": [
+    "eq",
+    "ne",
+    "gt",
+    "ge",
+    "lt",
+    "le",
+    "and",
+    "or",
+    "contains",
+    "startswith",
+    "endswith",
+    "any",
+    "all"
+   ],
+   "@Capabilities.SupportedFormats": [
+    "application/json",
+    "application/pdf"
+   ],
+   "@PDF.Features.DocumentDescriptionReference": "../../../../default/iwbep/common/0001/$metadata",
+   "@PDF.Features.DocumentDescriptionCollection": "MyDocumentDescriptions",
+   "@PDF.Features.ArchiveFormat": true,
+   "@PDF.Features.Border": true,
+   "@PDF.Features.CoverPage": true,
+   "@PDF.Features.FitToPage": true,
+   "@PDF.Features.FontName": true,
+   "@PDF.Features.FontSize": true,
+   "@PDF.Features.HeaderFooter": true,
+   "@PDF.Features.IANATimezoneFormat": true,
+   "@PDF.Features.Margin": true,
+   "@PDF.Features.Padding": true,
+   "@PDF.Features.ResultSizeDefault": 20000,
+   "@PDF.Features.ResultSizeMaximum": 20000,
+   "@PDF.Features.Signature": true,
+   "@PDF.Features.TextDirectionLayout": true,
+   "@PDF.Features.Treeview": true,
+   "@PDF.Features.UploadToFileShare": true,
+   "@Capabilities.KeyAsSegmentSupported": true,
+   "@Capabilities.AsynchronousRequestsSupported": true
+  },
+  "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.FreightBooking": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "TransportationOrderUUID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Common.Text": {
+      "=": "FreightBookingDescription"
+     },
+     "@Core.Computed": true,
+     "@Common.Label": "Transportation Order UUID"
+    },
+    "FreightBooking": {
+     "type": "cds.String",
+     "length": 20,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Freight Booking"
+    },
+    "TransportationOrderCategory": {
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TransportationOrderCategory",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Transportation Order Category"
+    },
+    "FreightBookingType": {
+     "type": "cds.String",
+     "length": 4,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TransportationOrderType",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Freight Booking Type",
+     "@Common.QuickInfo": "Freight Order Type"
+    },
+    "TransportationOrderCrtnType": {
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrderCreationType",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Creation Type"
+    },
+    "FreightBookingDescription": {
+     "type": "cds.String",
+     "length": 40,
+     "notNull": true,
+     "@Common.Label": "Freight Booking Description",
+     "@Common.QuickInfo": "Freight Order Description"
+    },
+    "TranspOrdPartnerReference": {
+     "type": "cds.String",
+     "length": 35,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Partner Reference Number",
+     "@Common.QuickInfo": "Transportation Order Partner Reference Number"
+    },
+    "TranspOrdMasterBillOfLading": {
+     "type": "cds.String",
+     "length": 35,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Master Bill of Lading"
+    },
+    "TranspOrdResponsiblePerson": {
+     "type": "cds.String",
+     "length": 12,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Responsible Person",
+     "@Common.QuickInfo": "Transportation Order Responsible Person"
+    },
+    "TranspOrdDngrsGdsAreCntnd": {
+     "type": "cds.Boolean",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Dangerous Goods Are Contained",
+     "@Common.QuickInfo": "Transportation Order Dangerous Goods Are Contained"
+    },
+    "TranspOrdServiceLevel": {
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Service Level - Carrier",
+     "@Common.QuickInfo": "Transportation Service Level - Carrier"
+    },
+    "TranspOrdPlanningIsBlocked": {
+     "type": "cds.Boolean",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Planning Block",
+     "@Common.QuickInfo": "Transportation Order Planning Block"
+    },
+    "TranspOrdExecutionIsBlocked": {
+     "type": "cds.Boolean",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Execution Block",
+     "@Common.QuickInfo": "Transportation Order Execution Block"
+    },
+    "TranspOrdFrtSetlDocIsBlocked": {
+     "type": "cds.Boolean",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Blocked for Freight Settlement",
+     "@Common.QuickInfo": "Freight Document Is Blocked for Freight Settlement"
+    },
+    "TranspOrdCarrierUUID": {
+     "type": "cds.UUID",
+     "@Common.Label": "Carrier UUID"
+    },
+    "TranspOrdCarrier": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "BusinessPartner",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Carrier"
+    },
+    "TranspOrdCarrierAddressID": {
+     "type": "cds.String",
+     "length": 40,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Carrier Address ID"
+    },
+    "TranspOrdSCACCode": {
+     "type": "cds.String",
+     "length": 4,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "StandardCarrierAlphaCode",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Carrier SCAC Code",
+     "@Common.QuickInfo": "Transportation Order Standard Carrier Alpha Code"
+    },
+    "TranspOrdAirlineIATACode": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspAirlineIATACode",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Airline IATA Code",
+     "@Common.QuickInfo": "Transportation Order Airline IATA Code"
+    },
+    "TranspOrdAirWayBill": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Airway Bill",
+     "@Common.QuickInfo": "Transportation Order Airway Bill"
+    },
+    "TranspOrdCarrierOriginOfEntry": {
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspCarrierOriginOfEntry",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Carrier Origin of Entry",
+     "@Common.QuickInfo": "Transportation Order Carrier Origin of Entry"
+    },
+    "TranspOrdShipperUUID": {
+     "type": "cds.UUID",
+     "@Common.Label": "Shipper UUID",
+     "@Common.QuickInfo": "Shipper Universally Unique Identifier"
+    },
+    "TranspOrdShipper": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "BusinessPartner",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Shipper"
+    },
+    "TranspOrdShipperAddressID": {
+     "type": "cds.String",
+     "length": 40,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Shipper Address ID"
+    },
+    "TranspOrdConsigneeUUID": {
+     "type": "cds.UUID",
+     "@Common.Label": "Ship-to Party UUID"
+    },
+    "TranspOrdConsignee": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "BusinessPartner",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Ship-to Party"
+    },
+    "TranspOrdConsigneeAddressID": {
+     "type": "cds.String",
+     "length": 40,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Ship-to Party Address ID"
+    },
+    "TranspOrdExecutingCarrierUUID": {
+     "type": "cds.UUID",
+     "@Common.Label": "Executing Carrier UUID"
+    },
+    "TranspOrdExecutingCarrier": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "BusinessPartner",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Executing Carrier"
+    },
+    "TranspOrdExecutingCarrAddrID": {
+     "type": "cds.String",
+     "length": 40,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Executing Carrier Address ID"
+    },
+    "TransOrdAcctNmbrWthExectgCarr": {
+     "type": "cds.String",
+     "length": 14,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Account Number with Carrier",
+     "@Common.QuickInfo": "Account Number with the Executing Carrier",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=%2FSCMTMS%2FVDM_EIKTO_K"
+    },
+    "TranspOrdShippingType": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrderShippingType",
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Shipping Type",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=%2FSCMTMS%2FSHIPPING_TYPE"
+    },
+    "TranspOrdMovementType": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TransportationMovementType",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Movement Type",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=%2FSCMTMS%2FMOVEMENT_TYPE"
+    },
+    "TranspOrdTrafficDirection": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrderTrafficDirection",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Traffic Direction",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=%2FSCMTMS%2FTRAFFIC_DIRECTION"
+    },
+    "PlngAndExecOrgExternalID": {
+     "type": "cds.String",
+     "length": 20,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspPlngAndExecutionOrg",
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Execution Org",
+     "@Common.Heading": "Execution Organization",
+     "@Common.QuickInfo": "Transportation Execution Organization",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=%2FSCMTMS%2FEXEC_ORG_EXT_ID"
+    },
+    "PlngAndExecGroupExternalID": {
+     "type": "cds.String",
+     "length": 20,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspPlngAndExecutionGroup",
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Execution Group",
+     "@Common.QuickInfo": "Transportation Execution Group"
+    },
+    "PurchasingOrgExternalID": {
+     "type": "cds.String",
+     "length": 20,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TransportationPurchasingOrg",
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Purchasing Org.",
+     "@Common.Heading": "Purchasing Organization",
+     "@Common.QuickInfo": "Transportation Purchasing Organization"
+    },
+    "PurchasingGroupExternalID": {
+     "type": "cds.String",
+     "length": 20,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TransportationPurchasingGroup",
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Purchasing Group",
+     "@Common.QuickInfo": "Transportation Purchasing Group"
+    },
+    "PurchasingCompanyOrgExternalID": {
+     "type": "cds.String",
+     "length": 20,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TransportationCompanyOrg",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Purchasing Company Organization",
+     "@Common.QuickInfo": "Transportation Order Purchasing Company Organization"
+    },
+    "TranspOrdLifeCycleStatus": {
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrderLifecycleStatus",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Life Cycle Status",
+     "@Common.QuickInfo": "Transportation Order Life Cycle Status"
+    },
+    "TransportationOrderExecSts": {
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrderExecutionStatus",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Execution Status",
+     "@Common.QuickInfo": "Transportation Order Execution Status"
+    },
+    "TranspOrdFrtDisputeCaseStatus": {
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "FreightDisputeCaseStatus",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Freight Dispute Case Status",
+     "@Common.QuickInfo": "Transportation Order Freight Dispute Case Status"
+    },
+    "TranspOrderDngrsGdsSts": {
+     "type": "cds.String",
+     "length": 1,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrdDangerousGoodsStatus",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Dangerous Goods Status",
+     "@Common.QuickInfo": "Transportation Order Dangerous Goods Status"
+    },
+    "TranspOrdSubcontrgConfStatus": {
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrderSubcontrgConfStatus",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Subcontracting Confirmation Status",
+     "@Common.QuickInfo": "Transportation Order Subcontracting Confirmation Status"
+    },
+    "TranspOrderSubcontrgSts": {
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrdSubcontractingStatus",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Subcontracting Status",
+     "@Common.QuickInfo": "Transportation Order Subcontracting Status"
+    },
+    "TranspOrdWhseProcessingStatus": {
+     "type": "cds.String",
+     "length": 1,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrdWhseProcessingStatus",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Warehouse Processing Status",
+     "@Common.QuickInfo": "Transportation Order Warehouse Processing Status"
+    },
+    "TranspOrdGoodsMovementStatus": {
+     "type": "cds.String",
+     "length": 1,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrdGoodsMovementStatus",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Goods Movement Status",
+     "@Common.QuickInfo": "Transportation Order Goods Movement Status"
+    },
+    "TranspOrdMeansOfTransport": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TransportationMeansOfTransport",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Means of Transport",
+     "@Common.QuickInfo": "Transportation Order Means of Transport"
+    },
+    "TranspOrdTransportationMode": {
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TransportationMode",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Transportation Mode"
+    },
+    "TransportationModeCategory": {
+     "type": "cds.String",
+     "length": 1,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TransportationModeCategory",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Transportation Mode Category"
+    },
+    "TranspOrdMaxUtilznMassRatio": {
+     "type": "cds.Decimal",
+     "precision": 16,
+     "scale": 2,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Maximum Utilization Mass Ratio",
+     "@Common.QuickInfo": "Transportation Order Max Utilization Mass Ratio"
+    },
+    "TranspOrdMaxUtilznVolumeRatio": {
+     "type": "cds.Decimal",
+     "precision": 16,
+     "scale": 2,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Maximum Utilization Volume Ratio",
+     "@Common.QuickInfo": "Transportation Order Max Utilization Volume Ratio"
+    },
+    "TranspOrdGrossWeight": {
+     "type": "cds.Decimal",
+     "precision": 31,
+     "scale": 14,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdGrossWeightUnit"
+     },
+     "@Common.Label": "Gross Weight",
+     "@Common.QuickInfo": "Transportation Order Gross Weight"
+    },
+    "TranspOrdGrossWeightUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Gross Weight Unit of Measure"
+    },
+    "TranspOrdNetWeight": {
+     "type": "cds.Decimal",
+     "precision": 31,
+     "scale": 14,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdNetWeightUnit"
+     },
+     "@Common.Label": "Net Weight",
+     "@Common.QuickInfo": "Transportation Order Net Weight"
+    },
+    "TranspOrdNetWeightUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Net Weight Unit of Measure"
+    },
+    "TranspOrdGrossVolume": {
+     "type": "cds.Decimal",
+     "precision": 31,
+     "scale": 14,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdGrossVolumeUnit"
+     },
+     "@Common.Label": "Gross Volume",
+     "@Common.QuickInfo": "Transportation Order Gross Volume"
+    },
+    "TranspOrdGrossVolumeUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Gross Volume Unit of Measure"
+    },
+    "TranspOrdQuantity": {
+     "type": "cds.Decimal",
+     "precision": 31,
+     "scale": 14,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdQuantityUnit"
+     },
+     "@Common.Label": "Quantity",
+     "@Common.QuickInfo": "Transportation Order Quantity"
+    },
+    "TranspOrdQuantityUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Quantity Unit of Measure"
+    },
+    "TranspOrdAlternativeQty": {
+     "type": "cds.Decimal",
+     "precision": 31,
+     "scale": 14,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdAlternativeQtyUnit"
+     },
+     "@Common.Label": "Alternative Quantity",
+     "@Common.QuickInfo": "Transportation Order Alternative Quantity"
+    },
+    "TranspOrdAlternativeQtyUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Alternative Quantity Unit of Measure"
+    },
+    "TranspOrdNumberOfCtns": {
+     "type": "cds.Decimal",
+     "precision": 31,
+     "scale": 14,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdNumberOfCtnsUnit"
+     },
+     "@Common.Label": "Number of TEU",
+     "@Common.QuickInfo": "Transportation Order Number Of Containers"
+    },
+    "TranspOrdNumberOfCtnsUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Number of TEU Unit of Measure",
+     "@Common.QuickInfo": "Transportation Order Number of TEU Unit of Measure"
+    },
+    "TranspOrdNrmdLdCnsnQuantity": {
+     "type": "cds.Decimal",
+     "precision": 31,
+     "scale": 14,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdNrmdLdCnsnQuantityUnt"
+     },
+     "@Common.Label": "Normalized Load Consumption Quantity"
+    },
+    "TranspOrdNrmdLdCnsnQuantityUnt": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Normalized Load Consumption Quantity UoM"
+    },
+    "TranspOrdAddlNrmdLdCnsnQty": {
+     "type": "cds.Decimal",
+     "precision": 31,
+     "scale": 14,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdAddlNrmdLdCnsnQtyUnit"
+     },
+     "@Common.Label": "Add. Normalized Load Consumption Qty.",
+     "@Common.QuickInfo": "Additional Normalized Load Consumption Quantity"
+    },
+    "TranspOrdAddlNrmdLdCnsnQtyUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Additional Normalized Qty. UoM",
+     "@Common.QuickInfo": "Additional Normalized Load Consumption Qty. UoM"
+    },
+    "TranspOrdDngrsGdsExmpPts": {
+     "type": "cds.Decimal",
+     "precision": 31,
+     "scale": 14,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdDngrsGdsExmpPtsUnit"
+     },
+     "@Common.Label": "Dangerous Goods Exemption Points",
+     "@Common.QuickInfo": "Transportation Order Dangerous Goods Exemption Points"
+    },
+    "TranspOrdDngrsGdsExmpPtsUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Dangerous Goods Exemption Points UoM",
+     "@Common.QuickInfo": "Transportation Order Dangerous Goods Exemption Points UoM"
+    },
+    "TranspOrdDistance": {
+     "type": "cds.Decimal",
+     "precision": 28,
+     "scale": 3,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdDistanceUnit"
+     },
+     "@Common.Label": "Total Distance",
+     "@Common.QuickInfo": "Transportation Order Total Distance"
+    },
+    "TranspOrdDistanceUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Distance Unit",
+     "@Common.QuickInfo": "Transportation Order Distance Unit"
+    },
+    "TranspOrdNetDuration": {
+     "type": "cds.Decimal",
+     "precision": 11,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Transportation Order Net Duration"
+    },
+    "TranspOrdHasMltplExectgPties": {
+     "type": "cds.Boolean",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Multiple Executing Parties",
+     "@Common.QuickInfo": "Transportation Order Multiple Executing Parties"
+    },
+    "TranspOrdInvoicingCarrierLevel": {
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrdInvoicingCarrierLevel",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Invoicing Carrier Level",
+     "@Common.QuickInfo": "Transportation Order Invoicing Carrier Level",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=%2FSCMTMS%2FVDM_PYMT_IND"
+    },
+    "TranspOrdCreatedByUser": {
+     "type": "cds.String",
+     "length": 12,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Created By",
+     "@Common.QuickInfo": "Transportation Order Created By"
+    },
+    "TranspOrdCreationDateTime": {
+     "type": "cds.DateTime",
+     "@odata.Precision": 0,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@Core.Computed": true,
+     "@Common.Label": "Creation Date Time",
+     "@Common.QuickInfo": "Transportation Order Creation Date Time"
+    },
+    "TranspOrdChangedByUser": {
+     "type": "cds.String",
+     "length": 12,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Changed By",
+     "@Common.QuickInfo": "Transportation Order Changed By"
+    },
+    "TranspOrdChangedDateTime": {
+     "type": "cds.DateTime",
+     "@odata.Precision": 0,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@Core.Computed": true,
+     "@Common.Label": "Changed Date Time",
+     "@Common.QuickInfo": "Changed On"
+    },
+    "TranspOrdLfcycStsChgDteTime": {
+     "type": "cds.DateTime",
+     "@odata.Precision": 0,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@Core.Computed": true,
+     "@Common.Label": "Lifecycle Status Change Date Time",
+     "@Common.QuickInfo": "Transportation Order Life Cycle Status Change Date Time"
+    },
+    "TranspOrdNodeHasError": {
+     "type": "cds.Boolean",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Has Error on Root Node Instance",
+     "@Common.QuickInfo": "Transportation Order Has Error on Node Instance"
+    },
+    "SAP__Messages": {
+     "items": {
+      "type": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.SAP__Message",
+      "notNull": true
+     }
+    },
+    "_FreightBookingDocRef": {
+     "type": "cds.Composition",
+     "target": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.FreightBookingDocRef",
+     "cardinality": {
+      "max": "*"
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightBookingDocRef",
+        "_FreightBooking"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "$self"
+       ]
+      }
+     ],
+     "@Common.Composition": true
+    },
+    "_FreightBookingEvent": {
+     "type": "cds.Composition",
+     "target": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.FreightBookingEvent",
+     "cardinality": {
+      "max": "*"
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightBookingEvent",
+        "_FreightBooking"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "$self"
+       ]
+      }
+     ],
+     "@Common.Composition": true
+    },
+    "_FreightBookingItem": {
+     "type": "cds.Composition",
+     "target": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.FreightBookingItem",
+     "cardinality": {
+      "max": "*"
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightBookingItem",
+        "_FreightBooking"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "$self"
+       ]
+      }
+     ],
+     "@Common.Composition": true
+    },
+    "_FreightBookingStage": {
+     "type": "cds.Association",
+     "target": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.FreightBookingStage",
+     "cardinality": {
+      "max": "*"
+     },
+     "keys": []
+    },
+    "_FreightBookingStop": {
+     "type": "cds.Composition",
+     "target": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.FreightBookingStop",
+     "cardinality": {
+      "max": "*"
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightBookingStop",
+        "_FreightBooking"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "$self"
+       ]
+      }
+     ],
+     "@Common.Composition": true
+    }
+   },
+   "actions": {
+    "UnassignFreightUnit": {
+     "kind": "action",
+     "params": {
+      "_FreightUnits": {
+       "items": {
+        "type": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.D_FreightUnitUnassignParameter",
+        "notNull": true
+       }
+      }
+     }
+    },
+    "AssignFreightUnit": {
+     "kind": "action",
+     "params": {
+      "TransportationOrderItemUUID": {
+       "type": "cds.UUID",
+       "default": {
+        "val": null
+       },
+       "@Common.Label": "UUID of TO Item",
+       "@Common.Heading": "UUID of Transportation Order Item with Conversion Exit",
+       "@Common.QuickInfo": "UUID of Transportation Order Item with Conversion Exit"
+      },
+      "TranspOrdStageMismatchStrategy": {
+       "type": "cds.String",
+       "length": 1,
+       "notNull": false,
+       "@Common.IsUpperCase": true,
+       "default": {
+        "val": null
+       },
+       "@Common.Label": "Rule for Nonmatching Locations",
+       "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=%2FSCMTMS%2FVDM_STG_CAP_MISM_STRAT"
+      },
+      "_FreightUnits": {
+       "items": {
+        "type": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.D_FreightUnitAssignParameter",
+        "notNull": true
+       }
+      }
+     }
+    },
+    "UnassignConsignmentOrders": {
+     "kind": "action",
+     "params": {
+      "_ConsignmentOrders": {
+       "items": {
+        "type": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.D_TrOrdUnassignCsgnmtOrdsKeyP",
+        "notNull": true
+       }
+      }
+     }
+    },
+    "AssignConsignmentOrders": {
+     "kind": "action",
+     "params": {
+      "TransportationOrderItemUUID": {
+       "type": "cds.UUID",
+       "default": {
+        "val": null
+       },
+       "@Common.Label": "UUID of TO Item",
+       "@Common.Heading": "UUID of Transportation Order Item with Conversion Exit",
+       "@Common.QuickInfo": "UUID of Transportation Order Item with Conversion Exit"
+      },
+      "TranspOrdStageMismatchStrategy": {
+       "type": "cds.String",
+       "length": 1,
+       "notNull": false,
+       "@Common.IsUpperCase": true,
+       "default": {
+        "val": null
+       },
+       "@Common.Label": "Rule for Nonmatching Locations",
+       "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=%2FSCMTMS%2FVDM_STG_CAP_MISM_STRAT"
+      },
+      "_ConsignmentOrders": {
+       "items": {
+        "type": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.D_TranspOrdAssgCsgnmtOrdsKeyP",
+        "notNull": true
+       }
+      }
+     }
+    },
+    "CreateFreightBooking": {
+     "kind": "action",
+     "params": {
+      "TransportationOrderType": {
+       "type": "cds.String",
+       "length": 4,
+       "notNull": true,
+       "@Common.FieldControl": {
+        "#": "Mandatory"
+       },
+       "@Common.IsUpperCase": true,
+       "@Common.Label": "Document Type",
+       "@Common.Heading": "Business Document Type",
+       "@Common.QuickInfo": "Business Document Type",
+       "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=%2FSCMTMS%2FTOR_TYPE"
+      },
+      "TransportationOrder": {
+       "type": "cds.String",
+       "length": 20,
+       "notNull": false,
+       "@Common.IsUpperCase": true,
+       "default": {
+        "val": null
+       },
+       "@Common.Label": "Document"
+      }
+     },
+     "returns": {
+      "type": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.FreightBooking",
+      "notNull": true
+     }
+    },
+    "CancelFreightBooking": {
+     "kind": "action",
+     "params": {}
+    }
+   },
+   "@Common.CreatedBy": {
+    "=": "TranspOrdCreatedByUser"
+   },
+   "@Common.ChangedBy": {
+    "=": "TranspOrdChangedByUser"
+   },
+   "@Common.Label": "Freight Booking",
+   "@Common.Messages": {
+    "=": "SAP__Messages"
+   },
+   "@Capabilities.NavigationRestrictions.RestrictedProperties": [
+    {
+     "NavigationProperty": {
+      "=": "_FreightBookingDocRef"
+     },
+     "InsertRestrictions": {
+      "Insertable": true
+     }
+    },
+    {
+     "NavigationProperty": {
+      "=": "_FreightBookingItem"
+     },
+     "InsertRestrictions": {
+      "Insertable": true
+     }
+    }
+   ],
+   "@Capabilities.SearchRestrictions.Searchable": false,
+   "@Capabilities.UpdateRestrictions.DeltaUpdateSupported": true,
+   "@Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties": [
+    "_FreightBookingDocRef",
+    "_FreightBookingEvent",
+    "_FreightBookingItem",
+    "_FreightBookingStage",
+    "_FreightBookingStop"
+   ],
+   "@Capabilities.UpdateRestrictions.QueryOptions.SelectSupported": true,
+   "@Capabilities.DeepUpdateSupport.ContentIDSupported": true,
+   "@Capabilities.InsertRestrictions.Insertable": false,
+   "@Capabilities.DeleteRestrictions.Deletable": false,
+   "@Core.OptimisticConcurrency": [
+    "TranspOrdChangedDateTime"
+   ],
+   "@Capabilities.FilterRestrictions.FilterExpressionRestrictions": [
+    {
+     "Property": {
+      "=": "TranspOrdGrossWeight"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdNetWeight"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdGrossVolume"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdQuantity"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdAlternativeQty"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdNumberOfCtns"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdNrmdLdCnsnQuantity"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdAddlNrmdLdCnsnQty"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdDngrsGdsExmpPts"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdDistance"
+     },
+     "AllowedExpressions": "MultiValue"
+    }
+   ]
+  },
+  "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.FreightBookingDocRef": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "TransportationOrderDocRefUUID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Common.Text": {
+      "=": "TranspOrdDocReferenceID"
+     },
+     "@Core.Computed": true,
+     "@Common.Label": "Transp. Order Document Reference UUID"
+    },
+    "TransportationOrderUUID": {
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "FreightBooking",
+     "@Core.Computed": true,
+     "@Common.Label": "Transportation Order UUID"
+    },
+    "TranspOrdDocReferenceID": {
+     "type": "cds.String",
+     "length": 35,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Business Transaction Document"
+    },
+    "TranspOrdDocReferenceType": {
+     "type": "cds.String",
+     "length": 5,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspBizTransacDocTypeCode",
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Document Type for Business Transaction"
+    },
+    "TranspOrdDocReferenceItmID": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Document Item for Business Transaction"
+    },
+    "TranspOrdDocReferenceItemType": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspBizTransacDocItmTypeCode",
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Business Transaction Document Item Type",
+     "@Common.QuickInfo": "Business Transaction Document Item Type Code"
+    },
+    "TranspOrdDocumentReferenceDate": {
+     "type": "cds.Date",
+     "@Common.Label": "Business Transaction Document Date"
+    },
+    "TranspOrdDocRefIssuerName": {
+     "type": "cds.String",
+     "length": 40,
+     "notNull": true,
+     "@Common.Label": "Issuing Party of Bus. Trans. Document",
+     "@Common.QuickInfo": "Issuing Party of Business Transaction Document"
+    },
+    "SAP__Messages": {
+     "items": {
+      "type": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.SAP__Message",
+      "notNull": true
+     }
+    },
+    "_FreightBooking": {
+     "type": "cds.Association",
+     "target": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.FreightBooking",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightBooking",
+        "TransportationOrderUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TransportationOrderUUID"
+       ]
+      }
+     ]
+    }
+   },
+   "@Common.Label": "Freight Booking Document Reference",
+   "@Common.Messages": {
+    "=": "SAP__Messages"
+   },
+   "@Capabilities.SearchRestrictions.Searchable": false,
+   "@Capabilities.UpdateRestrictions.DeltaUpdateSupported": true,
+   "@Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties": [
+    "_FreightBooking"
+   ],
+   "@Capabilities.UpdateRestrictions.QueryOptions.SelectSupported": true,
+   "@Capabilities.DeepUpdateSupport.ContentIDSupported": true,
+   "@Capabilities.InsertRestrictions.Insertable": false,
+   "@Core.OptimisticConcurrency": [
+    "_FreightBooking/TranspOrdChangedDateTime"
+   ]
+  },
+  "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.FreightBookingEvent": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "TransportationOrderEventUUID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Common.Text": {
+      "=": "TranspOrdEventCode"
+     },
+     "@Core.Computed": true,
+     "@Common.Label": "Event UUID",
+     "@Common.QuickInfo": "Transportation Order Event UUID"
+    },
+    "TransportationOrderUUID": {
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "FreightBooking",
+     "@Core.Computed": true,
+     "@Common.Label": "Transportation Order UUID"
+    },
+    "TransportationOrderStopUUID": {
+     "type": "cds.UUID",
+     "@Common.SAPObjectNodeTypeReference": "FreightBookingStop",
+     "@Core.Computed": true,
+     "@Common.Label": "Stop UUID",
+     "@Common.QuickInfo": "Transportation Order Stop UUID"
+    },
+    "TransportationOrderItemUUID": {
+     "type": "cds.UUID",
+     "@Common.SAPObjectNodeTypeReference": "FreightBookingItem",
+     "@Core.Computed": true,
+     "@Common.Label": "Item UUID",
+     "@Common.QuickInfo": "Transportation Order Item UUID"
+    },
+    "TranspOrdEventLocationID": {
+     "type": "cds.String",
+     "length": 20,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Event Location ID",
+     "@Common.QuickInfo": "Transportation Order Event Location ID"
+    },
+    "TranspOrdEventLocationUUID": {
+     "type": "cds.UUID",
+     "@Common.SAPObjectNodeTypeReference": "Location",
+     "@Core.Computed": true,
+     "@Common.Label": "Event Location UUID",
+     "@Common.QuickInfo": "Transportation Order Event Location UUID (CHAR 22)"
+    },
+    "TranspOrdEventCode": {
+     "type": "cds.String",
+     "length": 20,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TransportationOrderEventCode",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Event Code",
+     "@Common.QuickInfo": "Transportation Order Event Code",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=%2FSCMTMS%2FVDM_EVENT_CODE"
+    },
+    "TranspOrdEventReasonCode": {
+     "type": "cds.String",
+     "length": 20,
+     "notNull": true,
+     "@Common.Text": {
+      "=": "TranspOrdEventReasonDesc"
+     },
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Event Reason Code",
+     "@Common.QuickInfo": "Transportation Order Event Reason Code"
+    },
+    "TranspOrdEventReasonDesc": {
+     "type": "cds.String",
+     "length": 100,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Event Reason Description",
+     "@Common.QuickInfo": "Transportation Order Event Reason Description"
+    },
+    "TranspOrdEvtInformationSource": {
+     "type": "cds.String",
+     "length": 1,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrdExecInformationSource",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Event Information Source",
+     "@Common.QuickInfo": "Transportation Order Source of Event Information"
+    },
+    "TranspOrdEvtActualDateTime": {
+     "type": "cds.DateTime",
+     "@odata.Precision": 0,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@Core.Computed": true,
+     "@Common.Label": "Event Actual Date Time",
+     "@Common.QuickInfo": "Transportation Order Event Actual Date Time"
+    },
+    "TranspOrdEvtActualDateTimeZone": {
+     "type": "cds.String",
+     "length": 6,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Event Actual Time Zone",
+     "@Common.QuickInfo": "Transp Order Event Actual Time Zone"
+    },
+    "TranspOrdEvtExpdEndDateTime": {
+     "type": "cds.DateTime",
+     "@odata.Precision": 0,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@Core.Computed": true,
+     "@Common.Label": "Event Expected End Date Time",
+     "@Common.QuickInfo": "Transportation Order Event Expected End Date Time"
+    },
+    "TranspOrdEvtEstimatedDateTime": {
+     "type": "cds.DateTime",
+     "@odata.Precision": 0,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@Core.Computed": true,
+     "@Common.Label": "Event Estimated Date Time",
+     "@Common.QuickInfo": "Transportation Order Event Estimated Date Time"
+    },
+    "TranspOrdEvtPersnRespRecording": {
+     "type": "cds.String",
+     "length": 50,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Event Person Who Performs the Task",
+     "@Common.QuickInfo": "Transp. Order Event Person Who Performs the Task"
+    },
+    "TranspOrdEventRecordingMethod": {
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TransportationRecordingMethod",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Event Method Used to Perform the Task",
+     "@Common.QuickInfo": "Transp. Order Event Method Used to Perform the Task"
+    },
+    "TranspOrdEventCreatedByUser": {
+     "type": "cds.String",
+     "length": 12,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Created By"
+    },
+    "TranspOrdEventCreationDateTime": {
+     "type": "cds.DateTime",
+     "@odata.Precision": 0,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@Core.Computed": true,
+     "@Common.Label": "Creation Date Time"
+    },
+    "TranspOrdEvtLastChangedByUser": {
+     "type": "cds.String",
+     "length": 12,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Changed By"
+    },
+    "TranspOrdEventChangedDateTime": {
+     "type": "cds.DateTime",
+     "@odata.Precision": 0,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@Core.Computed": true,
+     "@Common.Label": "Changed Date Time",
+     "@Common.QuickInfo": "Changed On"
+    },
+    "_FreightBooking": {
+     "type": "cds.Association",
+     "target": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.FreightBooking",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightBooking",
+        "TransportationOrderUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TransportationOrderUUID"
+       ]
+      }
+     ]
+    },
+    "_FreightBookingItem": {
+     "type": "cds.Association",
+     "target": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.FreightBookingItem",
+     "cardinality": {
+      "max": 1
+     },
+     "keys": []
+    },
+    "_FreightBookingStop": {
+     "type": "cds.Association",
+     "target": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.FreightBookingStop",
+     "cardinality": {
+      "max": 1
+     },
+     "keys": []
+    }
+   },
+   "@Common.CreatedBy": {
+    "=": "TranspOrdEventCreatedByUser"
+   },
+   "@Common.ChangedBy": {
+    "=": "TranspOrdEvtLastChangedByUser"
+   },
+   "@Common.Label": "Freight Booking Event",
+   "@Capabilities.SearchRestrictions.Searchable": false,
+   "@Capabilities.InsertRestrictions.Insertable": false,
+   "@Capabilities.DeleteRestrictions.Deletable": false,
+   "@Capabilities.UpdateRestrictions.Updatable": false,
+   "@Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties": [
+    "_FreightBooking",
+    "_FreightBookingItem",
+    "_FreightBookingStop"
+   ],
+   "@Capabilities.UpdateRestrictions.QueryOptions.SelectSupported": true,
+   "@Core.OptimisticConcurrency": [
+    "_FreightBooking/TranspOrdChangedDateTime"
+   ]
+  },
+  "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.FreightBookingItem": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "TransportationOrderItemUUID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Common.Text": {
+      "=": "TranspOrdItemDesc"
+     },
+     "@Core.Computed": true,
+     "@Common.Label": "Item UUID",
+     "@Common.QuickInfo": "Transportation Order Item UUID"
+    },
+    "TransportationOrderUUID": {
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "FreightBooking",
+     "@Core.Computed": true,
+     "@Common.Label": "Transportation Order UUID"
+    },
+    "TranspOrdItem": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Item"
+    },
+    "TranspOrdItemType": {
+     "type": "cds.String",
+     "length": 4,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TransportationOrderItemType",
+     "@Core.Immutable": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Item Type",
+     "@Common.Heading": "Item Type of Transportation Order",
+     "@Common.QuickInfo": "Transportation Order Item Type"
+    },
+    "TranspOrderMultipleItem": {
+     "type": "cds.String",
+     "length": 1,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrderMultipleItem",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Multiple Item",
+     "@Common.QuickInfo": "Transportation Order Item Multiple Item"
+    },
+    "TranspOrdItemParentItemUUID": {
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "FreightBookingItem",
+     "@Core.Immutable": true,
+     "@Common.Label": "Parent Item UUID",
+     "@Common.QuickInfo": "Transportation Order Parent Item UUID"
+    },
+    "TranspOrdItemSourceStopUUID": {
+     "type": "cds.UUID",
+     "@Common.SAPObjectNodeTypeReference": "FreightBookingStop",
+     "@Core.Immutable": true,
+     "@Common.Label": "Item Source Stop UUID",
+     "@Common.QuickInfo": "Transportation Order Item Source Stop UUID"
+    },
+    "TranspOrdItemDestStopUUID": {
+     "type": "cds.UUID",
+     "@Common.SAPObjectNodeTypeReference": "FreightBookingStop",
+     "@Core.Immutable": true,
+     "@Common.Label": "Item Destination Stop UUID",
+     "@Common.QuickInfo": "Transportation Order Item Destination Stop UUID"
+    },
+    "TranspOrdItemDesc": {
+     "type": "cds.String",
+     "length": 40,
+     "notNull": true,
+     "@Common.Label": "Item Description"
+    },
+    "TranspOrdItemCategory": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrderItemCategory",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Item Category"
+    },
+    "TranspOrdItemIsMainCargoItem": {
+     "type": "cds.Boolean",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item Is Main Cargo Item",
+     "@Common.QuickInfo": "Transportation Order Item Is Main Cargo Item"
+    },
+    "PredecessorTransportationOrder": {
+     "type": "cds.UUID",
+     "@Common.SAPObjectNodeTypeReference": "TransportationOrder",
+     "@Core.Computed": true,
+     "@Common.Label": "Item Predecessor Document Root UUID",
+     "@Common.QuickInfo": "Transportation Order Item Predecessor Document Root UUID"
+    },
+    "TranspOrdItemShipper": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "BusinessPartner",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Item Shipper",
+     "@Common.QuickInfo": "Transportation Order Item Shipper"
+    },
+    "TranspOrdItemShipperAddressID": {
+     "type": "cds.String",
+     "length": 40,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item Shipper Address ID",
+     "@Common.QuickInfo": "Transportation Order Item Shipper Address ID"
+    },
+    "TranspOrdItemConsignee": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "BusinessPartner",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Item Ship-to Party",
+     "@Common.QuickInfo": "Transportation Order Item Ship-to Party"
+    },
+    "TranspOrdItemConsigneeAddrID": {
+     "type": "cds.String",
+     "length": 40,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item Ship-to Party Address ID",
+     "@Common.QuickInfo": "Transportation Order Item Ship-to Party Address ID"
+    },
+    "TranspOrdItemEquipPlateNumber": {
+     "type": "cds.String",
+     "length": 20,
+     "notNull": true,
+     "@Common.Label": "Item Registration Number",
+     "@Common.QuickInfo": "Transportation Order Item Registration Number"
+    },
+    "TranspOrdItmRegnCtryReg": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Item Country/Region Key",
+     "@Common.QuickInfo": "Transportation Order Item Country/Region Key"
+    },
+    "TranspOrdItemGrossWeight": {
+     "type": "cds.Decimal",
+     "precision": 31,
+     "scale": 14,
+     "notNull": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdItemGrossWeightUnit"
+     },
+     "@Common.Label": "Item Gross Weight",
+     "@Common.QuickInfo": "Transportation Order Item Gross Weight"
+    },
+    "TranspOrdItemGrossWeightUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Common.Label": "Item Gross Weight Unit",
+     "@Common.QuickInfo": "Transportation Order Item Gross Weight Unit"
+    },
+    "TranspOrdItemGrossVolume": {
+     "type": "cds.Decimal",
+     "precision": 31,
+     "scale": 14,
+     "notNull": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdItemGrossVolumeUnit"
+     },
+     "@Common.Label": "Item Gross Volume",
+     "@Common.QuickInfo": "Transp Order Item Gross Volume"
+    },
+    "TranspOrdItemGrossVolumeUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Common.Label": "Item Gross Volume Unit",
+     "@Common.QuickInfo": "Transportation Order Item Gross Volume Unit"
+    },
+    "TranspOrdItemNetWeight": {
+     "type": "cds.Decimal",
+     "precision": 31,
+     "scale": 14,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdItemNetWeightUnit"
+     },
+     "@Common.Label": "Item Net Weight",
+     "@Common.QuickInfo": "Transportation Order Item Net Weight"
+    },
+    "TranspOrdItemNetWeightUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item Net Weight Unit",
+     "@Common.QuickInfo": "Transportation Order Item Net Weight Unit"
+    },
+    "TranspOrdItemQuantity": {
+     "type": "cds.Decimal",
+     "precision": 31,
+     "scale": 14,
+     "notNull": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdItemQuantityUnit"
+     },
+     "@Common.Label": "Item Quantity",
+     "@Common.QuickInfo": "Transportation Order Item Quantity"
+    },
+    "TranspOrdItemQuantityUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Common.Label": "Item Quantity Unit",
+     "@Common.QuickInfo": "Transportation Order Item Quantity Unit"
+    },
+    "TranspOrdItemAltvQty": {
+     "type": "cds.Decimal",
+     "precision": 31,
+     "scale": 14,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdItemAltvQtyUnit"
+     },
+     "@Common.Label": "Item Alternative Quantity",
+     "@Common.QuickInfo": "Transportation Order Item Alternative Quantity"
+    },
+    "TranspOrdItemAltvQtyUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item Alternative Quantity Unit",
+     "@Common.QuickInfo": "Transportation Order Item Alternative Quantity Unit"
+    },
+    "TranspOrdItemBaseQty": {
+     "type": "cds.Decimal",
+     "precision": 31,
+     "scale": 14,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdItemBaseQtyUnit"
+     },
+     "@Common.Label": "Item Base Quantity",
+     "@Common.QuickInfo": "Transportation Order Item Base Quantity"
+    },
+    "TranspOrdItemBaseQtyUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item Base Quantity Unit",
+     "@Common.QuickInfo": "Transp. Order Item Base Quantity UoM"
+    },
+    "TranspOrdItemTareWeight": {
+     "type": "cds.Decimal",
+     "precision": 31,
+     "scale": 14,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdItemTareWeightUnit"
+     },
+     "@Common.Label": "Item Tare Weight",
+     "@Common.QuickInfo": "Transportation Order Item Tare Weight"
+    },
+    "TranspOrdItemTareWeightUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item Tare Weight Unit",
+     "@Common.QuickInfo": "Transportation Order Item Tare Weight Unit"
+    },
+    "TranspOrdItemNumberOfCtns": {
+     "type": "cds.Decimal",
+     "precision": 31,
+     "scale": 14,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdItemNumberOfCtnsUnit"
+     },
+     "@Common.Label": "Item Number of TEU",
+     "@Common.QuickInfo": "Transportation Order Item Number Of Containers"
+    },
+    "TranspOrdItemNumberOfCtnsUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item Number of TEU UoM",
+     "@Common.QuickInfo": "Transportation Order Item Number Of Containers Unit"
+    },
+    "TranspOrdItemLength": {
+     "type": "cds.Decimal",
+     "precision": 13,
+     "scale": 3,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdItemLengthUnit"
+     },
+     "@Common.Label": "Item Length",
+     "@Common.QuickInfo": "Transportation Order Item Length"
+    },
+    "TranspOrdItemWidth": {
+     "type": "cds.Decimal",
+     "precision": 13,
+     "scale": 3,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdItemLengthUnit"
+     },
+     "@Common.Label": "Item Width",
+     "@Common.QuickInfo": "Transportation Order Item Width"
+    },
+    "TranspOrdItemHeight": {
+     "type": "cds.Decimal",
+     "precision": 13,
+     "scale": 3,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdItemLengthUnit"
+     },
+     "@Common.Label": "Item Height",
+     "@Common.QuickInfo": "Transportation Order Item Height"
+    },
+    "TranspOrdItemLengthUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item Length Unit",
+     "@Common.QuickInfo": "Transportation Order Item Length Unit"
+    },
+    "TranspOrdItemGoodsValueAmount": {
+     "type": "cds.Decimal",
+     "precision": 31,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.ISOCurrency": {
+      "=": "TranspOrdItemGoodsValueCrcy"
+     },
+     "@Common.Label": "Item Goods Value Amount",
+     "@Common.QuickInfo": "Transportation Order Item Goods Value Amount"
+    },
+    "TranspOrdItemGoodsValueCrcy": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "Currency",
+     "@Common.IsCurrency": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Item Goods Value Currency",
+     "@Common.QuickInfo": "Transportation Order Item Goods Value Currency"
+    },
+    "TranspOrdItemCapacityUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item Length Capacity Unit",
+     "@Common.QuickInfo": "Transportation Order Item Length Capacity Unit"
+    },
+    "TranspOrdItemCapacityLength": {
+     "type": "cds.Decimal",
+     "precision": 13,
+     "scale": 3,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdItemCapacityUnit"
+     },
+     "@Common.Label": "Item Length Capacity",
+     "@Common.QuickInfo": "Transportation Order Item Length Capacity"
+    },
+    "TranspOrdItemCapacityWidth": {
+     "type": "cds.Decimal",
+     "precision": 13,
+     "scale": 3,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdItemCapacityUnit"
+     },
+     "@Common.Label": "Item Width Capacity",
+     "@Common.QuickInfo": "Transportation Order Item Width Capacity"
+    },
+    "TranspOrdItemCapacityHeight": {
+     "type": "cds.Decimal",
+     "precision": 13,
+     "scale": 3,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdItemCapacityUnit"
+     },
+     "@Common.Label": "Item Height Capacity",
+     "@Common.QuickInfo": "Transportation Order Item Height Capacity"
+    },
+    "TranspOrdItmCapGrossVolume": {
+     "type": "cds.Decimal",
+     "precision": 31,
+     "scale": 14,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdItmCapGrossVolumeUnit"
+     },
+     "@Common.Label": "Item Capacity Gross Volume",
+     "@Common.QuickInfo": "Transp. Order Item Capacity Gross Volume"
+    },
+    "TranspOrdItmCapGrossVolumeUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item Capacity Gross Volume Unit",
+     "@Common.QuickInfo": "Transportation Order Item Capacity Gross Volume Unit"
+    },
+    "TranspOrdItmCapGrossWeight": {
+     "type": "cds.Decimal",
+     "precision": 31,
+     "scale": 14,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdItmCapGrossWeightUnit"
+     },
+     "@Common.Label": "Item Capacity Gross Weight",
+     "@Common.QuickInfo": "Transportation Order Item Capacity Gross Weight"
+    },
+    "TranspOrdItmCapGrossWeightUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item Capacity Gross Weight Unit",
+     "@Common.QuickInfo": "Transportation Order Item Capacity Gross Weight Unit"
+    },
+    "TranspOrdItmCnsmpnLoadQuantity": {
+     "type": "cds.Decimal",
+     "precision": 31,
+     "scale": 14,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdItmCnsmpnLoadQtyUnit"
+     },
+     "@Common.Label": "Item Load Consumption Quantity",
+     "@Common.QuickInfo": "Transp. Order Item Load Consumption Quantity"
+    },
+    "TranspOrdItmCnsmpnLoadQtyUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item Load Consumption Quantity UoM",
+     "@Common.QuickInfo": "Transp. Order Item Load Consumption Quantity UoM"
+    },
+    "TranspOrdItmNrmdLdCnsnQuantity": {
+     "type": "cds.Decimal",
+     "precision": 31,
+     "scale": 14,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdItmNrmdLdCnsnQtyUnit"
+     },
+     "@Common.Label": "ItemNormalized Load Consumption Quantity",
+     "@Common.QuickInfo": "Transp. Order Item Normalized Load Consumption Quantity"
+    },
+    "TranspOrdItmNrmdLdCnsnQtyUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item Normalized Load Consump. Qty. UoM",
+     "@Common.QuickInfo": "Transp. Order Item Normalized Load Consumption Quantity UoM"
+    },
+    "TranspOrdItemIsDangerousGood": {
+     "type": "cds.Boolean",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item is Dangerous Goods",
+     "@Common.QuickInfo": "Transportation Order Item is Dangerous Goods"
+    },
+    "EU_TrOrdItemDngrsGdsADRPtsQty": {
+     "type": "cds.Decimal",
+     "precision": 31,
+     "scale": 14,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "EU_TrOrdItemDngrsGdsADRPtsUnit"
+     },
+     "@Common.Label": "Item DG Exemption Points",
+     "@Common.QuickInfo": "Item Dangerous Goods Exemption Points"
+    },
+    "EU_TrOrdItemDngrsGdsADRPtsUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item DG Exemption Points UoM",
+     "@Common.QuickInfo": "Transp. Order Item UoM for ADR 1.1.3.6 DG Exemption Points"
+    },
+    "TranspOrdItemMatlFreightGroup": {
+     "type": "cds.String",
+     "length": 8,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Item Material Freight Group",
+     "@Common.QuickInfo": "Transportation Order Item Material Freight Group"
+    },
+    "TrOrdItemTransportationGroup": {
+     "type": "cds.String",
+     "length": 4,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Item Transportation Group",
+     "@Common.QuickInfo": "Transportation Order Item Transportation Group"
+    },
+    "TranspOrdItemProductID": {
+     "type": "cds.String",
+     "length": 40,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "Product",
+     "@Core.Computed": true,
+     "@Common.Label": "Item Product ID",
+     "@Common.QuickInfo": "Transportation Order Item Product ID"
+    },
+    "TranspOrdShptItemRefUUID": {
+     "type": "cds.UUID",
+     "@Core.Computed": true,
+     "@Common.Label": "Item Reference to Shipment Item",
+     "@Common.QuickInfo": "Transp. Order Item Reference to Shipment Item"
+    },
+    "IncotermsClassification": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "IncotermsClassification",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Item Incoterms Classification Code",
+     "@Common.QuickInfo": "Transportation Order Item Incoterms Classification Code"
+    },
+    "TrOrdItemIncotermsLocationUUID": {
+     "type": "cds.UUID",
+     "@Common.SAPObjectNodeTypeReference": "Location",
+     "@Core.Computed": true,
+     "@Common.Label": "Item Incoterms Location UUID",
+     "@Common.QuickInfo": "Transp. Order Item Incoterms Location UUID"
+    },
+    "TranspOrdItemIncotermsLocation": {
+     "type": "cds.String",
+     "length": 20,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item Incoterms Location",
+     "@Common.QuickInfo": "Transportation Order Item Incoterms Location"
+    },
+    "TranspOrdItemVoyage": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item Voyage",
+     "@Common.QuickInfo": "Transportation Order Item Voyage"
+    },
+    "TranspOrdItemFlight": {
+     "type": "cds.String",
+     "length": 7,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item Flight",
+     "@Common.QuickInfo": "Transportation Order Item Flight"
+    },
+    "TranspOrdItemVessel": {
+     "type": "cds.String",
+     "length": 35,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Item Vessel",
+     "@Common.QuickInfo": "Transportation Order Item Vessel"
+    },
+    "TranspOrdItemIMOShip": {
+     "type": "cds.String",
+     "length": 11,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Item IMO Ship",
+     "@Common.QuickInfo": "Transportation Order Item IMO Ship"
+    },
+    "TranspOrdItemFlightNumber": {
+     "type": "cds.String",
+     "length": 5,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Item Flight Number",
+     "@Common.QuickInfo": "Transportation Order Item Flight Number (Numerical)"
+    },
+    "TranspOrdItemBookingConfSts": {
+     "type": "cds.String",
+     "length": 1,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrderBookingConfStatus",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Item Booking Confirmation Status",
+     "@Common.QuickInfo": "Transp. Order Item Booking Confirmation Status"
+    },
+    "TranspOrdItemCargoIsHighValue": {
+     "type": "cds.Boolean",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item High-Value Cargo Indicator",
+     "@Common.QuickInfo": "Transportation Order Item High-Value Cargo Indicator",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=%2FSCMTMS%2FVDM_ITM_HVC_IND"
+    },
+    "TranspOrdItemWarehouseCategory": {
+     "type": "cds.String",
+     "length": 1,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspWarehouseCategory",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Item Warehouse Category",
+     "@Common.QuickInfo": "Transportation Order Item Warehouse Category"
+    },
+    "TranspOrdItemWarehouseNumber": {
+     "type": "cds.String",
+     "length": 4,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Item Warehouse Number",
+     "@Common.QuickInfo": "Transportation Order Item Warehouse Number"
+    },
+    "TranspOrdItemTemperatureUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item Temperature Unit",
+     "@Common.QuickInfo": "Transportation Order Item Unit of Measure of Temperature"
+    },
+    "TranspOrdItmMinTemp": {
+     "type": "cds.Decimal",
+     "precision": 7,
+     "scale": 2,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdItemTemperatureUnit"
+     },
+     "@Common.Label": "Item Minimum Control Temperature",
+     "@Common.QuickInfo": "Transportation Order Item Minimum Control Temperature"
+    },
+    "TranspOrdItmMaxTemp": {
+     "type": "cds.Decimal",
+     "precision": 7,
+     "scale": 2,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdItemTemperatureUnit"
+     },
+     "@Common.Label": "Item Maximum Control Temperature",
+     "@Common.QuickInfo": "Transportation Order Item Maximum Control Temperature"
+    },
+    "TranspOrdItmEquipmentGroup": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Item Equipment Group",
+     "@Common.QuickInfo": "Transportation Order Item Equipment Group",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=%2FSCMTMS%2FVDM_ITM_EQUIP_GROUP"
+    },
+    "TranspOrdItmEquipmentType": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Item Equipment Type",
+     "@Common.QuickInfo": "Transportation Order Item Equipment Type"
+    },
+    "TranspOrdItmCtnIsShprOwnd": {
+     "type": "cds.Boolean",
+     "notNull": true,
+     "@Common.Label": "Item Shipper-Owned Container",
+     "@Common.QuickInfo": "Transportation Order Item Shipper-Owned Container"
+    },
+    "TranspOrdItemHndlgExecStatus": {
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrdItemHndlgExecStatus",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Item Handling Execution Status",
+     "@Common.QuickInfo": "Transportation Order Item Handling Execution Status"
+    },
+    "TranspOrdItemPackageID": {
+     "type": "cds.String",
+     "length": 35,
+     "notNull": true,
+     "@Common.Label": "Item Package ID",
+     "@Common.QuickInfo": "Transportation Order Item Package ID"
+    },
+    "TranspOrdItemExternalPackageID": {
+     "type": "cds.String",
+     "length": 35,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Item External Package ID",
+     "@Common.QuickInfo": "Transportation Order Item External Package ID",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=%2FSCMTMS%2FVDM_ITM_PKG_ID_EXT"
+    },
+    "TranspOrdItemGdsMovementStatus": {
+     "type": "cds.String",
+     "length": 1,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrdGoodsMovementStatus",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Item Delivery Goods Movement Status",
+     "@Common.QuickInfo": "Transp. Order Item Delivery Goods Movement Status"
+    },
+    "FreightUnitUUID": {
+     "type": "cds.UUID",
+     "@Core.Computed": true,
+     "@Common.Label": "Item Freight Unit UUID",
+     "@Common.QuickInfo": "Transportation Order Item Freight Unit UUID"
+    },
+    "TranspOrdItmResourceID": {
+     "type": "cds.String",
+     "length": 40,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Resource"
+    },
+    "TranspOrdItemNodeHasError": {
+     "type": "cds.Boolean",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Has Error on Item Node Instance",
+     "@Common.QuickInfo": "Transportation Order Item Has Error on Node Instance"
+    },
+    "SAP__Messages": {
+     "items": {
+      "type": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.SAP__Message",
+      "notNull": true
+     }
+    },
+    "_FreightBooking": {
+     "type": "cds.Association",
+     "target": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.FreightBooking",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightBooking",
+        "TransportationOrderUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TransportationOrderUUID"
+       ]
+      }
+     ]
+    },
+    "_FreightBookingItemDestStop": {
+     "type": "cds.Association",
+     "target": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.FreightBookingStop",
+     "cardinality": {
+      "max": 1
+     },
+     "keys": []
+    },
+    "_FreightBookingItemDocRef": {
+     "type": "cds.Composition",
+     "target": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.FreightBookingItemDocRef",
+     "cardinality": {
+      "max": "*"
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightBookingItemDocRef",
+        "_FreightBookingItem"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "$self"
+       ]
+      }
+     ],
+     "@Common.Composition": true
+    },
+    "_FreightBookingItemParentItem": {
+     "type": "cds.Association",
+     "target": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.FreightBookingItem",
+     "cardinality": {
+      "max": 1
+     },
+     "keys": []
+    },
+    "_FreightBookingItemSrceStop": {
+     "type": "cds.Association",
+     "target": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.FreightBookingStop",
+     "cardinality": {
+      "max": 1
+     },
+     "keys": []
+    }
+   },
+   "@Common.Label": "Freight Booking Item",
+   "@Common.Messages": {
+    "=": "SAP__Messages"
+   },
+   "@Capabilities.NavigationRestrictions.RestrictedProperties": [
+    {
+     "NavigationProperty": {
+      "=": "_FreightBookingItemDocRef"
+     },
+     "InsertRestrictions": {
+      "Insertable": true
+     }
+    }
+   ],
+   "@Capabilities.SearchRestrictions.Searchable": false,
+   "@Capabilities.InsertRestrictions.RequiredProperties": [
+    "TranspOrdItemType",
+    "TranspOrdItemParentItemUUID"
+   ],
+   "@Capabilities.InsertRestrictions.Insertable": false,
+   "@Capabilities.UpdateRestrictions.DeltaUpdateSupported": true,
+   "@Capabilities.UpdateRestrictions.NonUpdatableProperties": [
+    "TranspOrdItemType",
+    "TranspOrdItemParentItemUUID",
+    "TranspOrdItemSourceStopUUID",
+    "TranspOrdItemDestStopUUID"
+   ],
+   "@Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties": [
+    "_FreightBooking",
+    "_FreightBookingItemDestStop",
+    "_FreightBookingItemDocRef",
+    "_FreightBookingItemParentItem",
+    "_FreightBookingItemSrceStop"
+   ],
+   "@Capabilities.UpdateRestrictions.QueryOptions.SelectSupported": true,
+   "@Capabilities.DeepUpdateSupport.ContentIDSupported": true,
+   "@Core.OptimisticConcurrency": [
+    "_FreightBooking/TranspOrdChangedDateTime"
+   ],
+   "@Capabilities.FilterRestrictions.FilterExpressionRestrictions": [
+    {
+     "Property": {
+      "=": "TranspOrdItemGrossWeight"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdItemGrossVolume"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdItemNetWeight"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdItemQuantity"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdItemAltvQty"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdItemBaseQty"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdItemTareWeight"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdItemNumberOfCtns"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdItemLength"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdItemWidth"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdItemHeight"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdItemGoodsValueAmount"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdItemCapacityLength"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdItemCapacityWidth"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdItemCapacityHeight"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdItmCapGrossVolume"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdItmCapGrossWeight"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdItmCnsmpnLoadQuantity"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdItmNrmdLdCnsnQuantity"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "EU_TrOrdItemDngrsGdsADRPtsQty"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdItmMinTemp"
+     },
+     "AllowedExpressions": "MultiValue"
+    },
+    {
+     "Property": {
+      "=": "TranspOrdItmMaxTemp"
+     },
+     "AllowedExpressions": "MultiValue"
+    }
+   ]
+  },
+  "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.FreightBookingItemDocRef": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "TranspOrdItemDocReferenceUUID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Common.Text": {
+      "=": "TranspOrdItemDocReferenceID"
+     },
+     "@Core.Computed": true,
+     "@Common.Label": "Item Document Reference UUID",
+     "@Common.QuickInfo": "Transportation Order Item Document Reference UUID"
+    },
+    "TransportationOrderUUID": {
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "FreightBooking",
+     "@Core.Computed": true,
+     "@Common.Label": "Transportation Order UUID"
+    },
+    "TransportationOrderItemUUID": {
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "FreightBookingItem",
+     "@Core.Computed": true,
+     "@Common.Label": "Item UUID",
+     "@Common.QuickInfo": "Transportation Order Item UUID"
+    },
+    "TranspOrdItemDocReferenceID": {
+     "type": "cds.String",
+     "length": 35,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Business Transaction Document",
+     "@Common.QuickInfo": "Business Transaction Document of Transportation Order Item"
+    },
+    "TranspOrdItemDocReferenceType": {
+     "type": "cds.String",
+     "length": 5,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspBizTransacDocTypeCode",
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Doc. Type for Biz. Transaction of Item",
+     "@Common.QuickInfo": "Document Type for Business Transaction of Transp Order Item"
+    },
+    "TranspOrdItemDocRefItemType": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspBizTransacDocItmTypeCode",
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Biz Transaction Doc Item Type of Item",
+     "@Common.QuickInfo": "Biz Transaction Doc Item Type Code of Transp Order Item"
+    },
+    "TranspOrdItmDocReferenceItemID": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Document Item for Business Transaction"
+    },
+    "TranspOrdItmDocRefDate": {
+     "type": "cds.Date",
+     "@Common.Label": "Business Transaction Doc Date of Item",
+     "@Common.QuickInfo": "Business Transaction Document Date of Transp Order Item"
+    },
+    "TranspOrdItemDocRefIssuerName": {
+     "type": "cds.String",
+     "length": 40,
+     "notNull": true,
+     "@Common.Label": "Issuing Party of Biz Trans. Doc of Item",
+     "@Common.QuickInfo": "Issuing Party of Biz Transaction Doc of Transp Order Item"
+    },
+    "SAP__Messages": {
+     "items": {
+      "type": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.SAP__Message",
+      "notNull": true
+     }
+    },
+    "_FreightBooking": {
+     "type": "cds.Association",
+     "target": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.FreightBooking",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightBooking",
+        "TransportationOrderUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TransportationOrderUUID"
+       ]
+      }
+     ]
+    },
+    "_FreightBookingItem": {
+     "type": "cds.Association",
+     "target": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.FreightBookingItem",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightBookingItem",
+        "TransportationOrderItemUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TransportationOrderItemUUID"
+       ]
+      }
+     ]
+    }
+   },
+   "@Common.Label": "Freight Booking Item Document Reference",
+   "@Common.Messages": {
+    "=": "SAP__Messages"
+   },
+   "@Capabilities.SearchRestrictions.Searchable": false,
+   "@Capabilities.UpdateRestrictions.DeltaUpdateSupported": true,
+   "@Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties": [
+    "_FreightBooking",
+    "_FreightBookingItem"
+   ],
+   "@Capabilities.UpdateRestrictions.QueryOptions.SelectSupported": true,
+   "@Capabilities.DeepUpdateSupport.ContentIDSupported": true,
+   "@Capabilities.InsertRestrictions.Insertable": false,
+   "@Core.OptimisticConcurrency": [
+    "_FreightBooking/TranspOrdChangedDateTime"
+   ]
+  },
+  "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.FreightBookingStage": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "TransportationOrderStageUUID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Common.Text": {
+      "=": "TransportationOrderStage"
+     },
+     "@Core.Computed": true,
+     "@Common.Label": "Stage UUID",
+     "@Common.QuickInfo": "Transportation Order Stage UUID"
+    },
+    "TransportationOrderUUID": {
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "FreightBooking",
+     "@Core.Computed": true,
+     "@Common.Label": "Transportation Order UUID"
+    },
+    "TranspOrdStageSrceStopUUID": {
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "FreightBookingStop",
+     "@Core.Computed": true,
+     "@Common.Label": "Stage Source Stop UUID",
+     "@Common.QuickInfo": "Transportation Order Stage Source Stop UUID"
+    },
+    "TranspOrdStageDestStopUUID": {
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "FreightBookingStop",
+     "@Core.Computed": true,
+     "@Common.Label": "Stage Destination Stop UUID",
+     "@Common.QuickInfo": "Transportation Order Stage Destination Stop UUID"
+    },
+    "TransportationOrderStage": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Stage",
+     "@Common.QuickInfo": "Transportation Order Stage"
+    },
+    "TrOrdStgeStopSuccessorCategory": {
+     "type": "cds.String",
+     "length": 1,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TrOrdStgeStopSuccessorCategory",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Successor Category",
+     "@Common.Heading": "Successor Category of Stop",
+     "@Common.QuickInfo": "Successor Category of Stop"
+    },
+    "TranspOrdStageType": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TransportationOrderStageType",
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Stage Type",
+     "@Common.QuickInfo": "Transportation Order Stage Type"
+    },
+    "TranspOrdStageCategory": {
+     "type": "cds.String",
+     "length": 1,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrderStageCategory",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Stage Category",
+     "@Common.QuickInfo": "Transportation Order Stage Category"
+    },
+    "TranspOrdStageMeansOfTransport": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TransportationMeansOfTransport",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Stage Means of Transport",
+     "@Common.QuickInfo": "Transportation Order Stage Means of Transport"
+    },
+    "TranspOrdStageTranspMode": {
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TransportationMode",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Stage Transportation Mode",
+     "@Common.QuickInfo": "Transportation Order Stage Transportation Mode"
+    },
+    "TranspOrdStageShippingType": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrderShippingType",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Stage Shipping Type",
+     "@Common.QuickInfo": "Transportation Order Stage Shipping Type"
+    },
+    "TranspOrdStageCarrierUUID": {
+     "type": "cds.UUID",
+     "@Common.Label": "Stage Carrier UUID",
+     "@Common.QuickInfo": "Transportation Order Stage Carrier UUID"
+    },
+    "TranspOrdStageCarrier": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "BusinessPartner",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Stage Carrier",
+     "@Common.QuickInfo": "Transportation Order Stage Carrier"
+    },
+    "TranspOrdStageSCACCode": {
+     "type": "cds.String",
+     "length": 4,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "StandardCarrierAlphaCode",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Stage Carrier SCAC Code",
+     "@Common.QuickInfo": "Transportation Order Stage Carrier SCAC Code"
+    },
+    "TranspOrdStgeInvcgCarrUUID": {
+     "type": "cds.UUID",
+     "@Core.Computed": true,
+     "@Common.Label": "Stage Invoicing Carrier UUID",
+     "@Common.QuickInfo": "Transportation Order Stage Invoicing Carrier UUID"
+    },
+    "TranspOrdStageInvoicingCarrier": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "BusinessPartner",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Stage Invoicing Carrier",
+     "@Common.QuickInfo": "Transportation Order Stage Invoicing Carrier"
+    },
+    "TranspOrdStgeInvcgSCACCode": {
+     "type": "cds.String",
+     "length": 4,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "StandardCarrierAlphaCode",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Stage Invoicing Carrier SCAC Code",
+     "@Common.QuickInfo": "Transportation Order Stage Invoicing Carrier SCAC Code"
+    },
+    "TranspOrdStgeInvcgCarrLvl": {
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrdStgeInvcgCarrLvl",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Stage Invoicing Carrier Level",
+     "@Common.QuickInfo": "Transportation Order Stage Invoicing Carrier Level"
+    },
+    "TranspOrdStageDistance": {
+     "type": "cds.Decimal",
+     "precision": 28,
+     "scale": 3,
+     "notNull": true,
+     "@Measures.Unit": {
+      "=": "TranspOrdStageDistanceUnit"
+     },
+     "@Common.Label": "Stage Distance",
+     "@Common.QuickInfo": "Transportation Order Stage Distance"
+    },
+    "TranspOrdStageDistanceUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "UnitOfMeasure",
+     "@Common.IsUnit": true,
+     "@Common.Label": "Stage Distance Unit",
+     "@Common.QuickInfo": "Transportation Order Stage Distance Unit"
+    },
+    "TranspOrdStageNetDuration": {
+     "type": "cds.Decimal",
+     "precision": 11,
+     "notNull": true,
+     "@Common.Label": "Stage Net Duration",
+     "@Common.QuickInfo": "Transportation Order Stage Net Duration in hhmmss"
+    },
+    "TranspOrdStageVoyage": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Stage Voyage",
+     "@Common.QuickInfo": "Transportation Order Stage Voyage"
+    },
+    "TranspOrdStageFlight": {
+     "type": "cds.String",
+     "length": 7,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Stage Airline Cd. / Flight No.",
+     "@Common.QuickInfo": "Transportation Order Stage Airline Cd. / Flight No."
+    },
+    "TranspOrdStageVessel": {
+     "type": "cds.String",
+     "length": 35,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Stage Vessel",
+     "@Common.QuickInfo": "Transportation Order Stage Vessel"
+    },
+    "TranspOrdStageIMOShip": {
+     "type": "cds.String",
+     "length": 11,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Stage IMO Ship",
+     "@Common.QuickInfo": "Transportation Order Stage IMO Ship"
+    },
+    "TranspOrdStageNodeHasError": {
+     "type": "cds.Boolean",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Has Error on Stage Node Instance",
+     "@Common.QuickInfo": "Transportation Order Stage Has Error on Node Instance"
+    },
+    "TranspOrdStgeIsNotPlngRelevant": {
+     "type": "cds.Boolean",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Stage Planning Not Relevance",
+     "@Common.QuickInfo": "Transportation Order Stage Planning Not Relevance"
+    },
+    "SAP__Messages": {
+     "items": {
+      "type": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.SAP__Message",
+      "notNull": true
+     }
+    },
+    "_FreightBooking": {
+     "type": "cds.Association",
+     "target": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.FreightBooking",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightBooking",
+        "TransportationOrderUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TransportationOrderUUID"
+       ]
+      }
+     ]
+    },
+    "_FreightBookingStageDestStop": {
+     "type": "cds.Association",
+     "target": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.FreightBookingStop",
+     "cardinality": {
+      "max": 1
+     }
+    },
+    "_FreightBookingStageSrceStop": {
+     "type": "cds.Association",
+     "target": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.FreightBookingStop",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightBookingStageSrceStop",
+        "TransportationOrderStopUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TranspOrdStageSrceStopUUID"
+       ]
+      }
+     ]
+    }
+   },
+   "@Common.Label": "Freight Booking Stage",
+   "@Common.Messages": {
+    "=": "SAP__Messages"
+   },
+   "@Capabilities.SearchRestrictions.Searchable": false,
+   "@Capabilities.UpdateRestrictions.DeltaUpdateSupported": true,
+   "@Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties": [
+    "_FreightBooking",
+    "_FreightBookingStageDestStop",
+    "_FreightBookingStageSrceStop"
+   ],
+   "@Capabilities.UpdateRestrictions.QueryOptions.SelectSupported": true,
+   "@Capabilities.DeepUpdateSupport.ContentIDSupported": true,
+   "@Capabilities.InsertRestrictions.Insertable": false,
+   "@Capabilities.DeleteRestrictions.Deletable": false,
+   "@Core.OptimisticConcurrency": [
+    "_FreightBooking/TranspOrdChangedDateTime"
+   ],
+   "@Capabilities.FilterRestrictions.FilterExpressionRestrictions": [
+    {
+     "Property": {
+      "=": "TranspOrdStageDistance"
+     },
+     "AllowedExpressions": "MultiValue"
+    }
+   ]
+  },
+  "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.FreightBookingStop": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "TransportationOrderStopUUID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Common.Text": {
+      "=": "TransportationOrderStop"
+     },
+     "@Core.Computed": true,
+     "@Common.Label": "Stop UUID",
+     "@Common.QuickInfo": "Transportation Order Stop UUID"
+    },
+    "TransportationOrderUUID": {
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "FreightBooking",
+     "@Core.Computed": true,
+     "@Common.Label": "Transportation Order UUID"
+    },
+    "TransportationOrderStop": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Stop",
+     "@Common.QuickInfo": "Transportation Order Stop"
+    },
+    "TranspOrdStopStopParentUUID": {
+     "type": "cds.UUID",
+     "@Core.Computed": true,
+     "@Common.Label": "Stop Parent UUID",
+     "@Common.QuickInfo": "Transportation Order Stop Stop Parent UUID"
+    },
+    "TranspOrdStopCategory": {
+     "type": "cds.String",
+     "length": 1,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrderStopCategory",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Stop Category"
+    },
+    "TranspOrdStopLocation": {
+     "type": "cds.String",
+     "length": 20,
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Stop Location",
+     "@Common.QuickInfo": "Transportation Order Stop Location"
+    },
+    "TranspOrdStopLocUNCode": {
+     "type": "cds.String",
+     "length": 5,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspLocationUNCode",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Stop Location UN Code",
+     "@Common.QuickInfo": "Transportation Order Stop Location United Nations Code"
+    },
+    "TranspOrdStopLocIATACode": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspLocationIATACode",
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Stop Location IATA Code",
+     "@Common.QuickInfo": "Transportation Order Stop Location IATA Code"
+    },
+    "TranspOrdStopLocationAddlUUID": {
+     "type": "cds.UUID",
+     "@Common.Label": "Stop Location Additional UUID",
+     "@Common.QuickInfo": "Transportation Ord Stop Location Additional UUID"
+    },
+    "TranspOrdStopLocationUUID": {
+     "type": "cds.UUID",
+     "@Common.SAPObjectNodeTypeReference": "Location",
+     "@Core.Computed": true,
+     "@Common.Label": "Stop Location UUID",
+     "@Common.QuickInfo": "Transportation Order Stop Location UUID (CHAR22)"
+    },
+    "TranspOrdStopSequencePosition": {
+     "type": "cds.String",
+     "length": 1,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "TranspOrdStopSequencePosition",
+     "@Core.Computed": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Stop Position",
+     "@Common.Heading": "Stop Position in Transportation Stop Sequence",
+     "@Common.QuickInfo": "Stop Position in Transportation Stop Sequence"
+    },
+    "TranspOrdStopPlanTranspDteTme": {
+     "type": "cds.DateTime",
+     "@odata.Precision": 0,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@Common.Label": "Stop Planned Date Time",
+     "@Common.QuickInfo": "Transportation Order Stop Planned Date Time"
+    },
+    "TranspOrdStopSelDateTime": {
+     "type": "cds.DateTime",
+     "@odata.Precision": 0,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@Core.Computed": true,
+     "@Common.Label": "Stop Selection DateTime",
+     "@Common.QuickInfo": "Transportation Order Stop Selection DateTime"
+    },
+    "TranspOrdStopApptStrtDteTme": {
+     "type": "cds.DateTime",
+     "@odata.Precision": 0,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@Common.Label": "Stop Appointment Start Date Time",
+     "@Common.QuickInfo": "Transportation Order Stop Appointment Start Date Time"
+    },
+    "TranspOrdStopApptEndDteTme": {
+     "type": "cds.DateTime",
+     "@odata.Precision": 0,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@Common.Label": "Stop Appointment End Date Time",
+     "@Common.QuickInfo": "Transportation Order Stop Appointment End Date Time"
+    },
+    "TranspStopCarrConfStrtDteTme": {
+     "type": "cds.DateTime",
+     "@odata.Precision": 0,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@Common.Label": "Carrier Conf. Start Date Time of Stop",
+     "@Common.QuickInfo": "Transportation Order Stop Carrier Conf Start Date Time"
+    },
+    "TranspStopCarrConfEndDteTme": {
+     "type": "cds.DateTime",
+     "@odata.Precision": 0,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@Common.Label": "Carrier Conf. End Date Time of Stop",
+     "@Common.QuickInfo": "Transportation Order Stop Carrier Conf End Date Time"
+    },
+    "TranspOrdStopLoadStartDateTime": {
+     "type": "cds.DateTime",
+     "@odata.Precision": 0,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@Core.Computed": true,
+     "@Common.Label": "Stop Load Start Date Time",
+     "@Common.QuickInfo": "Transportation Ord Stop Load Start Date Time"
+    },
+    "TranspOrdStopLoadEndDateTime": {
+     "type": "cds.DateTime",
+     "@odata.Precision": 0,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@Core.Computed": true,
+     "@Common.Label": "Stop Load End Date Time",
+     "@Common.QuickInfo": "Transportation Order Stop Load End Date Time"
+    },
+    "TranspOrdStopCoupleStrtDteTme": {
+     "type": "cds.DateTime",
+     "@odata.Precision": 0,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@Core.Computed": true,
+     "@Common.Label": "Stop Couple Start Date Time",
+     "@Common.QuickInfo": "Transportation Order Stop Couple Start Date Time"
+    },
+    "TranspOrdStopCoupleEndDteTme": {
+     "type": "cds.DateTime",
+     "@odata.Precision": 0,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@Core.Computed": true,
+     "@Common.Label": "Stop Couple End Date Time",
+     "@Common.QuickInfo": "Transportation Order Stop Couple End Date Time"
+    },
+    "TranspOrdStopDocCutOffDateTime": {
+     "type": "cds.DateTime",
+     "@odata.Precision": 0,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@Common.Label": "Stop Document Cut-Off Date Time",
+     "@Common.QuickInfo": "Transportation Order Stop Document Cut-Off Date Time"
+    },
+    "TranspOrdStopCrgoCutOffDteTme": {
+     "type": "cds.DateTime",
+     "@odata.Precision": 0,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@Common.Label": "Stop Cargo Cut-Off Date Time",
+     "@Common.QuickInfo": "Transp. Order Stop Cargo Cut-Off Date Time"
+    },
+    "TrOrdStopDaGdsDocnCtffDateTime": {
+     "type": "cds.DateTime",
+     "@odata.Precision": 0,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@Core.Computed": true,
+     "@Common.Label": "Stop DngrsGds Docn. Cut-Off Date Time",
+     "@Common.QuickInfo": "Transp. Order Stop Dangerous Goods Docn. Cut-Off Date Time"
+    },
+    "TranspOrdStopVGMCutOffDateTime": {
+     "type": "cds.DateTime",
+     "@odata.Precision": 0,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@Common.Label": "Stop VGM Cut-Off Date Time",
+     "@Common.QuickInfo": "Transportation Order Stop VGM Cut-Off Date Time"
+    },
+    "TranspOrdStopIsEntryPort": {
+     "type": "cds.Boolean",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Stop Is Entry Port",
+     "@Common.QuickInfo": "Transportation Order Stop Is Entry Port"
+    },
+    "TranspOrdStopIsExitPort": {
+     "type": "cds.Boolean",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Stop Is Exit Port",
+     "@Common.QuickInfo": "Transportation Order Stop Is Exit Port"
+    },
+    "TranspOrdStopNodeHasError": {
+     "type": "cds.Boolean",
+     "notNull": true,
+     "@Core.Computed": true,
+     "@Common.Label": "Has Error on Stop Node Instance",
+     "@Common.QuickInfo": "Transportation Order Stop Has Error on Node Instance"
+    },
+    "SAP__Messages": {
+     "items": {
+      "type": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.SAP__Message",
+      "notNull": true
+     }
+    },
+    "_FreightBooking": {
+     "type": "cds.Association",
+     "target": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.FreightBooking",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightBooking",
+        "TransportationOrderUUID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "TransportationOrderUUID"
+       ]
+      }
+     ]
+    },
+    "_FreightBookingStage": {
+     "type": "cds.Composition",
+     "target": "sap_s4_OP_API_FREIGHTBOOKING_0001_v1.FreightBookingStage",
+     "cardinality": {
+      "max": "*"
+     },
+     "on": [
+      {
+       "ref": [
+        "_FreightBookingStage",
+        "_FreightBookingStageSrceStop"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "$self"
+       ]
+      }
+     ],
+     "@Common.Composition": true
+    }
+   },
+   "@Common.Label": "Freight Booking Stop",
+   "@Common.Messages": {
+    "=": "SAP__Messages"
+   },
+   "@Capabilities.SearchRestrictions.Searchable": false,
+   "@Capabilities.UpdateRestrictions.DeltaUpdateSupported": true,
+   "@Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties": [
+    "_FreightBooking",
+    "_FreightBookingStage"
+   ],
+   "@Capabilities.UpdateRestrictions.QueryOptions.SelectSupported": true,
+   "@Capabilities.DeepUpdateSupport.ContentIDSupported": true,
+   "@Capabilities.InsertRestrictions.Insertable": false,
+   "@Capabilities.DeleteRestrictions.Deletable": false,
+   "@Core.OptimisticConcurrency": [
+    "_FreightBooking/TranspOrdChangedDateTime"
+   ]
+  }
+ }
+}

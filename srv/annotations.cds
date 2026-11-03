@@ -43,9 +43,12 @@ annotate DDRMService.SAPDocument with {
     DocNumber         @title: '{@i18n>docNumber}' ;
     DocType @title: '{@i18n>sapDocumentType}' @readonly;
     DocTypeDesc @title: '{@i18n>sapDocumentTypeDescription}' @readonly;
-    description @title: '{@i18n>description}' @readonly;
+    DocumentKindCode @title: '{@i18n>DocumentKindCode}' @readonly;
+    DocumentKindDescription @title: '{@i18n>DocumentKindDescription}' @readonly;
+    DocumentKindDescriptionDE @title: '{@i18n>DocumentKindDescriptionDE}' @readonly;
+  //  description @title: '{@i18n>description}' @readonly;
     CustomerNumber @title: '{@i18n>sapDocumentClientNumber}'@readonly;
-    CustomerName   @title: '{@i18n>sapDocumentClientName}' @readonly;
+  //  CustomerName   @title: '{@i18n>sapDocumentClientName}' @readonly;
 }
 
 
@@ -127,5 +130,15 @@ annotate DDRMService.Process with @(Common.SideEffects : {
   //  TargetProperties : [
   //      'processStatusID.description'
   //  ]
+});
+
+annotate DDRMService.ProcessSAPDocumentIn with @(Common.SideEffects : {
+    SourceEntities  : [ $self],
+    TargetEntities  : [$self],
+});
+
+annotate DDRMService.ProcessSAPDocumentOut with @(Common.SideEffects : {
+    SourceEntities  : [ $self],
+    TargetEntities  : [$self],
 });
 

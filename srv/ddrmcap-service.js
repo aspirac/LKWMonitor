@@ -1,6 +1,6 @@
 const cds = require('@sap/cds');
 const { redacted } = require('@sap/cds/lib/utils/cds-utils');
-const {cloudSdk}  = require('@sap-cloud-sdk/connectivity');
+const { cloudSdk } = require('@sap-cloud-sdk/connectivity');
 
 //import { registerDestination } from '@sap-cloud-sdk/connectivity';
 const { Readable, PassThrough } = require("stream");
@@ -34,6 +34,8 @@ class DDRMService extends cds.ApplicationService {
       req.error(400, messageString);
     })
 
+
+
     this.on('callInterfaceScale', 'Process', async req => {
 
       let result = await this._updateProcessDataScale(req, false);
@@ -63,24 +65,231 @@ class DDRMService extends cds.ApplicationService {
 
     })
 
+    this.on('updateSAPDocuments', 'Process.drafts', async req => {
+      const messageString = this._getMessage(req, 'MUST_NOT_BE_DRAFT');
+      req.error(400, messageString);
+    })
+
+    this.on('updateSAPDocuments', 'Process', async (req) => {
+      debugger;
+      var results = [];
+      results = await this._performUpdateSAPDocuments(req);
+    })
+
+    this.on('updateSAPDocuments', 'ProcessSAPDocumentOut.drafts', async req => {
+      const messageString = this._getMessage(req, 'MUST_NOT_BE_DRAFT');
+      req.error(400, messageString);
+    })
+
+    this.on('callSAPSalesOrderOut', 'ProcessSAPDocumentOut.drafts', async req => {
+      const messageString = this._getMessage(req, 'MUST_NOT_BE_DRAFT');
+      req.error(400, messageString);
+    })
+
+
+    this.on('callSAPInboundDeliveryOut', 'ProcessSAPDocumentOut.drafts', async req => {
+      const messageString = this._getMessage(req, 'MUST_NOT_BE_DRAFT');
+      req.error(400, messageString);
+    })
+
+    this.on('callSAPOutboundDeliveryOut', 'ProcessSAPDocumentOut.drafts', async req => {
+      const messageString = this._getMessage(req, 'MUST_NOT_BE_DRAFT');
+      req.error(400, messageString);
+    })
+
+    this.on('callSAPFreightOrderOut', 'ProcessSAPDocumentOut.drafts', async req => {
+      const messageString = this._getMessage(req, 'MUST_NOT_BE_DRAFT');
+      req.error(400, messageString);
+    })
+    this.on('callSAPFreightBookingOut', 'ProcessSAPDocumentOut.drafts', async req => {
+      const messageString = this._getMessage(req, 'MUST_NOT_BE_DRAFT');
+      req.error(400, messageString);
+    })
+
+
+
+    this.on('updateSAPDocuments', 'ProcessSAPDocumentIn.drafts', async req => {
+      const messageString = this._getMessage(req, 'MUST_NOT_BE_DRAFT');
+      req.error(400, messageString);
+    })
+
+
+    this.on('callSAPSalesOrderIn', 'ProcessSAPDocumentIn.drafts', async req => {
+      const messageString = this._getMessage(req, 'MUST_NOT_BE_DRAFT');
+      req.error(400, messageString);
+    })
+
+
+    this.on('callSAPInboundDeliveryIn', 'ProcessSAPDocumentIn.drafts', async req => {
+      const messageString = this._getMessage(req, 'MUST_NOT_BE_DRAFT');
+      req.error(400, messageString);
+    })
+
+    this.on('callSAPOutboundDeliveryIn', 'ProcessSAPDocumentIn.drafts', async req => {
+      const messageString = this._getMessage(req, 'MUST_NOT_BE_DRAFT');
+      req.error(400, messageString);
+    })
+
+    this.on('callSAPFreightOrderIn', 'ProcessSAPDocumentIn.drafts', async req => {
+      const messageString = this._getMessage(req, 'MUST_NOT_BE_DRAFT');
+      req.error(400, messageString);
+    })
+    this.on('callSAPFreightBookingIn', 'ProcessSAPDocumentIn.drafts', async req => {
+      const messageString = this._getMessage(req, 'MUST_NOT_BE_DRAFT');
+      req.error(400, messageString);
+    })
+
+    this.on('callSAPSalesOrderOut', 'ProcessSAPDocumentOut', async req => {
+      const ID = req.params[0];
+      const SalesOrders = req.data;
+      console.log("=====>>>>Sales Order - Out>>>" + ID + '    ' + param);
+
+      debugger;
+      var results = [];
+      var res;
+      results = await this._getSAPSalesOrder(req);
+      console.log("=====>>>>AFTER CALL ");
+      res = this._performUpsertSAPSalesOrders(req, results);
+      //  console.log(res);
+    })
+
+    this.on('callSAPInboundDeliveryOut', 'ProcessSAPDocumentOut', async req => {
+      console.log("=====>>>>Inbound Delivery - Out>>>");
+      debugger;
+      var results = [];
+      var res;
+      results = await this._getSAPInboundDelivery(req);
+      console.log("=====>>>>AFTER CALL ");
+      res = this._performUpsertSAPInboundDelivery(req, results);
+
+
+    })
+
+    this.on('callSAPOutboundDeliveryOut', 'ProcessSAPDocumentOut', async req => {
+      console.log("=====>>>>Outbound Delivery - Out>>>");
+      debugger;
+      var results = [];
+      var res;
+      results = await this._getSAPOutboundDelivery(req);
+      console.log("=====>>>>AFTER CALL ");
+      res = this._performUpsertSAPOutBoundDelivery(req, results);
+      console.log(res);
+    })
+
+    this.on('callSAPFreightOrderOut', 'ProcessSAPDocumentOut', async req => {
+      console.log("=====>>>>FreightOrder - Out>>>");
+      debugger;
+      var results = [];
+      var res;
+      results = await this._getSAPFreightOrder(req);
+      console.log("=====>>>>AFTER CALL " + results);
+    })
+
+    this.on('callSAPFreightBookingOut', 'ProcessSAPDocumentOut', async req => {
+      console.log("=====>>>>FreightBooking - Out>>>");
+      debugger;
+      var results = [];
+      var res;
+      results = await this._getSAPFreightBooking(req);
+      console.log("=====>>>>AFTER CALL " + results);
+    })
+
+    this.on('updateSAPDocuments', 'ProcessSAPDocumentOut', async (req) => {
+      debugger;
+      var results = [];
+      results = await this._performUpdateSAPDocuments(req);
+    })
+
+    this.on('callSAPSalesOrderIn', 'ProcessSAPDocumentIn', async req => {
+      console.log("=====>>>>Sales Order - In>>>");
+      debugger;
+      var results = [];
+      var res;
+      results = await this._getSAPSalesOrder(req);
+
+    })
+
+    this.on('callSAPInboundDeliveryIn', 'ProcessSAPDocumentIn', async req => {
+      console.log("=====>>>>Inbound Delivery - In>>>");
+      debugger;
+      var results = [];
+      var res;
+      results = await this._getSAPInboundDelivery(req);
+      console.log("=====>>>>AFTER CALL ");
+    })
+
+    this.on('callSAPOutboundDeliveryIn', 'ProcessSAPDocumentIn', async req => {
+      console.log("=====>>>>Outbound Delivery - In>>>");
+      debugger;
+      var results = [];
+      var res;
+      results = await this._getSAPOutboundDelivery(req);
+      console.log("=====>>>>AFTER CALL ");
+    })
+
+    this.on('callSAPFreightOrderIn', 'ProcessSAPDocumentIn', async req => {
+      console.log("=====>>>>FreightOrder - In>>>");
+      debugger;
+      var results = [];
+      var res;
+      results = await this._getSAPFreightOrder(req);
+      console.log("=====>>>>AFTER CALL ");
+    })
+
+    this.on('callSAPFreightBookingIn', 'ProcessSAPDocumentIn', async req => {
+      console.log("=====>>>>FreightBooking - In>>>");
+      debugger;
+      var results = [];
+      var res;
+      results = await this._getSAPFreightBooking(req);
+      console.log("=====>>>>AFTER CALL ");
+    })
+    this.on('updateSAPDocuments', 'ProcessSAPDocumentIn', async (req) => {
+      debugger;
+      var results = [];
+      results = await this._performUpdateSAPDocuments(req);
+    })
+
+    this.before('READ', 'Process', async (req) => {
+      debugger;
+      console.log("=====>>>>BEFORE READ PROCESS>>>");
+      const { Process } = cds.entities;
+      var results = [];
+      results = await this._performUpdateSAPDocuments(req);
+      // Initialize drafts
+
+    })
     this.before('CREATE', 'Process', async (req) => {
       debugger;
       console.log("=====>>>>BEFORE CREATE PROCESS>>>");
       const { Process } = cds.entities;
+      //  results = await this._performUpdateSAPDocuments(req);
       const { maxID } = await SELECT.one`max(processID) as maxID`.from(Process)
       req.data.processID = maxID + 1;
       //   req.data.processStatusID_ID = '20 - Frei zur Einfahrt';  
     })
 
+    this.before('CREATE', 'Process.drafts', async (req) => {
+      debugger;
+      console.log("=====>>>>BEFORE CREATE PROCESS Draft>>>");
+      const { Process } = cds.entities;
+      debugger;
+      var results = [];
+      var res;
+      results = await this._performUpdateSAPDocuments(req);
+      console.log("=====>>>>AFTER CALL ");
+    })
+
+
     this.before('CREATE', 'ProcessSAPDocumentIn', async (req) => {
       debugger;
-        var results = [];
-        var res;
-      
-      results = await this._getSAPDocuments(req);
-      console.log("=====>>>>BEFORE CREATE PROCESS SAP DOCUMENT IN NON DRAFTS >>>");
-      res = await this._performUpsertSAPDocuments (req, results);
-    
+      var results = [];
+      var res;
+
+      //    results = await this._getSAPDocuments(req);
+      //    console.log("=====>>>>BEFORE CREATE PROCESS SAP DOCUMENT IN NON DRAFTS >>>");
+      //    res = await this._performUpsertSAPDocuments(req, results);
+      //   results = await this._performUpdateSAPDocuments(req);
       const { ProcessSAPDocumentIn } = cds.entities;
       console.log("=====>>>>BEFORE CREATE PROCESS SAP DOCUMENT IN - NON DRAFT>>>");
 
@@ -94,29 +303,50 @@ class DDRMService extends cds.ApplicationService {
     })
 
     this.before('CREATE', 'ProcessSAPDocumentIn.drafts', async (req) => {
-        var results = [];
-        var res;
-      
-      results = await this._getSAPDocuments(req);
-      console.log("=====>>>>BEFORE CREATE PROCESS SAP DOCUMENT IN DRAFTS >>>");
-      res = await this._performUpsertSAPDocuments (req, results);
-    
+      var results = [];
+      var res;
+
+      //   results = await this._getSAPDocuments(req);
+      //   console.log("=====>>>>BEFORE CREATE PROCESS SAP DOCUMENT IN DRAFTS >>>");
+      //   res = await this._performUpsertSAPDocuments(req, results);
+
       const { ProcessSAPDocumentIn } = cds.entities;
       const { maxID } = await SELECT.one`max(sapDocumentInID) as maxID`.from(ProcessSAPDocumentIn)
-   
+
       req.data.sapDocumentInID = maxID + 1;
 
     })
 
-        this.before('CREATE', 'ProcessSAPDocumentOut.drafts', async (req) => {
+    this.before('CREATE', 'ProcessSAPDocumentOut', async (req) => {
       debugger;
-         var results = [];
-        var res;
-      
-      results = await this._getSAPDocuments(req);
-      console.log("=====>>>>BEFORE CREATE PROCESS SAP DOCUMENT OUT DRAFTS >>>");
-      res =  this._performUpsertSAPDocuments (req, results);
-    
+      var results = [];
+      var res;
+
+      //    results = await this._getSAPDocuments(req);
+      //    console.log("=====>>>>BEFORE CREATE PROCESS SAP DOCUMENT IN NON DRAFTS >>>");
+      //    res = await this._performUpsertSAPDocuments(req, results);
+
+      const { ProcessSAPDocumentOut } = cds.entities;
+      console.log("=====>>>>BEFORE CREATE PROCESS SAP DOCUMENT IN - NON DRAFT>>>");
+
+      const { maxID } = await SELECT.one`max(sapDocumentOutID) as maxID`.from(ProcessSAPDocumentOut)
+
+      console.log("=====>>>>AFTER QUERY PROCESS SAP DOCUMENT OUT>>>");
+      req.data.sapDocumentOutID = maxID + 1;
+
+
+
+    })
+
+    this.before('CREATE', 'ProcessSAPDocumentOut.drafts', async (req) => {
+      debugger;
+      var results = [];
+      var res;
+
+      //   results = await this._getSAPDocuments(req);
+      //   console.log("=====>>>>BEFORE CREATE PROCESS SAP DOCUMENT OUT DRAFTS >>>");
+      //   res = this._performUpsertSAPDocuments(req, results);
+
       const { ProcessSAPDocumentOut } = cds.entities;
       console.log("=====>>>>BEFORE CREATE PROCESS SAP DOCUMENT OUT>>>");
 
@@ -126,39 +356,348 @@ class DDRMService extends cds.ApplicationService {
 
     })
 
+    this._getDocucumentKindDesc = async function (DocKindID) {
+      try {
+        const {  SAPDocumentKindType } = cds.entities;
+        const { SELECT } = cds.ql;
+        var q1;
+        var newSalesOrderEntries = [];
+        var newSAPDocument;
+        var newSAPDocumentEntries = [];
+        // parse the documents
+
+        q1 = await SELECT.from(SAPDocumentKindType).where`ID=${DocKindID}`;
+        
+        return q1;
+      } catch (error) {
+        // Handle errors during API call<
+        console.error(error.message);
+        this._errorMessage(error.message, req, "getDocucumentKindDesc");
+        return (error.message);
+
+      }
+    }
+
+       this._getBusinessPartnerName =  function (BPID) {
+      try {
+        const {  BusinessPartner } = cds.entities;
+        const { SELECT } = cds.ql;
+        var q1;
+       
+        // parse the documents
+
+        q1 =  SELECT.from(BusinessPartner).where`BPID=${BPID}`;
+        console.log(q1[0].Name);
+        return q1;
+      } catch (error) {
+        // Handle errors during API call<
+        console.error(error.message);
+        this._errorMessage(error.message, req, "getBusinessPartner");
+        return (error.message);
+
+      }
+    }
+     this._performUpsertBusinessPartners = async function (req, oData) {
+      try {
+        const { BusinessPartner } = cds.entities;
+        const { UPSERT, INSERT } = cds.ql;
+        var newBusinessPartner;
+        var newBusinessPartnerEntries = [];
+       
+        // parse the documents
+         
+  
+
+        oData.forEach((item, index) => {
+
+
+        newBusinessPartner = {
+            BPID: oData[index].BusinessPartner,
+            Supplier: oData[index].Supplier,
+            Name: oData[index].OrganizationBPName1,
+           
+          };
+          newBusinessPartnerEntries.push(newBusinessPartner);
+
+        });
+        //    await UPSERT.into(SalesOrder).entries(newSalesOrderEntries);
+        await UPSERT.into(BusinessPartner).entries(newBusinessPartnerEntries);
+
+        //   const { result } = UPSERT.into(SalesOrder).entries(newSalesOrderEntries);
+
+        return newBusinessPartnerEntries;
+      } catch (error) {
+        // Handle errors during API call<
+        console.error(error.message);
+        this._errorMessage(error.message, req, "performInsert BusinessPartner");
+        return (error.message);
+
+      }
+    }
+
+    this._performUpsertSAPSalesOrders = async function (req, oData) {
+      try {
+        const { SalesOrder, SAPDocument } = cds.entities;
+        const { UPSERT, INSERT } = cds.ql;
+        var newSalesOrder;
+        var newSalesOrderEntries = [];
+        var newSAPDocument;
+        var newSAPDocumentEntries = [];
+        // parse the documents
+        var q1 = await this._getDocucumentKindDesc('SALESORDER');
+         
+  
+
+        oData.forEach((item, index) => {
+
+/*
+          newSalesOrder =
+          {
+            SalesOrder: oData[index].SalesOrder,
+
+            SalesOrderType: oData[index].SalesOrderType,
+            SalesOrganization: oData[index].SoldToParty,
+            SalesOrganization: oData[index].SalesOrganization,
+            DistributionChannel: oData[index].DistributionChannel,
+            OrganizationDivision: oData[index].OrganizationDivision,
+            SalesGroup: oData[index].SalesGroup,
+            SalesOffice: oData[index].SalesOffice,
+            SalesDistrict: oData[index].SalesDistrict,
+            SoldToParty: oData[index].SoldToParty,
+            CreationDate: oData[index].CreationDate,
+            CreatedByUser: oData[index].CreatedByUser,
+            SalesOrderDate: oData[index].SalesOrderDate
+
+
+          };
+          newSalesOrderEntries.push(newSalesOrder);
+
+        */ 
+       
+          newSAPDocument = {
+            DocNumber: oData[index].SalesOrder,
+            DocType: oData[index].SalesOrderType,
+            DocTypeDesc: ' ',
+            DocumentKindCode: 'SALESORDER',
+            DocumentKindDescription: q1[0].description,
+            DocumentKindDescriptionDE: q1[0].descriptionDE,
+       //     description: ' ',
+            CustomerNumber: oData[index].SoldToParty,
+       //     CustomerName: ' '
+          };
+          newSAPDocumentEntries.push(newSAPDocument);
+
+        });
+        //    await UPSERT.into(SalesOrder).entries(newSalesOrderEntries);
+        await UPSERT.into(SAPDocument).entries(newSAPDocumentEntries);
+
+        //   const { result } = UPSERT.into(SalesOrder).entries(newSalesOrderEntries);
+
+        return newSalesOrderEntries;
+      } catch (error) {
+        // Handle errors during API call<
+        console.error(error.message);
+        this._errorMessage(error.message, req, "performInsert SalesOrder");
+        return (error.message);
+
+      }
+    }
+
+    this._performUpsertSAPInboundDelivery = async function (req, oData) {
+      try {
+        const { InboundDelivery, SAPDocument } = cds.entities;
+        const { UPSERT } = cds.ql;
+        var newInboundDelivery;
+        var newInboundDeliveryEntries = [];
+        var newSAPDocument;
+        var newSAPDocumentEntries = [];
+        var q1 = await this._getDocucumentKindDesc('INDELIVERY');
+         
+        // parse the documents
+        oData.forEach((item, index) => {
+/*
+
+          newInboundDelivery =
+          {
+            DeliveryDocument: oData[index].DeliveryDocument,
+            ReceivingLocationTimeZone: oData[index].ReceivingLocationTimeZone,
+            ActualDeliveryRoute: oData[index].ActualDeliveryRoute,
+            ActualGoodsMovementDate: oData[index].ActualGoodsMovementDate,
+            ActualGoodsMovementTime: oData[index].ActualGoodsMovementTime,
+            BillingDocumentDate: oData[index].BillingDocumentDate,
+            BillOfLading: oData[index].BillOfLading,
+            CompleteDeliveryIsDefined: oData[index].CompleteDeliveryIsDefined,
+            ConfirmationTime: oData[index].ConfirmationTime,
+            CreatedByUser: oData[index].CreatedByUser,
+            CreationDate: oData[index].CreationDate,
+            CreationTime: oData[index].CreationTime,
+            CustomerGroup: oData[index].CustomerGroup,
+            DeliveryBlockReason: oData[index].DeliveryBlockReason,
+            DeliveryDate: oData[index].DateTime,
+
+            DeliveryDocumentBySupplier: oData[index].DeliveryDocumentBySupplier,
+            DeliveryDocumentType: oData[index].DeliveryDocumentBySupplier,
+            DeliveryIsInPlant: oData[index].DeliveryIsInPlant,
+            DeliveryPriority: oData[index].DeliveryPriority,
+            DeliveryTime: oData[index].DeliveryTime,
+            DeliveryVersion: oData[index].DeliveryVersion,
+            DepreciationPercentage: oData[index].DepreciationPercentage,
+            DistrStatusByDecentralizedWrhs: oData[index].DistrStatusByDecentralizedWrhs,
+            DocumentDate: oData[index].DocumentDate,
+            ExternalIdentificationType: oData[index].ExternalIdentificationType,
+            ExternalTransportSystem: oData[index].ExternalTransportSystem,
+            FactoryCalendarByCustomer: oData[index].FactoryCalendarByCustomer,
+            Supplier: oData[index].Supplier
+
+          };
+          newInboundDeliveryEntries.push(newInboundDelivery);
+*/
+          newSAPDocument = {
+            DocNumber: oData[index].DeliveryDocument,
+            DocType: oData[index].SalesOrderType,
+            DocTypeDesc: ' ',
+            DocumentKindCode: 'INDELIVERY',
+            DocumentKindDescription: q1[0].description,
+            DocumentKindDescriptionDE: q1[0].descriptionDE,
+      //      description: ' ',
+            CustomerNumber: oData[index].Supplier,
+      //      CustomerName: ' '
+          };
+          newSAPDocumentEntries.push(newSAPDocument);
+
+        });
+
+        await UPSERT.into(SAPDocument).entries(newSAPDocumentEntries);
+
+
+        //   await UPSERT.into(InboundDelivery).entries(newInboundDeliveryEntries);
+        return newInboundDeliveryEntries;
+
+
+
+      } catch (error) {
+        // Handle errors during API call<
+        console.error(error.message);
+        this._errorMessage(error.message, req, "performInsert Inbound Delivery");
+        return (error.message);
+
+      }
+    }
+
+    this._performUpsertSAPOutBoundDelivery = async function (req, oData) {
+      try {
+        const { OutboundDelivery, SAPDocument} = cds.entities;
+        const { UPSERT } = cds.ql;
+        var newOutBoundDelivery;
+        var newOutBoundDeliveryEntries = [];
+        var newSAPDocument;
+        var newSAPDocumentEntries = [];
+        var q1 = await this._getDocucumentKindDesc('OUDELIVERY');
+        var q2;
+          
+
+        // parse the documents
+        oData.forEach((item, index) => {
+
+/*
+          newOutBoundDelivery =
+          {
+            DeliveryDocument: oData[index].DeliveryDocument,
+            ReceivingLocationTimeZone: oData[index].ReceivingLocationTimeZone,
+            ShipingLocationTimeZone: oData[index].ShipingLocationTimeZone,
+            ActualDeliveryRoute: oData[index].ActualDeliveryRoute,
+            ActualGoodsMovementDate: oData[index].ActualGoodsMovementDate,
+            ActualGoodsMovementTime: oData[index].ActualGoodsMovementTime,
+            BillingDocumentDate: oData[index].BillingDocumentDate,
+            BillOfLading: oData[index].BillOfLading,
+            CompleteDeliveryIsDefined: oData[index].CompleteDeliveryIsDefined,
+            ConfirmationTime: oData[index].ConfirmationTime,
+            CreatedByUser: oData[index].CreatedByUser,
+            CreationDate: oData[index].CreationDate,
+            CreationTime: oData[index].CreationTime,
+            CustomerGroup: oData[index].CustomerGroup,
+            DeliveryBlockReason: oData[index].DeliveryBlockReason,
+            DeliveryDate: oData[index].DateTime,
+            DeliveryDocumentBySupplier: oData[index].DeliveryDocumentBySupplier,
+            DeliveryDocumentType: oData[index].DeliveryDocumentBySupplier,
+            DeliveryIsInPlant: oData[index].DeliveryIsInPlant,
+            DeliveryPriority: oData[index].DeliveryPriority,
+            DeliveryTime: oData[index].DeliveryTime,
+            DeliveryVersion: oData[index].DeliveryVersion,
+            DepreciationPercentage: oData[index].DepreciationPercentage,
+            DistrStatusByDecentralizedWrhs: oData[index].DistrStatusByDecentralizedWrhs,
+            DocumentDate: oData[index].DocumentDate,
+            ExternalIdentificationType: oData[index].ExternalIdentificationType,
+            ExternalTransportSystem: oData[index].ExternalTransportSystem,
+            FactoryCalendarByCustomer: oData[index].FactoryCalendarByCustomer
+
+
+          };
+          newOutBoundDeliveryEntries.push(newOutBoundDelivery);
+          */
+          
+//q2 =  this._getBusinessPartnerName(oData[index].SoldToParty);
+
+      newSAPDocument = {
+            DocNumber: oData[index].DeliveryDocument,
+            DocType: oData[index].SalesOrderType,
+            DocTypeDesc: ' ',
+            DocumentKindCode: 'OUDELIVERY',
+            DocumentKindDescription: q1[0].description,
+            DocumentKindDescriptionDE: q1[0].descriptionDE,
+      //      description: ' ',
+            CustomerNumber: oData[index].SoldToParty,
+       //     CustomerName: ' ',
+          };
+          newSAPDocumentEntries.push(newSAPDocument);
+        });
+        //  console.log(newOutBoundDeliveryEntries);
+ //       await UPSERT.into(OutboundDelivery).entries(newOutBoundDeliveryEntries);
+
+   await UPSERT.into(SAPDocument).entries(newSAPDocumentEntries);
+
+        return newOutBoundDeliveryEntries;
+      } catch (error) {
+        // Handle errors during API call<
+        console.error(error.message);
+        this._errorMessage(error.message,"Perform Insert Outbound delivery");
+        return (error.message);
+
+      }
+    }
     this._performUpsertSAPDocuments = async function (req, oData) {
       try {
-        const { SAPDocument } = cds.entities;      
+        const { SAPDocument } = cds.entities;
         const { UPSERT } = cds.ql;
         var newSapDocument;
         var newSapDocumentEntries = [];
         // parse the documents
         oData.forEach((item, index) => {
-       
-         
-      newSapDocument =
-      {
+
+
+          newSapDocument =
+          {
             DocNumber: oData[index].SalesOrder,
             DocType: oData[index].SalesOrderType,
-            CustomerNumber:oData[index].SoldToParty,
+            CustomerNumber: oData[index].SoldToParty,
             DocTypeDesc: "               ",
-            description : "               ",
-            CustomerName  : "               ",
-           
-            
+       //     description: "               ",
+       //     CustomerName: "               ",
+
+
           };
           newSapDocumentEntries.push(newSapDocument);
           UPSERT.into(SAPDocument).entries(newSapDocumentEntries);
- 
+
           console.log(newSapDocumentEntries);
           newSapDocumentEntries = [];
-       });
-      
-       
-       console.log(newSapDocumentEntries);
-       const { result } = UPSERT.into(SAPDocument).entries(newSapDocumentEntries);
-       console.log(result);
-   
+        });
+
+
+        console.log(newSapDocumentEntries);
+        const { result } = UPSERT.into(SAPDocument).entries(newSapDocumentEntries);
+        console.log(result);
+
         return;
       } catch (error) {
         // Handle errors during API call<
@@ -169,30 +708,30 @@ class DDRMService extends cds.ApplicationService {
       }
     }
 
- this._getSAPDocuments = async function ( req) {
+    this._getSAPDocuments = async function (req) {
       try {
 
-      var s4hanaSales = await cds.connect.to('OP_API_SALES_ORDER_SRV_0001');
-      var s4hanaFreight = await cds.connect.to('CE_FREIGHTORDER_0001');
-     
-      var result;
+        var s4hanaSales = await cds.connect.to('OP_API_SALES_ORDER_SRV_0001');
+        var s4hanaFreight = await cds.connect.to('CE_FREIGHTORDER_0001');
 
-    
-        const {A_SalesOrder, A_SalesOrderItem} = s4hanaSales.entities;
-        const {FreightOrder} = s4hanaFreight.entities;
+        var result;
 
-       debugger;
-    //   console.log("=====>>>>BEFORE READ SALES ORDER>>>");
-    
 
-      var results = [];
+        const { A_SalesOrder, A_SalesOrderItem } = s4hanaSales.entities;
+        const { FreightOrder } = s4hanaFreight.entities;
 
-      
-    //   results = await s4hanaSales.run(SELECT.from(A_SalesOrder).limit(50));
-         results = await s4hanaSales.run(SELECT.from(A_SalesOrder));
-     
-   
-    //   console.log("=====>>>>AFTER QUERY PROCESS SAP DOCUMENT IN getSAPDocuments>>>"+results);
+        debugger;
+        //   console.log("=====>>>>BEFORE READ SALES ORDER>>>");
+
+
+        var results = [];
+
+
+        //   results = await s4hanaSales.run(SELECT.from(A_SalesOrder).limit(50));
+        results = await s4hanaSales.run(SELECT.from(A_SalesOrder));
+
+
+        //   console.log("=====>>>>AFTER QUERY PROCESS SAP DOCUMENT IN getSAPDocuments>>>"+results);
         return results;
       } catch (error) {
         // Handle errors during API call
@@ -200,6 +739,182 @@ class DDRMService extends cds.ApplicationService {
         console.error(error.message);
         console.log("=====>>>>ERROR >>> getSAPDocuments");
         this._errorMessage(error.message, req, "getSAPDocuments");
+        return (error.message);
+
+      }
+    }
+
+      this._getSAPBusinessPartners = async function (req) {
+      try {
+
+        var s4hanaBusinessPartner = await cds.connect.to('OP_API_BUSINESS_PARTNER_SRV');
+        var result;
+
+
+        const {A_BusinessPartner} = s4hanaBusinessPartner.entities;
+        debugger;
+        var results = [];
+        results = await s4hanaBusinessPartner.run(SELECT.from(A_BusinessPartner));
+           console.log("=====>>>>AFTER QUERY PROCESS SAP DOCUMENT IN getBusinessPartner>>>");
+        return results;
+      } catch (error) {
+        // Handle errors during API call
+
+        console.error(error.message);
+        console.log("=====>>>>ERROR >>> getSAPBP");
+        this._errorMessage(error.message, req, "getSAPBP");
+        return (error.message);
+
+      }
+    }
+
+    this._getSAPSalesOrder = async function (req) {
+      try {
+
+        var s4hanaSales = await cds.connect.to('OP_API_SALES_ORDER_SRV_0001');
+        var result;
+
+
+        const { A_SalesOrder, A_SalesOrderItem } = s4hanaSales.entities;
+        debugger;
+        var results = [];
+        results = await s4hanaSales.run(SELECT.from(A_SalesOrder));
+        //   console.log("=====>>>>AFTER QUERY PROCESS SAP DOCUMENT IN getSAPDocuments>>>"+results);
+        return results;
+      } catch (error) {
+        // Handle errors during API call
+
+        console.error(error.message);
+        console.log("=====>>>>ERROR >>> getSAPDocuments");
+        this._errorMessage(error.message, req, "getSAPDocuments");
+        return (error.message);
+
+      }
+    }
+
+    this._getSAPInboundDelivery = async function (req) {
+      try {
+
+
+        var s4hanaInboundDelivery = await cds.connect.to('OP_API_INBOUND_DELIVERY_SRV_0002');
+        var result;
+
+
+        const { A_InbDeliveryHeader } = s4hanaInboundDelivery.entities;
+        debugger;
+        var results = [];
+        results = await s4hanaInboundDelivery.run(SELECT.from(A_InbDeliveryHeader));
+        return results;
+      } catch (error) {
+        // Handle errors during API call
+
+        console.error(error.message);
+        console.log("=====>>>>ERROR >>> getSAPDocuments");
+        this._errorMessage(error.message, req, "getSAPDocuments");
+        return (error.message);
+
+      }
+    }
+
+
+    this._getSAPOutboundDelivery = async function (req) {
+      try {
+
+
+        var s4hanaOutboundDelivery = await cds.connect.to('OP_API_OUTBOUND_DELIVERY_SRV_0002');
+        var result;
+
+
+        const { A_OutbDeliveryHeader } = s4hanaOutboundDelivery.entities;
+        debugger;
+        var results = [];
+        results = await s4hanaOutboundDelivery.run(SELECT.from(A_OutbDeliveryHeader));
+        return results;
+      } catch (error) {
+        // Handle errors during API call
+
+        console.error(error.message);
+        console.log("=====>>>>ERROR >>> getSAPDocuments");
+        this._errorMessage(error.message, req, "getSAPDocuments");
+        return (error.message);
+
+      }
+    }
+
+    this._getSAPFreightOrder = async function (req) {
+      try {
+
+
+        var s4hanaFreightOrder = await cds.connect.to('sap_s4_OP_API_FREIGHTORDER_0001_v1');
+        var result;
+        const { FreightOrder } = s4hanaFreightOrder.entities;
+
+        debugger;
+        var results = [];
+        results = await s4hanaFreightOrder.run(SELECT.from(FreightOrder));
+        return results;
+      } catch (error) {
+        // Handle errors during API call
+
+        console.error(error.message);
+        console.log("=====>>>>ERROR >>> getSAPDocuments");
+        this._errorMessage(error.message, req, "getSAPDocuments");
+        return (error.message);
+
+      }
+    }
+
+    this._getSAPFreightBooking = async function (req) {
+      try {
+
+
+        var s4hanaFreightBooking = await cds.connect.to('sap_s4_OP_API_FREIGHTBOOKING_0001_v1');
+        var result;
+        const { FreightBooking } = s4hanaFreightBooking.entities;
+
+        debugger;
+        var results = [];
+        results = await s4hanaFreightBooking.run(SELECT.from(FreightBooking));
+        return results;
+      } catch (error) {
+        // Handle errors during API call
+
+        console.error(error.message);
+        console.log("=====>>>>ERROR >>> getSAPDocuments");
+        this._errorMessage(error.message, req, "getSAPDocuments");
+        return (error.message);
+
+      }
+    }
+
+    // update all sap documents 
+    this._performUpdateSAPDocuments = async function (req) {
+      try {
+        var results = [];
+        var res;
+
+        results = await this._getSAPBusinessPartners(req);
+        console.log("=====>>>>AFTER CALL _getBP ");
+        res = this._performUpsertBusinessPartners(req, results);
+        results = await this._getSAPSalesOrder(req);
+        console.log("=====>>>>AFTER CALL _getSAPSalesOrder ");
+        res = this._performUpsertSAPSalesOrders(req, results);
+        results = await this._getSAPInboundDelivery(req);
+        console.log("=====>>>>AFTER CALL _getSAPInboundDelivery ");
+        res = this._performUpsertSAPInboundDelivery(req, results);
+        results = await this._getSAPOutboundDelivery(req);
+        console.log("=====>>>>AFTER CALL _getSAPOutboundDelivery ");
+        this._performUpsertSAPOutBoundDelivery(req, results);
+      
+   
+        
+
+      } catch (error) {
+        // Handle errors during API call
+
+        console.error(error.message);
+        console.log("=====>>>>ERROR >>> ");
+        this._errorMessage(error.message, req, "performUpdateSAPDocuments");
         return (error.message);
 
       }
@@ -217,16 +932,16 @@ class DDRMService extends cds.ApplicationService {
 
     this._getMessage = function (req, oMessageKey) {
 
-//var complete_url = window.location.href;
+      //var complete_url = window.location.href;
 
 
-      var navLang = navigator.language || navigator.userLanguage ;
-   //   var sValue = jQuery.sap.getUriParameters().get("myUriParam");
-       console.log("=====>>>>LANGUAGE " + navLang+ " ");
-  
-   //   const locale = req.locale.substring(0, req.locale.indexOf("_"));
+      var navLang = navigator.language || navigator.userLanguage;
+      //   var sValue = jQuery.sap.getUriParameters().get("myUriParam");
+      console.log("=====>>>>LANGUAGE " + navLang + " ");
+
+      //   const locale = req.locale.substring(0, req.locale.indexOf("_"));
       const locale = req.locale;
-            console.log("=====>>>>locale " +  req.locale);
+      console.log("=====>>>>locale " + req.locale);
       const loc = ('./i18n/' + 'i18n_' + locale);
       const bundle = new TextBundle(loc, locale);
       return bundle.getText(oMessageKey);
@@ -411,9 +1126,9 @@ class DDRMService extends cds.ApplicationService {
         var ProcessId = req.params[0].ID;
         let date = new Date();
         let timeString = this._getTime();
-          let messageString = this._getMessage(req, 'BTP_UPDATE_FSE') + date.toString() + " " + timeString;
-       
-          this._infoMessage(messageString, req, "performUpdateFSE");
+        let messageString = this._getMessage(req, 'BTP_UPDATE_FSE') + date.toString() + " " + timeString;
+
+        this._infoMessage(messageString, req, "performUpdateFSE");
         await UPDATE.entity(Process, ProcessId)
           .set({ FSEDate: oData.FSEDate, FSEAlternativeMenge: oData.FSEAlternativeMenge, FSETrockenGehalt: oData.FSETrockenGehalt, FSEAGewicht: oData.FSEAGewicht });
         return;
