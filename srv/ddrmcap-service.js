@@ -236,14 +236,14 @@ class DDRMService extends cds.ApplicationService {
       var res;
       results = await this._getSAPFreightOrder(req);
       console.log("=====>>>>AFTER CALL ");
-    })  
+    })
 
     this.on('callSAPFreightBookingIn', 'ProcessSAPDocumentIn', async req => {
       console.log("=====>>>>FreightBooking - In>>>");
       debugger;
       var results = [];
       var res;
-    
+
       results = await this._getSAPFreightBooking(req);
       console.log("=====>>>>AFTER CALL ");
     })
@@ -255,22 +255,22 @@ class DDRMService extends cds.ApplicationService {
 
     this.before('READ', 'Process', async (req) => {
       debugger;
-  //    console.log("=====>>>>BEFORE READ PROCESS>>>");
+      //    console.log("=====>>>>BEFORE READ PROCESS>>>");
       const { Process } = cds.entities;
       var results = [];
-      //     results = await this._performUpdateSAPDocuments(req);
+      results = await this._performUpdateSAPDocuments(req);
       // Initialize drafts
 
     })
 
-     this.after('READ', 'Process', async (req) => {
+    this.after('READ', 'Process', async (req) => {
       debugger;
-//      console.log("=====>>>>AFTER READ *>>>");
+      //      console.log("=====>>>>AFTER READ *>>>");
       const { Process } = cds.entities;
-   //    const entityName = req.target.name; // e.g., 'MyService.Books'
-  //const entityShortcut = req.entity;   // same as req.target.name
-  //await console.log('Processing entity:' +req);
-     // var results = [];
+      //    const entityName = req.target.name; // e.g., 'MyService.Books'
+      //const entityShortcut = req.entity;   // same as req.target.name
+      //await console.log('Processing entity:' +req);
+      // var results = [];
       //     results = await this._performUpdateSAPDocuments(req);
       // Initialize drafts
 
@@ -287,27 +287,27 @@ class DDRMService extends cds.ApplicationService {
     })
 */
 
-    
 
 
-   
+
+
 
     this.after('READ', 'SAPDocument', async (results, req) => {
       debugger;
-      
-   
-   
-       console.log("=====>>>>After READ SAPDocument>>>");
+
+
+
+      console.log("=====>>>>After READ SAPDocument>>>");
       const { Process } = cds.entities;
-  /*    
-      for (let i = results.length - 1; i >= 0; i--) {
-        //  if (results[i].isHidden) {
-      await   results.splice(i, 1);
-     await   console.log("i = " + i);
-        //}
-      }
-      
-*/
+      /*    
+          for (let i = results.length - 1; i >= 0; i--) {
+            //  if (results[i].isHidden) {
+          await   results.splice(i, 1);
+         await   console.log("i = " + i);
+            //}
+          }
+          
+    */
     })
     /*
     this.after('READ', 'Process', async (results, req) => {
@@ -321,11 +321,11 @@ class DDRMService extends cds.ApplicationService {
     })
       */
 
-   
-  
+
+
     this.before('CREATE', 'Process', async (req) => {
       debugger;
-      
+
       console.log("=====>>>>BEFORE CREATE PROCESS>>>");
       const { Process } = cds.entities;
       //  results = await this._performUpdateSAPDocuments(req);
@@ -369,7 +369,7 @@ class DDRMService extends cds.ApplicationService {
       var results = [];
       var res;
       debugger;
-  console.log("=====>>>>BEFORE CREATE PROCESS SAP DOCUMENT IN - DRAFT>>>");
+      console.log("=====>>>>BEFORE CREATE PROCESS SAP DOCUMENT IN - DRAFT>>>");
 
       const { ProcessSAPDocumentIn } = cds.entities;
       const { maxID } = await SELECT.one`max(sapDocumentInID) as maxID`.from(ProcessSAPDocumentIn)
@@ -378,7 +378,7 @@ class DDRMService extends cds.ApplicationService {
 
     })
 
-  
+
     this.before('CREATE', 'ProcessSAPDocumentOut', async (req) => {
       debugger;
       var results = [];
@@ -532,7 +532,7 @@ class DDRMService extends cds.ApplicationService {
           newSAPDocument = {
             DocNumber: item.SalesOrder,
             DocType: item.SalesOrderType,
-       //     DocTypeDesc: ' ',
+            //     DocTypeDesc: ' ',
             DocumentKindCode: 'SALESORDER',
             DocumentKindDescription: q1[0].description,
             DocumentKindDescriptionDE: q1[0].descriptionDE,

@@ -48,182 +48,117 @@
   },
   "cds": {
     "requires": {
-      "OP_API_SALES_ORDER_SRV_0001": {
-        "kind": "odata-v2",
-        "model": "srv/external/OP_API_SALES_ORDER_SRV_0001",
-        "credentials": {
-          "url": "http://S4HANA_D400.dest",
-          "path": "/sap/opu/odata/sap/API_SALES_ORDER_SRV"
-        },
-        "[production]": {
-          "credentials": {
-            "destination": "S4HANA_D400.dest",
-            "path": "/sap/opu/odata/sap/API_SALES_ORDER_SRV"
-          }
-        },
-        "csrf": true,
-        "csrfInBatch": true
+      "change-tracking": {
+        "considerLocalizedValues": true
       },
-      "sap_s4_OP_API_FREIGHTORDER_0001_v1": {
-        "kind": "odata-v4",
-        "model": "srv/external/sap-s4-OP_API_FREIGHTORDER_0001-v1",
-        "credentials": {
-          "url": "http://S4HANA_D400.dest",
-          "path": "sap/opu/odata4/sap/api_freightorder_2/srvd_a2x/sap/freightorder/0001"
-        },
-        "[production]": {
-          "credentials": {
-            "destination": "S4HANA_D400.dest"
-          }
-        },
-        "csrf": true,
-        "csrfInBatch": true
-      },
-      "sap_s4_OP_API_FREIGHTBOOKING_0001_v1": {
-        "kind": "odata-v4",
-        "model": "srv/external/sap-s4-OP_API_FREIGHTBOOKING_0001-v1",
-        "credentials": {
-          "url": "http://S4HANA_D400.dest",
-          "path": "/sap/opu/odata4/sap/api_freightbooking/srvd_a2x/sap/freightbooking/0001"
-        },
-        "[production]": {
-          "credentials": {
-            "destination": "S4HANA_D400.dest",
-            "proxyConfiguration": {
-              "host": "127.0.0.1",
-              "port": 8887,
-              "protocol": "http"
-            }
-          }
-        },
-        "csrf": true,
-        "csrfInBatch": true
-      },
-      "OP_API_INBOUND_DELIVERY_SRV_0002": {
-        "kind": "odata",
-        "model": "srv/external/OP_API_INBOUND_DELIVERY_SRV_0002",
-        "credentials": {
-          "url": "http://S4HANA_D400.dest",
-          "path": "/sap/opu/odata/sap/API_INBOUND_DELIVERY_SRV;v=0002"
-        },
-        "[production]": {
-          "credentials": {
-            "destination": "S4HANA_D400.dest",
-            "proxyConfiguration": {
-              "host": "127.0.0.1",
-              "port": 8887,
-              "protocol": "http"
-            }
-          }
-        },
-        "csrf": true,
-        "csrfInBatch": true
-      },
-      "OP_API_OUTBOUND_DELIVERY_SRV_0002": {
-        "kind": "odata",
-        "model": "srv/external/OP_API_OUTBOUND_DELIVERY_SRV_0002",
-        "credentials": {
-          "url": "http://S4HANA_D400.dest",
-          "path": "/sap/opu/odata/sap/API_OUTBOUND_DELIVERY_SRV;v=0002"
-        },
-        "[production]": {
-          "credentials": {
-            "destination": "S4HANA_D400.dest",
-            "proxyConfiguration": {
-              "host": "127.0.0.1",
-              "port": 8887,
-              "protocol": "http"
-            }
-          }
-        },
-        "csrf": true,
-        "csrfInBatch": true
-      },
-      "OP_API_BUSINESS_PARTNER_SRV": {
-        "kind": "odata",
-        "model": "srv/external/OP_API_BUSINESS_PARTNER_SRV",
-        "credentials": {
-          "url": "http://S4HANA_D400.dest",
-          "path": "/sap/opu/odata/sap/API_BUSINESS_PARTNER"
-        },
-        "[production]": {
-          "credentials": {
-            "destination": "S4HANA_D400.dest",
-            "proxyConfiguration": {
-              "host": "127.0.0.1",
-              "port": 8887,
-              "protocol": "http"
-            }
-          }
-        },
-        "csrf": true,
-        "csrfInBatch": true
-      },
-      "CE_FREIGHTBOOKING_0001": {
-        "kind": "odata",
-        "model": "srv/external/CE_FREIGHTBOOKING_0001",
-        "credentials": {
-          "url": "http://S4HANA_D400.dest",
-          "path": "/sap/opu/odata4/sap/api_freightbooking/srvd_a2x/sap/freightbooking/0001",
-          "proxyConfiguration": {
-            "host": "127.0.0.1",
-            "port": 8887,
-            "protocol": "http"
-          }
-        }
-      },
-      "sap_s4_CE_PLANT_0001_v1": {
-        "kind": "odata",
-        "model": "srv/external/sap-s4-CE_PLANT_0001-v1",
-        "credentials": {
-          "url": "http://S4HANA_D400.dest",
-          "path": "/sap/opu/odata4/sap/api_plant_2/srvd_a2x/sap/plant/0001",
-          "proxyConfiguration": {
-            "host": "127.0.0.1",
-            "port": 8887,
-            "protocol": "http"
-          }
-        }
-      },
-      "csrf": true,
-      "csrfInBatch": true
-    },
-    "change-tracking": {
-      "considerLocalizedValues": true
-    },
-    "auth": {
-      "kind": "mocked",
-      "users": {
-        "testvv": {
-          "password": "test",
-          "roles": [
-            "LKWViewer"
-          ]
-        },
-        "attachments": {
-          "scan": true
-        },
-        "test": {
-          "password": "test",
-          "roles": [
-            "LKWManager"
-          ]
-        }
-      }
-    },
-    "[development]": {
-      "db": {
-        "kind": "sqlite",
-        "credentials": {
-          "url": "db.sqlite"
-        }
-      }
-    },
-    "[production]": {
-      "db": "hana",
       "auth": {
         "kind": "xsuaa"
-      }
+      },
+      "[development]": {
+        "db": {
+          "kind": "sqlite",
+          "credentials": {
+            "url": "db.sqlite"
+          }
+        }
+      },
+      "[production]": {
+        "OP_API_SALES_ORDER_SRV_0001": {
+          "kind": "odata-v2",
+          "model": "srv/external/OP_API_SALES_ORDER_SRV_0001",
+          "credentials": {
+            "url": "http://S4HANA_D400.dest",
+            "path": "/sap/opu/odata/sap/API_SALES_ORDER_SRV",
+            "destination": "S4HANA_D400",
+            "requestTimeout": 80000
+          },
+          "csrf": true,
+          "csrfInBatch": true
+        },
+        "sap_s4_OP_API_FREIGHTORDER_0001_v1": {
+          "kind": "odata-v4",
+          "model": "srv/external/sap-s4-OP_API_FREIGHTORDER_0001-v1",
+          "credentials": {
+            "url": "http://S4HANA_D400.dest",
+            "path": "/sap/opu/odata4/sap/api_freightorder_2/srvd_a2x/sap/freightorder/0001",
+            "destination": "S4HANA_D400",
+            "requestTimeout": 80000
+          },
+          "csrf": true,
+          "csrfInBatch": true
+        },
+        "sap_s4_OP_API_FREIGHTBOOKING_0001_v1": {
+          "kind": "odata-v4",
+          "model": "srv/external/sap-s4-OP_API_FREIGHTBOOKING_0001-v1",
+          "credentials": {
+            "url": "http://S4HANA_D400.dest",
+            "path": "/sap/opu/odata4/sap/api_freightbooking/srvd_a2x/sap/freightbooking/0001",
+            "destination": "S4HANA_D400",
+            "requestTimeout": 80000
+          },
+          "csrf": true,
+          "csrfInBatch": true
+        },
+        "OP_API_INBOUND_DELIVERY_SRV_0002": {
+          "kind": "odata",
+          "model": "srv/external/OP_API_INBOUND_DELIVERY_SRV_0002",
+          "credentials": {
+            "url": "http://S4HANA_D400.dest",
+            "path": "/sap/opu/odata/sap/API_INBOUND_DELIVERY_SRV;v=0002",
+            "destination": "S4HANA_D400",
+            "requestTimeout": 80000
+          },
+          "csrf": true,
+          "csrfInBatch": true
+        },
+        "OP_API_OUTBOUND_DELIVERY_SRV_0002": {
+          "kind": "odata",
+          "model": "srv/external/OP_API_OUTBOUND_DELIVERY_SRV_0002",
+          "credentials": {
+            "url": "http://S4HANA_D400.dest",
+            "path": "/sap/opu/odata/sap/API_OUTBOUND_DELIVERY_SRV;v=0002",
+            "destination": "S4HANA_D400",
+            "requestTimeout": 80000
+          },
+          "csrf": true,
+          "csrfInBatch": true
+        },
+        "OP_API_BUSINESS_PARTNER_SRV": {
+          "kind": "odata",
+          "model": "srv/external/OP_API_BUSINESS_PARTNER_SRV",
+          "credentials": {
+            "url": "http://S4HANA_D400.dest",
+            "path": "/sap/opu/odata/sap/API_BUSINESS_PARTNER",
+            "destination": "S4HANA_D400",
+            "requestTimeout": 80000
+          },
+          "csrf": true,
+          "csrfInBatch": true
+        },
+        "CE_FREIGHTBOOKING_0001": {
+          "kind": "odata",
+          "model": "srv/external/CE_FREIGHTBOOKING_0001",
+          "credentials": {
+            "url": "http://S4HANA_D400.dest",
+            "path": "/sap/opu/odata4/sap/api_freightbooking/srvd_a2x/sap/freightbooking/0001",
+            "destination": "S4HANA_D400",
+            "requestTimeout": 80000
+          }
+        },
+        "sap_s4_CE_PLANT_0001_v1": {
+          "kind": "odata",
+          "model": "srv/external/sap-s4-CE_PLANT_0001-v1",
+          "credentials": {
+            "url": "http://S4HANA_D400.dest",
+            "path": "/sap/opu/odata4/sap/api_plant_2/srvd_a2x/sap/plant/0001",
+            "destination": "S4HANA_D400",
+            "requestTimeout": 80000
+          }
+        },
+        "csrf": true,
+        "csrfInBatch": true
+      },
+      "db": "hana"
     },
     "[hybrid]": {
       "db": {
@@ -236,7 +171,9 @@
     "workzone": true,
     "OP_API_FREIGHTBOOKING_0001": {
       "kind": "odata",
-      "model": "srv/external/OP_API_FREIGHTBOOKING_0001"
+      "model": "srv/external/OP_API_FREIGHTBOOKING_0001",
+      "destination": "S4HANA_D400",
+      "requestTimeout": 80000
     },
     "fiori": {
       "preview": true

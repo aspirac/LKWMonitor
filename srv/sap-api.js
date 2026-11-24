@@ -14,15 +14,21 @@ module.exports = async (srv) => {
         // handle connections
 
         // case 1. Sales orders
-
-         var s4hanaFreightOrder = await cds.connect.to('sap_s4_OP_API_FREIGHTORDER_0001_v1');
-         var s4hanaFreightBooking = await cds.connect.to('CE_FREIGHTBOOKING_0001');
-         var s4hanaSales = await cds.connect.to('OP_API_SALES_ORDER_SRV_0001');
+             var s4hanaSales = await cds.connect.to('OP_API_SALES_ORDER_SRV_0001');
+               console.log("=====>>>>API SAP >>> AFTER CONNECT SALES ORDER" );
+       var s4hanaFreightOrder = await cds.connect.to('sap_s4_OP_API_FREIGHTORDER_0001_v1');
+         console.log("=====>>>>API SAP >>> AFTER CONNECT FREIGHT ORDER" );
+  
+          var s4hanaFreightBooking = await cds.connect.to('CE_FREIGHTBOOKING_0001');
+         console.log("=====>>>>API SAP >>> AFTER CONNECT FREIGHT BOOKING" );
          var s4hanaInboundDelivery = await cds.connect.to('OP_API_INBOUND_DELIVERY_SRV_0002');
+          console.log("=====>>>>API SAP >>> AFTER CONNECT INBOUND DEL" );
          var s4hanaOutboundDelivery = await cds.connect.to('OP_API_OUTBOUND_DELIVERY_SRV_0002');
+               console.log("=====>>>>API SAP >>> AFTER CONNECT OUT BOUND DEL" );
          var s4hanaBusinessPartner = await cds.connect.to('OP_API_BUSINESS_PARTNER_SRV');
+               console.log("=====>>>>API SAP >>> AFTER CONNECT BP" );
          var s4hanaPlant = await cds.connect.to('sap_s4_CE_PLANT_0001_v1');
-    
+          console.log("=====>>>>API SAP >>> AFTER CONNECT PLANT" );
 
         const objectType = req.target.name;
         var result;
@@ -37,16 +43,16 @@ module.exports = async (srv) => {
   
    
         console.log('Object type = ' + objectType);
-         if (objectType.endsWith("SalesOrder") ){        
-         //   results = await DDRMService._performUpdateSAPDocuments(req);
-      //     result = await s4hanaSales.run(SELECT.from(A_SalesOrder).where({ OverallSDProcessStatus: { '!=': 'C' } }).columns('SalesOrder', 'SalesOrderType', 'SoldToParty', 'OverallSDProcessStatus'));
-            result = await s4hanaSales.run(SELECT.from(A_SalesOrder).where({ OverallSDProcessStatus: { '!=': 'C' } }));
+         if (objectType.endsWith("SalesOrder") ){    
+                  console.log("=====>>>>SalesOrder >>>" );    
+              result = await s4hanaSales.run(SELECT.from(A_SalesOrder).where({ OverallSDProcessStatus: { '!=': 'C' } }));
           }
           if(objectType.endsWith("SalesOrderItem")) {
+                     console.log("=====>>>>SalesOrderItem >>>" );    
           result = await s4hanaSales.run(SELECT.from(A_SalesOrderItem));
         } 
         else if (objectType.endsWith("FreightOrder")) {
-            console.log("=====>>>>Freight >>>" );
+            console.log("=====>>>>Freight Order>>>" );
            //  result  = await s4hanaFreightOrder.run(SELECT.from(FreightOrder).columns('FreightOrder', 'FreightOrderType', 'TranspOrdConsignee'));
              result  = await s4hanaFreightOrder.run(SELECT.from(FreightOrder));
         
