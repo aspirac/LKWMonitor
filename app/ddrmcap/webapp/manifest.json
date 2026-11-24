@@ -23,6 +23,14 @@
           "annotations": [],
           "odataVersion": "4.0"
         }
+      },
+      "OP_API_SALES_ORDER_SRV_0001": {
+        "uri": "/sap/opu/odata/sap/API_SALES_ORDER_SRV/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "2.0"
+        }
       }
     },
     "crossNavigation": {

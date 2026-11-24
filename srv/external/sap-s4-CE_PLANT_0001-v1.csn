@@ -1,0 +1,200 @@
+{
+ "meta": {
+  "creator": "cds-dk 10.2.1"
+ },
+ "$version": "2.0",
+ "definitions": {
+  "sap_s4_CE_PLANT_0001_v1": {
+   "kind": "service",
+   "@cds.external": true,
+   "@Common.ApplyMultiUnitBehaviorForSortingAndFiltering": true,
+   "@Capabilities.FilterFunctions": [
+    "eq",
+    "ne",
+    "gt",
+    "ge",
+    "lt",
+    "le",
+    "and",
+    "or",
+    "contains",
+    "startswith",
+    "endswith",
+    "any",
+    "all"
+   ],
+   "@SAP__support.TechnicalInfoLinks.Url": "../../../../default/iwbep/common/0001/$metadata",
+   "@SAP__support.TechnicalInfoLinks.FunctionImport": "GetTechnicalInfoLinks",
+   "@Capabilities.SupportedFormats": [
+    "application/json",
+    "application/pdf"
+   ],
+   "@PDF.Features.DocumentDescriptionReference": "../../../../default/iwbep/common/0001/$metadata",
+   "@PDF.Features.DocumentDescriptionCollection": "MyDocumentDescriptions",
+   "@PDF.Features.ArchiveFormat": true,
+   "@PDF.Features.Border": true,
+   "@PDF.Features.CoverPage": true,
+   "@PDF.Features.FitToPage": true,
+   "@PDF.Features.FontName": true,
+   "@PDF.Features.FontSize": true,
+   "@PDF.Features.HeaderFooter": true,
+   "@PDF.Features.IANATimezoneFormat": true,
+   "@PDF.Features.Margin": true,
+   "@PDF.Features.Padding": true,
+   "@PDF.Features.ResultSizeDefault": 20000,
+   "@PDF.Features.ResultSizeMaximum": 20000,
+   "@PDF.Features.Signature": true,
+   "@PDF.Features.TextDirectionLayout": true,
+   "@PDF.Features.Treeview": true,
+   "@PDF.Features.UploadToFileShare": true,
+   "@Capabilities.BatchSupport.SupportedFormats": [
+    "application/json",
+    "multipart/mixed"
+   ],
+   "@Capabilities.KeyAsSegmentSupported": true,
+   "@Capabilities.AsynchronousRequestsSupported": true
+  },
+  "sap_s4_CE_PLANT_0001_v1.Plant": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "Plant": {
+     "key": true,
+     "type": "cds.String",
+     "length": 4,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Plant",
+     "@Common.Heading": "Plnt",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=WERKS_D"
+    },
+    "PlantName": {
+     "type": "cds.String",
+     "length": 30,
+     "notNull": true,
+     "@Common.Label": "Plant Name"
+    },
+    "ValuationArea": {
+     "type": "cds.String",
+     "length": 4,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Valuation Area",
+     "@Common.Heading": "ValA",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=BWKEY"
+    },
+    "PlantCustomer": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Customer No Plant",
+     "@Common.Heading": "CustNoPlnt",
+     "@Common.QuickInfo": "Customer Number of Plant",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=KUNNR_WK"
+    },
+    "PlantSupplier": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Sppl. No. Plnt",
+     "@Common.Heading": "Supplier Number Plant",
+     "@Common.QuickInfo": "Supplier Number of Plant"
+    },
+    "FactoryCalendar": {
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Factory Calendar",
+     "@Common.Heading": "Cal",
+     "@Common.QuickInfo": "Factory calendar key",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=FABKL"
+    },
+    "DefaultPurchasingOrganization": {
+     "type": "cds.String",
+     "length": 4,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Purch. Organization",
+     "@Common.Heading": "POrg",
+     "@Common.QuickInfo": "Purchasing Organization",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=EKORG"
+    },
+    "SalesOrganization": {
+     "type": "cds.String",
+     "length": 4,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Sls Organization ICB",
+     "@Common.Heading": "SO ICB",
+     "@Common.QuickInfo": "Sales Organization for Intercompany Billing",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=VKOIV"
+    },
+    "AddressID": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Address",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=ADRNR"
+    },
+    "PlantCategory": {
+     "type": "cds.String",
+     "length": 1,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Plant Cat.",
+     "@Common.Heading": "C",
+     "@Common.QuickInfo": "Plant category",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=VLFKZ"
+    },
+    "DistributionChannel": {
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Distrib.Channel",
+     "@Common.Heading": "DstCh",
+     "@Common.QuickInfo": "Distribution Channel for Intercompany billing",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=VTWIV"
+    },
+    "Division": {
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true,
+     "@Common.SAPObjectNodeTypeReference": "Division",
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Interco. Billing Div",
+     "@Common.Heading": "Div.",
+     "@Common.QuickInfo": "Division for Intercompany Billing",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=SPAIV"
+    },
+    "Language": {
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true,
+     "@Common.Label": "Language Key",
+     "@Common.Heading": "Language",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=SPRAS"
+    },
+    "IsMarkedForArchiving": {
+     "type": "cds.Boolean",
+     "notNull": true,
+     "@Common.Label": "Archiving Flag",
+     "@Common.Heading": "ArMk",
+     "@Common.QuickInfo": "Central archiving marker for master record",
+     "@Common.DocumentationRef": "urn:sap-com:documentation:key?=type=DE&id=ACHVM_X"
+    }
+   },
+   "@Common.Label": "Plant",
+   "@Capabilities.SearchRestrictions.Searchable": false,
+   "@Capabilities.InsertRestrictions.Insertable": false,
+   "@Capabilities.DeleteRestrictions.Deletable": false,
+   "@Capabilities.UpdateRestrictions.Updatable": false,
+   "@Capabilities.UpdateRestrictions.QueryOptions.SelectSupported": true
+  }
+ }
+}

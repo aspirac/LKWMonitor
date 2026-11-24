@@ -42,13 +42,15 @@ annotate DDRMService.ProcessStatus with {
 annotate DDRMService.SAPDocument with {
     DocNumber         @title: '{@i18n>docNumber}' ;
     DocType @title: '{@i18n>sapDocumentType}' @readonly;
-    DocTypeDesc @title: '{@i18n>sapDocumentTypeDescription}' @readonly;
+ //   DocTypeDesc @title: '{@i18n>sapDocumentTypeDescription}' @readonly;
     DocumentKindCode @title: '{@i18n>DocumentKindCode}' @readonly;
     DocumentKindDescription @title: '{@i18n>DocumentKindDescription}' @readonly;
     DocumentKindDescriptionDE @title: '{@i18n>DocumentKindDescriptionDE}' @readonly;
   //  description @title: '{@i18n>description}' @readonly;
     CustomerNumber @title: '{@i18n>sapDocumentClientNumber}'@readonly;
-  //  CustomerName   @title: '{@i18n>sapDocumentClientName}' @readonly;
+    LoadingDateTime @title: '{@i18n>LoadingDate}'@readonly;
+    Address @title: '{@i18n>Address}'@readonly;
+    CustomerName   @title: '{@i18n>sapDocumentClientName}' @readonly;
 }
 
 

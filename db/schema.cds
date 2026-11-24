@@ -53,8 +53,9 @@ entity Process : managed {
         to_ProcessFSADocument    : Composition of many ProcessFSADocument
                                        on to_ProcessFSADocument.Process = $self;
 
-        to_ProcessAttachments    : Composition of many ProcessAttachments
-                                       on to_ProcessAttachments.Process = $self;
+        to_ProcessAttachments    : composition of many    ProcessAttachments
+                                   on to_ProcessAttachments.Process  = $self;
+                                    
 
 //      attachment               : Composition of many Attachments
 
@@ -105,6 +106,7 @@ entity ProcessAttachments : managed {
         content  : LargeBinary @Core.MediaType                  : fileType
                                @Core.ContentDisposition.Filename: fileName;
         Process  : Association to Process
+           
 }
 
 entity SAPDocumentKindType : managed {
@@ -121,15 +123,19 @@ entity SAPDocument : managed {
         //    key MANDT: String(5);
     key DocNumber                 : String(30);
         DocType                   : String(5);
-        DocTypeDesc               : String(50);
+//        DocTypeDesc               : String(50);
         DocumentKindCode          : String(30);
         DocumentKindDescriptionDE : String(30);
         DocumentKindDescription   : String(30);
     //    description               : String(60);
         CustomerNumber            : String(20);
-  //      CustomerName              : String(100);
+        CustomerName              : String(100);
+        LoadingDateTime:          DateTime;
+        Address: String(200);
         ProcessSapDocumentIn      : Association to many ProcessSAPDocumentIn
                                         on ProcessSapDocumentIn.to_SapDocument = $self;
+        ProcessSapDocumentOut      : Association to many ProcessSAPDocumentOut
+                                        on ProcessSapDocumentOut.to_SapDocument = $self;
 
 
 }
@@ -269,5 +275,5 @@ entity FreightBooking {
 entity BusinessPartner {
     key BPID     : String(20);
         Supplier : String(20);
-        Name     : String(40);
+        Name     : String(100);
 }

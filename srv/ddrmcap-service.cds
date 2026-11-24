@@ -1,3 +1,4 @@
+
 using {com.jrs.lkwvor as db} from '../db/schema';
 
 
@@ -70,23 +71,23 @@ service DDRMService @(requires: 'authenticated-user') {
 
     entity ProcessSAPDocumentOut as projection on db.ProcessSAPDocumentOut
         actions {
-            action updateSAPDocuments() returns Result;
+           action updateSAPDocuments() returns Result;
    
-            action callSAPSalesOrderOut(SalesOrder: Decimal)       returns db.SalesOrderType;
-            action callSAPInboundDeliveryOut()  returns InboundDelivery;
-            action callSAPOutboundDeliveryOut() returns OutboundDelivery;
-            action callSAPFreightOrderOut()     returns FreightOrder;
-            action callSAPFreightBookingOut()   returns FreightBooking;
+     //       action callSAPSalesOrderOut(SalesOrder: Decimal)       returns db.SalesOrderType;
+     //       action callSAPInboundDeliveryOut()  returns InboundDelivery;
+     //       action callSAPOutboundDeliveryOut() returns OutboundDelivery;
+     //       action callSAPFreightOrderOut()     returns FreightOrder;
+     //       action callSAPFreightBookingOut()   returns FreightBooking;
         };
 
     entity ProcessSAPDocumentIn  as projection on db.ProcessSAPDocumentIn
         actions {
-            action updateSAPDocuments()        returns Result;
-            action callSAPSalesOrderIn()       returns SalesOrder;
-            action callSAPInboundDeliveryIn()  returns InboundDelivery;
-            action callSAPOutboundDeliveryIn() returns OutboundDelivery;
-            action callSAPFreightOrderIn()     returns FreightOrder;
-            action callSAPFreightBookingIn()   returns FreightBooking;
+          action updateSAPDocuments()        returns Result;
+   //         action callSAPSalesOrderIn()       returns SalesOrder;
+   //         action callSAPInboundDeliveryIn()  returns InboundDelivery;
+   //         action callSAPOutboundDeliveryIn() returns OutboundDelivery;
+   //         action callSAPFreightOrderIn()     returns FreightOrder;
+   //         action callSAPFreightBookingIn()   returns FreightBooking;
         };
 
 
@@ -133,3 +134,6 @@ annotate db.Process with {
     }
 
 };
+
+
+   

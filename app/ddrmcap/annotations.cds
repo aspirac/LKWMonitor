@@ -1,6 +1,8 @@
 using DDRMService as service from '../../srv/ddrmcap-service';
 
 
+
+
 annotate service.Process with @(
 
     Aggregation.ApplySupported    : {
@@ -553,6 +555,84 @@ annotate service.Process with @(
 
 );
 
+annotate service.ProcessAttachments with @(
+    Capabilities.UpdateRestrictions: {Updatable: true},
+    UI                             : {
+        HeaderInfo         : {
+            $Type         : 'UI.HeaderInfoType',
+            TypeName      : '{i18n>ProcessAttachments}',
+            TypeNamePlural: '{i18n>ProcessAttachments}'
+        },
+
+        PresentationVariant: {Visualizations: ['@UI.LineItem'],
+                                                                //      SortOrder     : [{
+                                                                //          $Type     : 'Common.SortOrderType',
+                                                                //         Property  : sapDocumentInID,
+                                                                //          Descending: false
+                                                                //      }]
+                                              },
+
+        SelectionFields    : [],
+        LineItem           : [
+
+            {
+                $Type: 'UI.DataField',
+                Value: Title,
+                Label: '{@i18n>attachmentTitle}',
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: content,
+                Label: '{@i18n>attachmentContent}',
+            },
+            /*
+           {
+                $Type: 'UI.DataField',
+                Value: fileName,
+                Label: '{@i18n>attachmentFileName}',
+            },
+            */
+            {
+                $Type: 'UI.DataField',
+                Value: fileType,
+                Label: '{@i18n>attachmentFileType}',
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: createdBy,
+                Label: '{@i18n>attachmentCreatedBy}',
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: createdAt,
+                Label: '{@i18n>attachmentCreatedAt}',
+            },
+
+
+        ]
+    }
+);
+
+
+annotate service.Process with {
+    processTypeID @Common.ValueList: {
+        $Type         : 'Common.ValueListType',
+        CollectionPath: 'ProcessType',
+
+        Parameters    : [
+            {
+                $Type            : 'Common.ValueListParameterInOut',
+                LocalDataProperty: processTypeID_ID,
+                ValueListProperty: 'ID',
+            },
+            {
+                $Type            : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty: 'description',
+            },
+        ],
+    }
+};
+
 annotate service.ProcessSAPDocumentIn with @(
     Capabilities.UpdateRestrictions: {Updatable: true},
     UI                             : {
@@ -574,7 +654,7 @@ annotate service.ProcessSAPDocumentIn with @(
         LineItem           : [
 
             {
-                $Type : 'UI.DataFieldForAction',
+               $Type : 'UI.DataFieldForAction',
                 Action: 'DDRMService.updateSAPDocuments',
                 Label : '{@i18n>updateSAPDocuments}',
             },
@@ -635,27 +715,37 @@ annotate service.ProcessSAPDocumentIn with @(
                 Value: to_SapDocument.DocType,
 
             },
-            {
-                $Type: 'UI.DataField',
-                Value: to_SapDocument.DocTypeDesc,
+  //          {
+  //              $Type: 'UI.DataField',
+  //              Value: to_SapDocument.DocTypeDesc,
 
-            },
+    //        },
        //     {
        //         $Type: 'UI.DataField',
        //         Value: to_SapDocument.description,
 
      //       },
+                {
+                $Type: 'UI.DataField',
+                Value: to_SapDocument.LoadingDateTime,
+
+            },
             {
                 $Type: 'UI.DataField',
                 Value: to_SapDocument.CustomerNumber,
 
             },
 
-      //      {
-      //          $Type: 'UI.DataField',
-      //          Value: to_SapDocument.CustomerName,
+            {
+                $Type: 'UI.DataField',
+                Value: to_SapDocument.CustomerName,
 
-      //      },
+            },
+     {
+                $Type: 'UI.DataField',
+                Value: to_SapDocument.Address,
+
+            },
 
         ]
     }
@@ -694,10 +784,10 @@ annotate service.ProcessSAPDocumentOut with @(
         LineItem           : [
             {
 
-                $Type  : 'UI.DataFieldForAction',
+               $Type  : 'UI.DataFieldForAction',
                 Action : 'DDRMService.updateSAPDocuments',
                 Label  : '{@i18n>updateSAPDocuments}',
-                visible: false,
+   //             visible: false,
             },
             //        {
             //            $Type : 'UI.DataFieldForAction',
@@ -746,11 +836,11 @@ annotate service.ProcessSAPDocumentOut with @(
                 Value: to_SapDocument.DocType,
 
             },
-            {
-                $Type: 'UI.DataField',
-                Value: to_SapDocument.DocTypeDesc,
+    //        {
+    //            $Type: 'UI.DataField',
+    //            Value: to_SapDocument.DocTypeDesc,
 
-            },
+//            },
                       {
                 $Type: 'UI.DataField',
                 Value: to_SapDocument.DocumentKindCode,
@@ -773,73 +863,24 @@ annotate service.ProcessSAPDocumentOut with @(
      //       },
             {
                 $Type: 'UI.DataField',
+                Value: to_SapDocument.LoadingDateTime,
+
+            },
+            {
+                $Type: 'UI.DataField',
                 Value: to_SapDocument.CustomerNumber,
 
             },
 
-         //   {
-         //       $Type: 'UI.DataField',
-         //       Value: to_SapDocument.CustomerName,
-
-         //   },
-
-
-        ]
-    }
-);
-
-
-annotate service.ProcessAttachments with @(
-    Capabilities.UpdateRestrictions: {Updatable: true},
-    UI                             : {
-        HeaderInfo         : {
-            $Type         : 'UI.HeaderInfoType',
-            TypeName      : '{i18n>ProcessAttachments}',
-            TypeNamePlural: '{i18n>ProcessAttachments}'
-        },
-
-        PresentationVariant: {Visualizations: ['@UI.LineItem'],
-                                                                //      SortOrder     : [{
-                                                                //          $Type     : 'Common.SortOrderType',
-                                                                //         Property  : sapDocumentInID,
-                                                                //          Descending: false
-                                                                //      }]
-                                              },
-
-        SelectionFields    : [],
-        LineItem           : [
-
             {
                 $Type: 'UI.DataField',
-                Value: Title,
-                Label: '{@i18n>attachmentTitle}',
+                Value: to_SapDocument.CustomerName,
+
             },
-            {
+     {
                 $Type: 'UI.DataField',
-                Value: content,
-                Label: '{@i18n>attachmentContent}',
-            },
-            /*
-           {
-                $Type: 'UI.DataField',
-                Value: fileName,
-                Label: '{@i18n>attachmentFileName}',
-            },
-            */
-            {
-                $Type: 'UI.DataField',
-                Value: fileType,
-                Label: '{@i18n>attachmentFileType}',
-            },
-            {
-                $Type: 'UI.DataField',
-                Value: createdBy,
-                Label: '{@i18n>attachmentCreatedBy}',
-            },
-            {
-                $Type: 'UI.DataField',
-                Value: createdAt,
-                Label: '{@i18n>attachmentCreatedAt}',
+                Value: to_SapDocument.Address,
+
             },
 
 
@@ -847,336 +888,7 @@ annotate service.ProcessAttachments with @(
     }
 );
 
-/*
-//Insolvenz List Report in Object page
-annotate service.InsolvencyMeasures with @(
-    Capabilities.UpdateRestrictions: {Updatable: true},
-    UI                             : {
-        HeaderInfo: {
-            $Type         : 'UI.HeaderInfoType',
-            TypeName      : '{i18n>measures}',
-            TypeNamePlural: '{i18n>measures}'
-        },
-        LineItem  : [
 
-            {
-                $Type: 'UI.DataField',
-                Value: measuresTypeId_ID,
-                Label: '{@i18n>measuresType}',
-            },
-            {
-                $Type: 'UI.DataField',
-                Value: measuresClassId_ID,
-                Label: '{@i18n>measuresClass}',
-            },
-            {
-                $Type: 'UI.DataField',
-                Value: liquidityEffect,
-                Label: '{@i18n>liquidityEffect}',
-            },
-            {
-                $Type: 'UI.DataField',
-                Value: yieldEffect,
-                Label: '{@i18n>yieldEffect}',
-            },
-            {
-                $Type: 'UI.DataField',
-                Value: releaseLocking,
-                Label: '{@i18n>releaseLocking}',
-            },
-            {
-                $Type: 'UI.DataField',
-                Value: fundsOutflowCurrentYear,
-                Label: '{@i18n>fundsOutflowCurrentYear}',
-            },
-            {
-                $Type: 'UI.DataField',
-                Value: measuresDate,
-                Label: '{@i18n>measuresDate}',
-            },
-            {
-                $Type: 'UI.DataField',
-                Value: fundsOutflowNextYear,
-                Label: '{@i18n>fundsOutflowNextYear}',
-            },
-            {
-                $Type: 'UI.DataField',
-                Value: measuresResponsible,
-                Label: '{@i18n>measuresResponsible}',
-            },
-            {
-                $Type: 'UI.DataField',
-                Value: commentMeasures,
-                Label: '{@i18n>commentMeasures}',
-            },
-        ]
-    }
-);
-
-//Crisis List Report in Object page
-annotate service.CrisisMeasures with @(
-    Capabilities.UpdateRestrictions: {Updatable: true},
-    UI                             : {
-        HeaderInfo: {
-            $Type         : 'UI.HeaderInfoType',
-            TypeName      : '{i18n>measures}',
-            TypeNamePlural: '{i18n>measures}'
-        },
-        LineItem  : [
-
-            {
-                $Type: 'UI.DataField',
-                Value: measuresTypeId_ID,
-                Label: '{@i18n>measuresType}',
-            },
-            {
-                $Type: 'UI.DataField',
-                Value: measuresClassId_ID,
-                Label: '{@i18n>measuresClass}',
-            },
-
-            {
-                $Type: 'UI.DataField',
-                Value: liquidityEffect,
-                Label: '{@i18n>liquidityEffect}',
-            },
-            {
-                $Type: 'UI.DataField',
-                Value: yieldEffect,
-                Label: '{@i18n>yieldEffect}',
-            },
-            {
-                $Type: 'UI.DataField',
-                Value: releaseLocking,
-                Label: '{@i18n>releaseLocking}',
-            },
-            {
-                $Type: 'UI.DataField',
-                Value: fundsOutflowCurrentYear,
-                Label: '{@i18n>fundsOutflowCurrentYear}',
-            },
-            {
-                $Type: 'UI.DataField',
-                Value: fundsOutflowNextYear,
-                Label: '{@i18n>fundsOutflowNextYear}',
-            },
-            {
-                $Type: 'UI.DataField',
-                Value: measuresDate,
-                Label: '{@i18n>measuresDate}',
-            },
-            {
-                $Type: 'UI.DataField',
-                Value: measuresResponsible,
-                Label: '{@i18n>measuresResponsible}',
-            },
-            {
-                $Type: 'UI.DataField',
-                Value: commentMeasures,
-                Label: '{@i18n>commentMeasures}',
-            },
-            {
-                $Type: 'UI.DataField',
-                Value: leadBuyer,
-                Label: '{@i18n>leadBuyer}',
-            },
-
-
-        ]
-    }
-);
-
-annotate service.InsolvencyMeasures with {
-    measuresClassId @Common.ValueList: {
-        $Type         : 'Common.ValueListType',
-        CollectionPath: 'MeasuresClass',
-        Parameters    : [
-            {
-                $Type            : 'Common.ValueListParameterInOut',
-                LocalDataProperty: measuresClassId_ID,
-                ValueListProperty: 'ID',
-            },
-            {
-                $Type            : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty: 'description',
-            },
-        ],
-    }
-};
-
-annotate service.InsolvencyMeasures with {
-    measuresTypeId @Common.ValueList: {
-        $Type         : 'Common.ValueListType',
-        CollectionPath: 'MeasuresType',
-        Parameters    : [
-            {
-                $Type            : 'Common.ValueListParameterInOut',
-                LocalDataProperty: measuresTypeId_ID,
-                ValueListProperty: 'ID',
-            },
-            {
-                $Type            : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty: 'description',
-            },
-        ],
-    }
-};
-
-annotate service.CrisisMeasures with {
-    measuresClassId @Common.ValueList: {
-        $Type         : 'Common.ValueListType',
-        CollectionPath: 'MeasuresClass',
-        Parameters    : [
-            {
-                $Type            : 'Common.ValueListParameterInOut',
-                LocalDataProperty: measuresClassId_ID,
-                ValueListProperty: 'ID',
-            },
-            {
-                $Type            : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty: 'description',
-            },
-        ],
-    }
-};
-
-annotate service.CrisisMeasures with {
-    measuresTypeId @Common.ValueList: {
-        $Type         : 'Common.ValueListType',
-        CollectionPath: 'MeasuresType',
-        Parameters    : [
-            {
-                $Type            : 'Common.ValueListParameterInOut',
-                LocalDataProperty: measuresTypeId_ID,
-                ValueListProperty: 'ID',
-            },
-            {
-                $Type            : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty: 'description',
-            },
-        ],
-    }
-};
-
-annotate service.Process with {
-    duns @Common.ValueList: {
-        CollectionPath: 'FinanzRating',
-        Parameters    : [
-            {
-                $Type            : 'Common.ValueListParameterInOut',
-                LocalDataProperty: duns,
-                ValueListProperty: 'DUNS'
-            },
-            {
-                $Type            : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty: 'FIRMENNAME'
-            },
-            {
-                $Type            : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty: 'SCORE_FINAL'
-            }
-        ]
-    };
-};
-
-annotate service.Process with {
-    bearbeiterId @Common.ValueList: {
-        $Type         : 'Common.ValueListType',
-        CollectionPath: 'User',
-        Parameters    : [
-            {
-                $Type            : 'Common.ValueListParameterInOut',
-                LocalDataProperty: bearbeiterId_ID,
-                ValueListProperty: 'ID',
-            },
-            {
-                $Type            : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty: 'nachName',
-            },
-            {
-                $Type            : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty: 'vorName',
-            },
-        ],
-    }
-};
-
-annotate service.InsolvencyMeasures with {
-    measuresResponsible @Common.ValueList: {
-        $Type         : 'Common.ValueListType',
-        CollectionPath: 'User',
-        Parameters    : [
-            {
-                $Type            : 'Common.ValueListParameterInOut',
-                LocalDataProperty: measuresResponsible,
-                ValueListProperty: 'ID',
-            },
-            {
-                $Type            : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty: 'nachName',
-            },
-            {
-                $Type            : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty: 'vorName',
-            },
-        ],
-    }
-};
-
-annotate service.Process with {
-    vertieftesRating @Common.ValueList: {
-        $Type         : 'Common.ValueListType',
-        CollectionPath: 'Rating',
-        Parameters    : [
-            {
-                $Type            : 'Common.ValueListParameterInOut',
-                LocalDataProperty: vertieftesRating_ID,
-                ValueListProperty: 'ID',
-            },
-            {
-                $Type            : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty: 'description',
-            },
-        ],
-    }
-};
-
-annotate service.Process {
-    actualRating @Common.ValueList: {
-        $Type         : 'Common.ValueListType',
-        CollectionPath: 'Rating',
-        Parameters    : [
-            {
-                $Type            : 'Common.ValueListParameterInOut',
-                LocalDataProperty: actualRating_ID,
-                ValueListProperty: 'ID',
-            },
-            {
-                $Type            : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty: 'description',
-            },
-        ],
-    }
-};
-*/
-annotate service.Process with {
-    processTypeID @Common.ValueList: {
-        $Type         : 'Common.ValueListType',
-        CollectionPath: 'ProcessType',
-
-        Parameters    : [
-            {
-                $Type            : 'Common.ValueListParameterInOut',
-                LocalDataProperty: processTypeID_ID,
-                ValueListProperty: 'ID',
-            },
-            {
-                $Type            : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty: 'description',
-            },
-        ],
-    }
-};
 
 
 annotate service.Process with {
@@ -1211,10 +923,10 @@ annotate service.ProcessSAPDocumentIn with {
                 $Type            : 'Common.ValueListParameterDisplayOnly',
                 ValueListProperty: 'DocType',
             },
-            {
-                $Type            : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty: 'DocTypeDesc',
-            },
+   //         {
+   //             $Type            : 'Common.ValueListParameterDisplayOnly',
+   //             ValueListProperty: 'DocTypeDesc',
+   //         },
            {
                 $Type            : 'Common.ValueListParameterDisplayOnly',
                 ValueListProperty: 'DocumentKindCode',
@@ -1232,15 +944,23 @@ annotate service.ProcessSAPDocumentIn with {
     //            $Type            : 'Common.ValueListParameterDisplayOnly',
     //            ValueListProperty: 'description',
     //        },
+       {
+                $Type            : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty: 'LoadingDateTime',
+            },
             {
                 $Type            : 'Common.ValueListParameterDisplayOnly',
                 ValueListProperty: 'CustomerNumber',
             },
-    //        {
-    //            $Type            : 'Common.ValueListParameterDisplayOnly',
-    //            ValueListProperty: 'CustomerName',
-    //        },
-
+            {
+                $Type            : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty: 'CustomerName',
+            },
+  {
+                $Type            : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty: 'Address',
+            },
+     
         ],
     }
 };
@@ -1260,10 +980,10 @@ annotate service.ProcessSAPDocumentOut with {
                 $Type            : 'Common.ValueListParameterDisplayOnly',
                 ValueListProperty: 'DocType',
             },
-            {
-                $Type            : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty: 'DocTypeDesc',
-            },
+   //         {
+   //             $Type            : 'Common.ValueListParameterDisplayOnly',
+   //             ValueListProperty: 'DocTypeDesc',
+   //         },
               {
                 $Type            : 'Common.ValueListParameterDisplayOnly',
                 ValueListProperty: 'DocumentKindCode',
@@ -1280,15 +1000,22 @@ annotate service.ProcessSAPDocumentOut with {
 //                $Type            : 'Common.ValueListParameterDisplayOnly',
 //                ValueListProperty: 'description',
 //            },
+ {
+                $Type            : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty: 'LoadingDateTime',
+            },
             {
                 $Type            : 'Common.ValueListParameterDisplayOnly',
                 ValueListProperty: 'CustomerNumber',
             },
-    //        {
-    //            $Type            : 'Common.ValueListParameterDisplayOnly',
-    //            ValueListProperty: 'CustomerName',
-    //        },
-
+            {
+                $Type            : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty: 'CustomerName',
+            },
+{
+                $Type            : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty: 'Address',
+            },
         ],
     }
 };
