@@ -258,7 +258,7 @@ class DDRMService extends cds.ApplicationService {
       //    console.log("=====>>>>BEFORE READ PROCESS>>>");
       const { Process } = cds.entities;
       var results = [];
-      results = await this._performUpdateSAPDocuments(req);
+   //   results = await this._performUpdateSAPDocuments(req);
       // Initialize drafts
 
     })

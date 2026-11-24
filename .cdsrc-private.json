@@ -31,9 +31,9 @@
         "csrf": true,
         "csrfInBatch": true
       },
-      "sap_s4_OP_API_FREIGHTBOOKING_0001_v1": {
-        "kind": "odata-v4",
-        "model": "srv/external/sap-s4-OP_API_FREIGHTBOOKING_0001-v1",
+      "CE_FREIGHTBOOKING_0001": {
+        "kind": "odata",
+        "model": "srv/external/CE_FREIGHTBOOKING_0001",
         "credentials": {
           "url": "http://S4HANA_D400.dest",
           "path": "/sap/opu/odata4/sap/api_freightbooking/srvd_a2x/sap/freightbooking/0001",
