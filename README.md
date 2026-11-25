@@ -144,7 +144,8 @@ In order to push the developments to Gitlab do:
 
 **-	git init
 -	git add .
--	git commit -m "Push LKWMonitor project to GitLab" 
+  git commit -m "Push LKWMonitor project to GitLab"
+-	 
 -	git remote add origin https://github.com/aspirac/LKWMonitorFinal.git
 -	git push 
 

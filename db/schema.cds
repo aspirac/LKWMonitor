@@ -10,6 +10,7 @@ entity Process : managed {
         processID                : Integer     @Core.Computed;
         processTypeID            : Association to ProcessType;
         processStatusID          : Association to ProcessStatus;
+        processPlantID          : Association to ProcessPlant;
         LKW_Kennzeichen          : String(20);
         Trailer_Kennzeichen      : String(20);
         Fahrername               : String(20);
@@ -276,4 +277,16 @@ entity BusinessPartner {
     key BPID     : String(20);
         Supplier : String(20);
         Name     : String(100);
+}
+
+entity ProcessPlant {
+    key ID               : String(100);
+        PlantName                : String(100);
+        SalesOrganization   : String(20);
+        DistributionChannel : String(20);
+        Division            : String(20);
+        Process             : Association to many Process
+                                  on Process.processPlantID = $self;
+
+
 }

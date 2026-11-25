@@ -11,6 +11,7 @@ const TextBundle = require('@sap/textbundle').TextBundle;
 const { current_transaction_isolation_level } = require('@cap-js/hana/lib/cql-functions');
 const { SELECT, INSERT } = require('@sap/cds/lib/ql/cds-ql');
 const { log } = require('console');
+const { cloudSdkExceptionLogger } = require('@sap-cloud-sdk/util');
 //import { getOdataUrl } from './handlers/utilities.js';
 var contextReq = '0202'
 class DDRMService extends cds.ApplicationService {
@@ -255,23 +256,24 @@ class DDRMService extends cds.ApplicationService {
 
     this.before('READ', 'Process', async (req) => {
       debugger;
-      //    console.log("=====>>>>BEFORE READ PROCESS>>>");
+          console.log("=====>>>>BEFORE READ PROCESS>>>");
       const { Process } = cds.entities;
       var results = [];
-   //   results = await this._performUpdateSAPDocuments(req);
+  //    results = await this._performUpdateSAPDocuments(req);
       // Initialize drafts
 
     })
 
     this.after('READ', 'Process', async (req) => {
       debugger;
-      //      console.log("=====>>>>AFTER READ *>>>");
+            console.log("=====>>>>AFTER READ *>>>");
+         
       const { Process } = cds.entities;
       //    const entityName = req.target.name; // e.g., 'MyService.Books'
       //const entityShortcut = req.entity;   // same as req.target.name
       //await console.log('Processing entity:' +req);
-      // var results = [];
-      //     results = await this._performUpdateSAPDocuments(req);
+       var results = [];
+  //         results = await this._performUpdateSAPDocuments(req);
       // Initialize drafts
 
     })
@@ -334,6 +336,7 @@ class DDRMService extends cds.ApplicationService {
       //   req.data.processStatusID_ID = '20 - Frei zur Einfahrt';  
     })
 
+    /*
     this.before('CREATE', 'Process.drafts', async (req) => {
       debugger;
       this.contextReq = '20';
@@ -346,7 +349,7 @@ class DDRMService extends cds.ApplicationService {
       console.log("=====>>>>AFTER CALL ");
     })
 
-
+*/
     this.before('CREATE', 'ProcessSAPDocumentIn', async (req) => {
       debugger;
       var results = [];
@@ -497,6 +500,45 @@ class DDRMService extends cds.ApplicationService {
         //     console.error(error.message);
         return null;
         //     this._errorMessage(error.message, req, "performInsert BusinessPartner");
+        return (error.message);
+
+      }
+    }
+
+      this._performUpsertPlants = async function (req, oData) {
+      try {
+        const { ProcessPlant } = cds.entities;
+        const { UPSERT, INSERT } = cds.ql;
+        var newPlant;
+        var newPlantEntries = [];
+
+        // parse the documents
+
+
+
+        oData.forEach((item, index) => {
+
+
+          newPlant = {
+            ID: oData[index].Plant + " - " + oData[index].PlantName,
+            PlantName: oData[index].PlantName,
+            SalesOrganization: oData[index].SalesOrganization,
+            DistributionChannel: oData[index].DistributionChannel,
+            Division: oData[index].Division,
+
+          };
+          newPlantEntries.push(newPlant);
+        });
+        //    await UPSERT.into(SalesOrder).entries(newSalesOrderEntries);
+        await UPSERT.into(ProcessPlant).entries(newPlantEntries);
+
+      
+        return newPlantEntries;
+      } catch (error) {
+        // Handle errors during API call<
+        //     console.error(error.message);
+        return null;
+        //     this._errorMessage(error.message, req, "performInsert Plant");
         return (error.message);
 
       }
@@ -883,6 +925,31 @@ class DDRMService extends cds.ApplicationService {
       }
     }
 
+    
+    this._getSAPPlants = async function (req) {
+      try {
+
+        var s4hanaPlant = await cds.connect.to('sap_s4_CE_PLANT_0001_v1');
+        var result;
+
+
+        const { Plant } = s4hanaPlant.entities;
+        debugger;
+        var results = [];
+       
+        results = await s4hanaPlant.run(SELECT.from(Plant).columns('Plant', 'PlantName', 'SalesOrganization', 'DistributionChannel', 'Division'));
+           console.log("=====>>>>AFTER QUERY PROCESS SAP DOCUMENT IN getSAPPlants>>>");
+        return results;
+      } catch (error) {
+        // Handle errors during API call
+
+       
+        this._errorMessage(error.message, req, "getSAPPlants");
+        return (error.message);
+
+      }
+    }
+
     this._getSAPSalesOrder = async function (req) {
       try {
 
@@ -1011,6 +1078,11 @@ class DDRMService extends cds.ApplicationService {
         var SAPDocuments = [];
         var res;
         //    await delete SAPDocument;
+        console.log("UPDATE SAP DOCS");
+         results = await this._getSAPPlants(req);
+         res = await this._performUpsertPlants(req, results);
+  
+        
         results = await this._getSAPBusinessPartners(req);
         addresses = await this._getSAPBusinessPartnersAddresses(req);
         console.log("=====>>>>AFTER CALL _getBP ");
@@ -1025,12 +1097,9 @@ class DDRMService extends cds.ApplicationService {
         results = await this._getSAPOutboundDelivery(req);
         console.log("=====>>>>AFTER CALL _getSAPOutboundDelivery ");
         res = await this._performUpsertSAPOutBoundDelivery(req, results, addresses, SAPDocuments);
-
         results = await this._getSAPFreightOrder(req);
         console.log("=====>>>>AFTER CALL _getSAPFreightOrder ");
-
         res = await this._performUpsertSAPFreightOrders(req, results, addresses, SAPDocuments);
-
         results = await this._getSAPFreightBooking(req);
         console.log("=====>>>>AFTER CALL _getSAPFreightBooking ");
         res = await this._performUpsertSAPFreightBookings(req, results, addresses, SAPDocuments);
@@ -1542,7 +1611,9 @@ class DDRMService extends cds.ApplicationService {
        */
 
     this.before('CREATE', 'Process.drafts', async (req) => {
+      
       debugger;
+      console.log("CREATE PROCESS");
       req.data.processStatusID_ID = '20 - Frei zur Einfahrt';
     })
 

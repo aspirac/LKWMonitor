@@ -51,7 +51,7 @@ sap.ui.define(['sap/ui/core/mvc/ControllerExtension',
 
 				onInit: function () {
 
-			//		debugger;
+					debugger;
 					let lv_url = window.location.href
 					// you can access the Fiori elements extensionAPI via this.base.getExtensionAPI
 					var oModel = this.base.getExtensionAPI().getModel();

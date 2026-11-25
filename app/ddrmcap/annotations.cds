@@ -21,7 +21,8 @@ annotate service.Process with @(
         GroupableProperties   : [
             ID,
             processStatusID_ID,
-            processTypeID_ID
+            processTypeID_ID,
+            processPlantID_ID
 
         ],
 
@@ -35,6 +36,7 @@ annotate service.Process with @(
     UI.SelectionFields            : [
         processTypeID_ID,
         processStatusID_ID,
+        processPlantID_ID,
         LKW_Kennzeichen,
         Fahrername,
     //   Frachtfuehrername,
@@ -233,6 +235,18 @@ annotate service.Process with @(
                 Label    : '{@i18n>processID}',
 
             },
+             {
+                $Type: 'UI.DataField',
+                Value: processPlantID_ID
+            },
+
+            {
+                $Type: 'UI.DataField',
+                Value: processPlantID.PlantName,
+
+            },
+
+         
 
         ],
     },
@@ -633,6 +647,36 @@ annotate service.Process with {
     }
 };
 
+annotate service.Process with {
+    processPlantID @Common.ValueList: {
+        $Type         : 'Common.ValueListType',
+        CollectionPath: 'ProcessPlant',
+
+        Parameters    : [
+            {
+                $Type            : 'Common.ValueListParameterInOut',
+                LocalDataProperty: processPlantID_ID,
+                ValueListProperty: 'ID',
+            },
+            {
+                $Type            : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty: 'PlantName',
+            },
+          {
+                $Type            : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty: 'SalesOrganization',
+            },
+          {
+                $Type            : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty: 'DistributionChannel',
+            },
+          {
+                $Type            : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty: 'Division',
+            },
+        ],
+    }
+};
 annotate service.ProcessSAPDocumentIn with @(
     Capabilities.UpdateRestrictions: {Updatable: true},
     UI                             : {

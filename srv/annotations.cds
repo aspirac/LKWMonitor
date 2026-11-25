@@ -31,6 +31,10 @@ annotate DDRMService.ProcessType with {
     @readonly;
 }
 
+annotate DDRMService.ProcessPlant with {
+    PlantName
+    @readonly;
+}
 annotate DDRMService.ProcessStatus with {
    
     ID          @title: '{@i18n>id}';
@@ -59,6 +63,7 @@ annotate DDRMService.Process with {
  
     processTypeID @title: '{@i18n>processTypeId}';
     processStatusID @title: '{@i18n>processStatusId}';
+    processPlantID @title: '{@i18n>Plant}';
     LKW_Kennzeichen @title: '{@i18n>LKWKennzeichen}';
     Trailer_Kennzeichen @title: '{@i18n>TrailerKennzeichen}';
     Fahrername @title: '{@i18n>Fahrername}';
@@ -144,3 +149,10 @@ annotate DDRMService.ProcessSAPDocumentOut with @(Common.SideEffects : {
     TargetEntities  : [$self],
 });
 
+annotate  DDRMService.ProcessPlant {
+        ID               @title: '{@i18n>Plant}';
+        PlantName                @title: '{@i18n>PlantName}';
+        SalesOrganization   @title: '{@i18n>SalesOrganization}';
+        DistributionChannel @title: '{@i18n>DistributionChannel}';
+        Division            @title: '{@i18n>Division}';
+}

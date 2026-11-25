@@ -68,6 +68,7 @@ service DDRMService @(requires: 'authenticated-user') {
     entity OutboundDelivery      as projection on db.OutboundDelivery;
     entity FreightOrder          as projection on db.FreightOrder;
     entity FreightBooking        as projection on db.FreightBooking;
+    entity ProcessPlant       as projection on db.ProcessPlant;
 
     entity ProcessSAPDocumentOut as projection on db.ProcessSAPDocumentOut
         actions {
@@ -126,14 +127,27 @@ annotate db.Process with {
             LocalDataProperty: processTypeID_ID,
             ValueListProperty: 'ID',
         }
-        //           {
-        //               $Type            : 'Common.ValueListParameterDisplayOnly',
-        //               ValueListProperty: 'description',
-        //           },
+      
+        ],
+    }
+
+}
+/*
+annotate db.Process with {
+    processPlantID @Common.ValueList: {
+        $Type         : 'Common.ValueListType',
+        CollectionPath: 'ProcessPlant',
+
+        Parameters    : [{
+            $Type            : 'Common.ValueListParameterInOut',
+            LocalDataProperty: processPlantID_ID,
+            ValueListProperty: 'ID',
+        }
+      
         ],
     }
 
 };
-
+*/
 
    
