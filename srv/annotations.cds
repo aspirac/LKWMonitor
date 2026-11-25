@@ -152,6 +152,7 @@ annotate DDRMService.ProcessSAPDocumentOut with @(Common.SideEffects : {
 annotate  DDRMService.ProcessPlant {
         ID               @title: '{@i18n>Plant}';
         PlantName                @title: '{@i18n>PlantName}';
+        PlantName_ID                @title: '{@i18n>Plant}';
         SalesOrganization   @title: '{@i18n>SalesOrganization}';
         DistributionChannel @title: '{@i18n>DistributionChannel}';
         Division            @title: '{@i18n>Division}';

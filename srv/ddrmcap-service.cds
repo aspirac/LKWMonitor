@@ -69,6 +69,7 @@ service DDRMService @(requires: 'authenticated-user') {
     entity FreightOrder          as projection on db.FreightOrder;
     entity FreightBooking        as projection on db.FreightBooking;
     entity ProcessPlant       as projection on db.ProcessPlant;
+    entity LastSapUpdate       as projection on db.LastSAPUpdate;
 
     entity ProcessSAPDocumentOut as projection on db.ProcessSAPDocumentOut
         actions {

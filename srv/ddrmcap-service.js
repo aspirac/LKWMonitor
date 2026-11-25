@@ -76,7 +76,7 @@ class DDRMService extends cds.ApplicationService {
     this.on('updateSAPDocuments', 'Process', async (req) => {
       debugger;
       var results = [];
-      results = await this._performUpdateSAPDocuments(req);
+      results = await this._performUpdateSAPDocuments(req, false);
     })
 
     this.on('updateSAPDocuments', 'ProcessSAPDocumentOut.drafts', async req => {
@@ -200,7 +200,7 @@ class DDRMService extends cds.ApplicationService {
     this.on('updateSAPDocuments', 'ProcessSAPDocumentOut', async (req) => {
       debugger;
       var results = [];
-      results = await this._performUpdateSAPDocuments(req);
+      results = await this._performUpdateSAPDocuments(req, true );
     })
 
     this.on('callSAPSalesOrderIn', 'ProcessSAPDocumentIn', async req => {
@@ -217,7 +217,7 @@ class DDRMService extends cds.ApplicationService {
       debugger;
       var results = [];
       var res;
-      results = await this._getSAPInboundDelivery(req);
+      results = await this._getSAPInboundDelivery(req, false);
       console.log("=====>>>>AFTER CALL ");
     })
 
@@ -251,7 +251,7 @@ class DDRMService extends cds.ApplicationService {
     this.on('updateSAPDocuments', 'ProcessSAPDocumentIn', async (req) => {
       debugger;
       var results = [];
-      results = await this._performUpdateSAPDocuments(req);
+      results = await this._performUpdateSAPDocuments(req, true );
     })
 
     this.before('READ', 'Process', async (req) => {
@@ -273,7 +273,7 @@ class DDRMService extends cds.ApplicationService {
       //const entityShortcut = req.entity;   // same as req.target.name
       //await console.log('Processing entity:' +req);
        var results = [];
-  //         results = await this._performUpdateSAPDocuments(req);
+           results = await this._performUpdateSAPDocuments(req, false);
       // Initialize drafts
 
     })
@@ -522,6 +522,7 @@ class DDRMService extends cds.ApplicationService {
           newPlant = {
             ID: oData[index].Plant + " - " + oData[index].PlantName,
             PlantName: oData[index].PlantName,
+            PlantName_ID : oData[index].Plant,
             SalesOrganization: oData[index].SalesOrganization,
             DistributionChannel: oData[index].DistributionChannel,
             Division: oData[index].Division,
@@ -1071,7 +1072,7 @@ class DDRMService extends cds.ApplicationService {
     }
 
     // update all sap documents 
-    this._performUpdateSAPDocuments = async function (req) {
+    this._performUpdateSAPDocuments = async function (req, forceUpdate) {
       try {
         var results = [];
         var addresses = [];
@@ -1079,29 +1080,32 @@ class DDRMService extends cds.ApplicationService {
         var res;
         //    await delete SAPDocument;
         console.log("UPDATE SAP DOCS");
+        res = await this._updateLastSAPUpdate(forceUpdate);
+        if (res == false){
+          return;
+        }
          results = await this._getSAPPlants(req);
          res = await this._performUpsertPlants(req, results);
   
         
         results = await this._getSAPBusinessPartners(req);
         addresses = await this._getSAPBusinessPartnersAddresses(req);
-        console.log("=====>>>>AFTER CALL _getBP ");
+     
         res = await this._performUpsertBusinessPartners(req, results);
         results = await this._getSAPSalesOrder(req);
-        console.log("=====>>>>AFTER CALL _getSAPSalesOrder ");
+   
         res = await this._performUpsertSAPSalesOrders(req, results, addresses, SAPDocuments);
-        console.log("=====>>>>AFTER INSERT _getSAPSalesOrder ");
+      
         results = await this._getSAPInboundDelivery(req);
-        console.log("=====>>>>AFTER CALL _getSAPInboundDelivery ");
+       
         res = await this._performUpsertSAPInboundDelivery(req, results, addresses, SAPDocuments);
         results = await this._getSAPOutboundDelivery(req);
-        console.log("=====>>>>AFTER CALL _getSAPOutboundDelivery ");
+      
         res = await this._performUpsertSAPOutBoundDelivery(req, results, addresses, SAPDocuments);
         results = await this._getSAPFreightOrder(req);
-        console.log("=====>>>>AFTER CALL _getSAPFreightOrder ");
+       
         res = await this._performUpsertSAPFreightOrders(req, results, addresses, SAPDocuments);
-        results = await this._getSAPFreightBooking(req);
-        console.log("=====>>>>AFTER CALL _getSAPFreightBooking ");
+        results = await this._getSAPFreightBooking(req); console.log("=====>>>>AFTER CALL _getSAPFreightBooking ");
         res = await this._performUpsertSAPFreightBookings(req, results, addresses, SAPDocuments);
 
 
@@ -1117,6 +1121,48 @@ class DDRMService extends cds.ApplicationService {
       }
     }
 
+    
+      this._updateLastSAPUpdate = async function (forceUpdate) {
+        const { LastSAPUpdate } = cds.entities;
+        const { UPSERT, INSERT, DELETE } = cds.ql;
+        var DateNow = new Date();
+        var TSNow = Date.now();
+        var newSAPUpdate;
+        var lastDate;
+        var newSAPUpdateEntries = [];
+            console.log("=====>>>>: "+ DateNow + " " + TSNow);
+            newSAPUpdate = {
+              UpdateTS: TSNow,
+              UpdateDate : DateNow
+          };
+          newSAPUpdateEntries.push(newSAPUpdate);
+          lastDate = await SELECT.from(LastSAPUpdate);
+          if (lastDate.length > 0){
+             var lastSave = Number(lastDate[0].UpdateTS);
+             console.log("=====>>>> Number: "+ lastSave ); 
+             // calculate the difference 
+             var diff = (Number(TSNow) - lastSave)/1000; // get seconds
+             console.log("=====>>>>DIFF: "+ diff);
+          }else {
+            await UPSERT.into(LastSAPUpdate).entries(newSAPUpdateEntries);
+            return true;
+          
+          }
+
+          // check the difference 
+          if (diff > 1300 || forceUpdate == true){
+            // delete current record
+              await  DELETE.from(LastSAPUpdate);
+            // Insert New Record
+              await UPSERT.into(LastSAPUpdate).entries(newSAPUpdateEntries);
+              return true;
+            }
+            return false;
+       
+     
+
+
+    }
     this._getOdataUrl = function (oData) {
       //   console.log("=====>>>>BEFORE get URL: ");
       //     let lv_url1 = window.location.href;
