@@ -277,19 +277,7 @@ class DDRMService extends cds.ApplicationService {
       // Initialize drafts
 
     })
-    /*
-    this.after('READ', 'Process', async (req) => {
-      debugger;
-      console.log("=====>>>>AFTER READ PROCESS>>>" +  req.params[0].ID);
-      const { Process } = cds.entities;
-      var results = [];
-      //     results = await this._performUpdateSAPDocuments(req);
-      // Initialize drafts
-
-    })
-*/
-
-
+   
 
 
 
@@ -311,17 +299,7 @@ class DDRMService extends cds.ApplicationService {
           
     */
     })
-    /*
-    this.after('READ', 'Process', async (results, req) => {
-      debugger;
-      const { Process } = cds.entities;
-      console.log("=====>>>>After READ Process XXX>>>");
-      //  var ProcessId = req.params[0].ID;
-      //    console.log("=====>>>>AFTER READ Process ID: " + req.params[0].ID);
-
-
-    })
-      */
+   
 
 
 
@@ -361,7 +339,7 @@ class DDRMService extends cds.ApplicationService {
 
       const { maxID } = await SELECT.one`max(sapDocumentInID) as maxID`.from(ProcessSAPDocumentIn)
 
-      console.log("=====>>>>AFTER QUERY PROCESS SAP DOCUMENT IN>>>");
+     
       req.data.sapDocumentInID = maxID + 1;
 
 
@@ -913,7 +891,7 @@ class DDRMService extends cds.ApplicationService {
 
         //     var addr = addresses.find((item) => item.BusinessPartner === 2);
 
-        console.log("=====>>>>AFTER QUERY PROCESS SAP DOCUMENT IN getBusinessPartnerAddress>>>");
+      
         return results;
       } catch (error) {
         // Handle errors during API call
@@ -939,7 +917,7 @@ class DDRMService extends cds.ApplicationService {
         var results = [];
        
         results = await s4hanaPlant.run(SELECT.from(Plant).columns('Plant', 'PlantName', 'SalesOrganization', 'DistributionChannel', 'Division'));
-           console.log("=====>>>>AFTER QUERY PROCESS SAP DOCUMENT IN getSAPPlants>>>");
+        
         return results;
       } catch (error) {
         // Handle errors during API call
@@ -961,10 +939,10 @@ class DDRMService extends cds.ApplicationService {
         const { A_SalesOrder, A_SalesOrderItem } = s4hanaSales.entities;
         debugger;
         var results = [];
-        console.log("=====>>>>TRACE >>> getSAPSalesOrder BEFORE");
+      
         results = await s4hanaSales.run(SELECT.from(A_SalesOrder).where({ OverallSDProcessStatus: { '!=': 'C' } }).columns('SalesOrder', 'SalesOrderType', 'SoldToParty', 'OverallSDProcessStatus'));
 
-        console.log("=====>>>>TRACE >>> getSAPSalesOrder AFTER");
+       
         return results;
       } catch (error) {
         // Handle errors during API call
@@ -1078,12 +1056,15 @@ class DDRMService extends cds.ApplicationService {
         var addresses = [];
         var SAPDocuments = [];
         var res;
+        var messageString;
+
         //    await delete SAPDocument;
-        console.log("UPDATE SAP DOCS");
+     
         res = await this._updateLastSAPUpdate(forceUpdate);
         if (res == false){
           return;
         }
+      
          results = await this._getSAPPlants(req);
          res = await this._performUpsertPlants(req, results);
   
@@ -1105,7 +1086,7 @@ class DDRMService extends cds.ApplicationService {
         results = await this._getSAPFreightOrder(req);
        
         res = await this._performUpsertSAPFreightOrders(req, results, addresses, SAPDocuments);
-        results = await this._getSAPFreightBooking(req); console.log("=====>>>>AFTER CALL _getSAPFreightBooking ");
+     
         res = await this._performUpsertSAPFreightBookings(req, results, addresses, SAPDocuments);
 
 
@@ -1130,7 +1111,7 @@ class DDRMService extends cds.ApplicationService {
         var newSAPUpdate;
         var lastDate;
         var newSAPUpdateEntries = [];
-            console.log("=====>>>>: "+ DateNow + " " + TSNow);
+      
             newSAPUpdate = {
               UpdateTS: TSNow,
               UpdateDate : DateNow
@@ -1139,10 +1120,10 @@ class DDRMService extends cds.ApplicationService {
           lastDate = await SELECT.from(LastSAPUpdate);
           if (lastDate.length > 0){
              var lastSave = Number(lastDate[0].UpdateTS);
-             console.log("=====>>>> Number: "+ lastSave ); 
+        
              // calculate the difference 
              var diff = (Number(TSNow) - lastSave)/1000; // get seconds
-             console.log("=====>>>>DIFF: "+ diff);
+         
           }else {
             await UPSERT.into(LastSAPUpdate).entries(newSAPUpdateEntries);
             return true;
